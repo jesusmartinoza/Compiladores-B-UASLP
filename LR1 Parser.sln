@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LR1 Parser", "LR1 Parser\LR1 Parser.csproj", "{427BE0CA-C0CF-4BA9-91CE-FFC10A552C51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{427BE0CA-C0CF-4BA9-91CE-FFC10A552C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{427BE0CA-C0CF-4BA9-91CE-FFC10A552C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{427BE0CA-C0CF-4BA9-91CE-FFC10A552C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{427BE0CA-C0CF-4BA9-91CE-FFC10A552C51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29EBD8CA-3309-424E-BE47-7A8E1D74CAD4}
+	EndGlobalSection
+EndGlobal
