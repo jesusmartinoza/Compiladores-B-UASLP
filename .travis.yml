@@ -1,0 +1,2 @@
+language: csharp
+solution: LR1 Parser.sln
