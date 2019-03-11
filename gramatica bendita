@@ -47,10 +47,12 @@ exp-simple-><term>
 opsuma->+
 opsuma->-
 tipo->int|string|vent|textBox|label
-term-><term><opmult><potencia>
-term-><potencia>
-potencia-><potencia>**<factor>
-potencia-><factor>
+//term-><term><opmult><potencia>
+//term-><potencia>
+//potencia-><potencia>**<factor>
+//potencia-><factor>
+term-><term><opmult><factor>
+opmult->**
 opmult->*
 opmult->/
 opmult->%
