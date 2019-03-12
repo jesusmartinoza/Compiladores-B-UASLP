@@ -1,5 +1,5 @@
-programa-><estructura><def-main>|<def-main>
-estructura-><estructura><def>|<def>
+programa-><estructura> <def-main>|<def-main>
+estructura-><estructura> <def>|<def>
 def-><sent-declara>|<def-func>
 def-func->defid { <secuencia-sent> }
 def-vent->CreaVentana ( id, cadena , num , num , num , num )
@@ -8,7 +8,7 @@ def-ctrl->CreaLabel ( id , id , num , num , cadena )
 crea-control->CreaBoton|CreaTextbox
 def-evnt->CreaEvento ( id , id )
 def-main->defmain { <secuencia-sent> }
-secuencia-sent-><secuencia-sent><sentencia>
+secuencia-sent-><secuencia-sent> <sentencia>
 secuencia-sent-><sentencia>
 sentencia-><sent-if>
 sentencia-><sent-repeat>
@@ -35,14 +35,14 @@ sent-func->CierraVentana ( id )
 sent-func->MBox ( cadena )
 sent-func->Loop ( id )
 sent-func->ImprimeTextBox ( id , id )
-sent-declara-><tipo><identificadores>
+sent-declara-><tipo> <identificadores>
 identificadores-><identificadores> , id|id
-exp-><exp-simple><op-comparacion><exp-simple>
+exp-><exp-simple> <op-comparacion> <exp-simple>
 exp-><exp-simple>
 op-comparacion->==
 op-comparacion->\>
 op-comparacion->\<
-exp-simple-><exp-simple><opsuma><term>
+exp-simple-><exp-simple> <opsuma> <term>
 exp-simple-><term>
 opsuma->+
 opsuma->-
