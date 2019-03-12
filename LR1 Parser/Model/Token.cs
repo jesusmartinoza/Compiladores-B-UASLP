@@ -8,9 +8,13 @@ namespace LR1_Parser.Model
 {
     class Token
     {
-        string id;
-        List<Token> left; // Conjunto de tokens del lado izquierdo de la flecha 
-        List<Token> right;  // Conjunto de tokens del lado derecho de la flecha 
-        HashSet<Token> first; // Conjunto de primeros de forma desordenada
+        string content;
+        bool terminal; // Bandera para indicar si es terminal o no-terminal
+        string val; // Guarda lexema o el resultado de evaluar un conjunto de atributos
+        //Getters and Setters
+        public string Content { get => content; set => content = value; }
+        public bool Terminal { get => terminal; set => terminal = value; }
+        public string Val { get => val; set => val = value; }
+
     }
 }
