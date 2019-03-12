@@ -64,6 +64,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AFDGenerator.cs" />
+    <Compile Include="Model\LR1Element.cs" />
+    <Compile Include="Model\Node.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Model\Production.cs" />
+    <Compile Include="Model\State.cs" />
+    <Compile Include="Model\Token.cs" />
+    <Compile Include="Tokenizer.cs" />
     <Compile Include="Views\PageAnalisis.xaml.cs">
       <DependentUpon>PageAnalisis.xaml</DependentUpon>
     </Compile>
