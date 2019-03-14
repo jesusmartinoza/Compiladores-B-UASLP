@@ -67,6 +67,7 @@
     <Compile Include="AFDGenerator.cs" />
     <Compile Include="Model\LR1Element.cs" />
     <Compile Include="Model\Node.cs" />
+    <Compile Include="Model\Primeros.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Model\Production.cs" />
     <Compile Include="Model\State.cs" />

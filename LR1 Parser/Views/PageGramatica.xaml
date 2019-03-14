@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:LR1_Parser"
       xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-
+      Loaded="Page_Loaded"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       Title="Gramatica">
@@ -20,6 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
             <RowDefinition MinHeight="200"/>
             <RowDefinition Height="2"/>
             <RowDefinition MinHeight="100"/>
@@ -27,12 +28,50 @@
         </Grid.RowDefinitions>
 
 
+        <ToolBarTray Grid.Row="0" Grid.ColumnSpan="3">
+            <ToolBar
+                
+                Style="{DynamicResource MaterialDesignToolBar}"
+                ClipToBounds="False">
+                <Button ToolTip="Abrir" Name="Abrir"  Click="Abrir_Click" >
+                    <materialDesign:PackIcon  Kind="FolderOpen" />
+                </Button>
 
-      
-            <GroupBox
+                <Button ToolTip="Guardar" Name="Guardar">
+                    <materialDesign:PackIcon  Kind="ContentSave" />
+                </Button>
+
+                <Separator />
+
+                <Button Command="Cut" ToolTip="Cut" ToolBar.OverflowMode="AsNeeded">
+                    <materialDesign:PackIcon  Kind="ContentCut" />
+                </Button>
+
+                <Button Command="Copy"  ToolTip="Copy that stuff" ToolBar.OverflowMode="AsNeeded">
+                    <materialDesign:PackIcon   Kind="ContentCopy" />
+                </Button>
+
+                <Separator />
+                <Button Command="Paste" ToolTip="Paste some stuff" ToolBar.OverflowMode="AsNeeded">
+                    <materialDesign:PackIcon Kind="ContentPaste" />
+                </Button>
+
+                <Separator />
+
+                <Button ToolTip="Generar tabla de analisis sintácttico" ToolBar.OverflowMode="AsNeeded" Name="GenerarTabla" Click="GenerarTabla_Click" >
+                    <materialDesign:PackIcon Kind="TableLarge" />
+                </Button>
+
+            </ToolBar>
+        </ToolBarTray>
+
+
+
+
+        <GroupBox
             Header="Gramática"
             Grid.Column="0" 
-            Grid.Row="0"
+            Grid.Row="1"
             Margin="1"
             
             >
@@ -48,27 +87,35 @@
       
        
 
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2" Grid.Row="0"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2" Grid.Row="1"/>
         <GroupBox
             Grid.Column="2"
             Header="Primeros"
             Margin="1"
-            Grid.Row="0"
+            Grid.Row="1"
             
             >
 
-           
-           
+            <ListView>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Code}" Header="Terminal" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Conjunto Primeros" />
+                        
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
         </GroupBox>
 
-        <GridSplitter Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Height="2" Grid.Row="1"/>
+        <GridSplitter Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Height="2" Grid.Row="2"/>
         
         <GroupBox
             
             Grid.Column="0"
             Header="Tabla de analisis sintáctico"
             Margin="1"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.ColumnSpan="3"
             
             >

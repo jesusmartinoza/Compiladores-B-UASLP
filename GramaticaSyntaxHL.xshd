@@ -1,0 +1,21 @@
+
+<SyntaxDefinition name="C#"
+        xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <Color name="Comment" foreground="Green" />
+    <Color name="String" foreground="Blue" />
+
+    <!-- This is the main ruleset. -->
+    <RuleSet>
+        <Span color="Comment" begin="#" />
+        <Keywords fontWeight="bold" foreground="Blue">
+            <Word>-></Word>
+
+        </Keywords>
+
+        <Keywords fontWeight="bold" foreground="Green">
+           <Word>&gt;</Word>
+            <Word>&lt;</Word>
+        
+        </Keywords>
+    </RuleSet>
+</SyntaxDefinition>
