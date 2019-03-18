@@ -12,7 +12,7 @@ namespace LR1_Parser.Model
     /// 
     /// Módulo desarrollado por Chivas :D
     /// </summary>
-    public class Token
+    public class Tokenizer
     {
         string content;
         bool terminal; // Bandera para indicar si es terminal o no-terminal
