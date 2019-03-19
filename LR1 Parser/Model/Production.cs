@@ -22,7 +22,7 @@ namespace LR1_Parser.Model
         List<Token> right;  // Conjunto de tokens del lado derecho de la flecha 
         HashSet<Token> first; // Conjunto de primeros de forma desordenada
 
-        public Productions(int i, Token l){
+        public Production(int i, Token l){
             id = i;
             left = l;
             right = new List<Token>();
