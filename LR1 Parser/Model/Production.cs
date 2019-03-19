@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LR1_Parser.Model
 {
-    class Production
+    public class Production
     {
         /*string id;
         List<Token> left; // Conjunto de tokens del lado izquierdo de la flecha 
