@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LR1_Parser.Model
 {
-    class Token
+    public class Token
     {
         /*string content;
         bool terminal; // Bandera para indicar si es terminal o no-terminal
