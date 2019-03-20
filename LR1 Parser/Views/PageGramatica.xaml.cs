@@ -125,44 +125,44 @@ namespace LR1_Parser
 
             Token n = new Token();
             n.Content = "S";
-            n.Terminal = false;
+            n.IsTerminal = false;
 
             Token n1 = new Token();
             n1.Content = "A";
-            n1.Terminal = false;
+            n1.IsTerminal = false;
 
             Token n2 = new Token();
             n2.Content = "B";
-            n2.Terminal = false;
+            n2.IsTerminal = false;
 
             Token n3 = new Token();
             n3.Content = "C";
-            n3.Terminal = false;
+            n3.IsTerminal = false;
 
             Token n4 = new Token();
             n4.Content = "D";
-            n4.Terminal = false;
+            n4.IsTerminal = false;
 
             /*TERMINALES*/
             Token t = new Token();
             t.Content = "x";
-            t.Terminal = true;
+            t.IsTerminal = true;
 
             Token t1 = new Token();
             t1.Content = "y";
-            t1.Terminal = true;
+            t1.IsTerminal = true;
 
             Token t2 = new Token();
             t2.Content = "z";
-            t2.Terminal = true;
+            t2.IsTerminal = true;
 
             Token t3 = new Token();
             t3.Content = "w";
-            t3.Terminal = true;
+            t3.IsTerminal = true;
 
             Token t4 = new Token();
             t4.Content = "ε";
-            t4.Terminal = true;
+            t4.IsTerminal = true;
 
 
             // **********************PRODUCCIONES*****************************
