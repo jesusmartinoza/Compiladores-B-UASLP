@@ -40,7 +40,15 @@ namespace LR1_Parser.Model
                 foreach (var elem in node.Elements)
                 {
                     if (elem.Gamma.Count == 0)
-                        state.Terminals.Add(elem.Left.Content, new Action() { action = 'R', state = 0}); // TODO: Poner el estado correcto
+                    {
+                        // Obtener produccion de la lista global usando el token left como elemento de busqueda
+                        Production production = MainWindow.productions.Where(p => p.Left.Content == elem.Left.Content).First();
+
+                        state.Terminals.Add(
+                            elem.Left.Content,
+                            new Action() { action = 'R', state = MainWindow.productions.IndexOf(production)}
+                        );
+                    }
                 }
 
                 states.Add(state);
