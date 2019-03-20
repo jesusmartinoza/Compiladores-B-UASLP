@@ -27,17 +27,9 @@ namespace LR1_Parser
     /// </summary>
     public partial class PageGramatica : Page
     {
-        //Lista de T y NT
-        public List<string> tokenNT;
-        public List<string> tokenT;
         //Lista de producciones
         public List<Production> producciones;
 
-        //Lista de todos los Token existentes
-        public List<Token> tokens;
-
-        //indice para saber el numero de producciones
-        int indice;
         public string TextoGramatica { get; set; }
 
         public PageGramatica()
@@ -78,80 +70,9 @@ namespace LR1_Parser
 
         private void GenerarTabla_Click(object sender, RoutedEventArgs e)
         {
-            //Inicializacion de variables
-            producciones = new List<Production>();
-            tokenNT = new List<string>();
-            tokenT = new List<string>();
-            tokens = new List<Token>();
-            //TText.Text = NTtext.Text = "";
-            indice = 1;
-            List<string> grammar = new List<string>();
-            string aux = EntradaGramatica.Text.Replace("\r", "");
-            aux = aux.Replace("->", "→");
-            grammar = aux.Split('\n').ToList();
+            Tokenizer obtenProd = new Tokenizer();
+            producciones = obtenProd.obtenProducciones(EntradaGramatica.Text);
 
-            //Separacion en NT y T
-            foreach (string s in grammar)
-            {
-                if (!tokenNT.Contains(s.Split('→')[0]))//Verifica que no exista ya en la lista
-                {
-                    tokenNT.Add(s.Split('→')[0]);
-                    tokens.Add(new Token(s.Split('→')[0], false));
-                }
-            }
-            foreach (string s in grammar)
-            {
-                foreach (string ss in s.Split('→')[1].Split(' '))//Separa los diferentes tokens de la parte derecha de la flecha
-                {
-                    if (!tokenNT.Contains(ss) && !tokenT.Contains(ss) && ss != "|")//Verifica que no sea un NT, aun no exista en la lista o sea el operador "|" de las gramaticas
-                    {
-                        tokenT.Add(ss);
-                        tokens.Add(new Token(ss, true));
-                    }
-                }
-            }
-
-            foreach (string s in grammar)
-            {
-                string[] aux2 = s.Split('→');
-                List<string> list = aux2[1].Split('|').ToList();
-
-                foreach (string ss in list)
-                {
-                    producciones.Add(new Production(indice, getToken(aux2[0])));
-                    List<string> tokenProd = ss.Split(' ').ToList();
-                    foreach (string ss2 in tokenProd)
-                    {
-                        if (ss2 != "")
-                        {
-                            producciones[producciones.Count - 1].Right.Add(getToken(ss2));
-                        }
-                    }
-                    indice++;
-                }
-            }
-
-            //Muestra en pantalla
-            foreach (string s in tokenNT)
-            {
-                //NTtext.Text += s + "\r\n";
-            }
-            foreach (string s in tokenT)
-            {
-                //TText.Text += s + "\r\n";
-            }
-        }
-
-        public Token getToken(string name)
-        {
-            foreach(Token t in tokens)
-            {
-                if (t.Content == name)
-                {
-                    return t;
-                }
-            }
-            return null;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
