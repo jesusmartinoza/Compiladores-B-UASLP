@@ -32,12 +32,14 @@ namespace LR1_Parser
         public MainWindow()
         {
             InitializeComponent();
+
+            productions = new List<Production>();
+            InitTestGrammar2();
+
             gramaticaPage = new PageGramatica();
             analisisPage = new PageAnalisis();
-            productions = new List<Production>();
-            Frame.Navigate(gramaticaPage);
 
-            InitTestGrammar2();
+            Frame.Navigate(gramaticaPage);
         }
 
         private void Analisis_Tab_Click(object sender, RoutedEventArgs e)

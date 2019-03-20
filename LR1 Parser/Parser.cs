@@ -59,10 +59,13 @@ namespace LR1_Parser.Model
                         // Obtener produccion de la lista global usando el token left como elemento de busqueda
                         Production production = MainWindow.productions.Where(p => p.Left.Content == elem.Left.Content).First();
 
-                        state.Terminals.Add(
-                            elem.Left.Content,
-                            new Action() { action = 'R', state = MainWindow.productions.IndexOf(production)}
-                        );
+                        foreach(var advanceToken in elem.Advance)
+                        {
+                            state.Terminals.Add(
+                                advanceToken.Content,
+                                new Action() { action = 'R', state = MainWindow.productions.IndexOf(production) }
+                            );
+                        }
                     }
                 }
 
