@@ -27,17 +27,9 @@ namespace LR1_Parser
     /// </summary>
     public partial class PageGramatica : Page
     {
-        //Lista de T y NT
-        public List<string> tokenNT;
-        public List<string> tokenT;
         //Lista de producciones
         public List<Production> producciones;
 
-        //Lista de todos los Token existentes
-        public List<Token> tokens;
-
-        //indice para saber el numero de producciones
-        int indice;
         public string TextoGramatica { get; set; }
 
         public PageGramatica()
@@ -78,21 +70,9 @@ namespace LR1_Parser
 
         private void GenerarTabla_Click(object sender, RoutedEventArgs e)
         {
-            
+            Tokenizer obtenProd = new Tokenizer();
+            producciones = obtenProd.obtenProducciones(EntradaGramatica.Text);
 
-       
-        }
-
-        public Token getToken(string name)
-        {
-            foreach(Token t in tokens)
-            {
-                if (t.Content == name)
-                {
-                    return t;
-                }
-            }
-            return null;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -118,8 +98,6 @@ namespace LR1_Parser
             }
            
         }
-
-        
 
     }
 }
