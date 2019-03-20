@@ -40,7 +40,7 @@ namespace LR1_Parser.Model
         {
             States = new List<State>();
 
-            foreach (var node in AFD1)
+            foreach (var node in AFD)
             {
                 State state = new State();
 
@@ -82,7 +82,7 @@ namespace LR1_Parser.Model
         /// representar el siguiente AFD
         void InitTestAFD()
         {
-            AFD1 = new List<Node>();
+            AFD = new List<Node>();
 
             // Lista auxiliar para guadar tokens de anticipacion {$, +, -}
             // Este conjunto de tokens se repiten varias veces en este test.
@@ -145,13 +145,13 @@ namespace LR1_Parser.Model
             Node n6 = new Node();
             n6.Elements.Add(n5elem0);
 
-            AFD1.Add(n0);
-            AFD1.Add(n1);
-            AFD1.Add(n2);
-            AFD1.Add(n3);
-            AFD1.Add(n4);
-            AFD1.Add(n5);
-            AFD1.Add(n6);
+            AFD.Add(n0);
+            AFD.Add(n1);
+            AFD.Add(n2);
+            AFD.Add(n3);
+            AFD.Add(n4);
+            AFD.Add(n5);
+            AFD.Add(n6);
         }
     }
 }
