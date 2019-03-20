@@ -29,18 +29,18 @@ namespace LR1_Parser.Model
                 // Desplazamientos
                 foreach (var edge in node.Edges)
                 {
-                    // if Token is terminal
+                    // if (Token) is terminal
                     if (edge.Value.IsTerminal)
-                        states.Terminals.Add(new State() { action = 'S', edge.Key });
+                        state.Terminals.Add(edge.Value.Content, new Action() { action = 'S', state = edge.Key });
                     else
-                        states.NonTerminals.Add(new State() { action = 'S', edge.Key });
+                        state.NonTerminals.Add(edge.Value.Content, new Action() { action = 'S', state = edge.Key });
                 }
 
                 // Reducciones
                 foreach (var elem in node.Elements)
                 {
-                    if (elem.gamma.Count == 0)
-                        states.Terminals.Add(new State() { action = 'R', /*Index*/ });
+                    if (elem.Gamma.Count == 0)
+                        state.Terminals.Add(elem.Left.Content, new Action() { action = 'R', state = 0}); // TODO: Poner el estado correcto
                 }
 
                 states.Add(state);
@@ -71,6 +71,10 @@ namespace LR1_Parser.Model
             // Info for Node 1
             // _________________________________________________________________
             Node n1 = new Node();
+            LR1Element n1elem0 = new LR1Element(); // Node 1 Element 0
+            n1elem0.Left = new Token("E'", false);
+            n1elem0.Advance.Add(new Token("$", true));
+            n1.Elements.Add(n1elem0);
             n1.Edges.Add(2, new Token("+", true));
             n1.Edges.Add(4, new Token("-", true));
 
@@ -99,12 +103,16 @@ namespace LR1_Parser.Model
             // Info for Node 5
             // _________________________________________________________________
             Node n5 = new Node();
+            LR1Element n5elem0 = new LR1Element(); // Node 5 Element 0
+            n5elem0.Left = new Token("E", false);
+            n5elem0.Advance.AddRange(commonAdvanceTokens);
+            n5.Elements.Add(n5elem0);
 
             // _________________________________________________________________
             // Info for Node 6
             // _________________________________________________________________
             Node n6 = new Node();
-
+            n6.Elements.Add(n5elem0);
         }
     }
 }

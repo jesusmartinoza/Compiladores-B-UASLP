@@ -15,6 +15,9 @@ namespace LR1_Parser.Model
     {
         Dictionary<string, Action> nonTerminals; // Conjunto de acciones de los no terminales
         Dictionary<string, Action> terminals; // Conjunto de acciones de los terminales
+
+        internal Dictionary<string, Action> Terminals { get => terminals; set => terminals = value; }
+        internal Dictionary<string, Action> NonTerminals { get => nonTerminals; set => nonTerminals = value; }
     }
 
     /// <summary>  
@@ -27,7 +30,7 @@ namespace LR1_Parser.Model
     /// </summary> 
     struct Action
     {
-        char action; // Puede ser 'S', 'R' u 'A'
-        int state; // Estado al que va
+        internal char action; // Puede ser 'S', 'R' u 'A'
+        internal int state; // Estado al que va
     }
 }

@@ -14,7 +14,7 @@ namespace LR1_Parser.Model
 
         //Getters and Setters
         public string Content { get => content; set => content = value; }
-        public bool Terminal { get => terminal; set => terminal = value; }
+        public bool IsTerminal { get => terminal; set => terminal = value; }
         public string Val { get => val; set => val = value; }
       
 
