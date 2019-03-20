@@ -37,7 +37,7 @@ namespace LR1_Parser
             productions = new List<Production>();
             Frame.Navigate(gramaticaPage);
 
-            InitTestGrammar();
+            InitTestGrammar2();
         }
 
         private void Analisis_Tab_Click(object sender, RoutedEventArgs e)
@@ -54,7 +54,6 @@ namespace LR1_Parser
         {
 
         }
-
         
         private void InitTestGrammar()
         {
@@ -201,6 +200,67 @@ namespace LR1_Parser
             productions.Add(p6);
             productions.Add(p7);
             productions.Add(p8);
+        }
+
+
+        /// <summary>
+        /// Gramatica de prueba
+        /// 
+        /// E' -> E
+        /// E -> E + n
+        /// E -> E - n
+        /// E -> n
+        /// </summary>
+        private void InitTestGrammar2()
+        {
+            Token Ep = new Token();
+            Ep.Content = "E'";
+            Ep.IsTerminal = false;
+
+            Token E = new Token();
+            E.Content = "E";
+            E.IsTerminal = false;
+
+            Token plusSymbol = new Token();
+            plusSymbol.Content = "+";
+            plusSymbol.IsTerminal = true;
+
+            Token minusSymbol = new Token();
+            minusSymbol.Content = "-";
+            minusSymbol.IsTerminal = true;
+
+            Token n = new Token();
+            n.Content = "n";
+            n.IsTerminal = true;
+
+            // E' -> E
+            Production p0 = new Production();
+            p0.Left = Ep;
+            p0.Right.Add(E);
+
+            // E -> E + n
+            Production p1 = new Production();
+            p1.Left = E;
+            p1.Right.Add(E);
+            p1.Right.Add(plusSymbol);
+            p1.Right.Add(n);
+
+            // E -> E - n
+            Production p2 = new Production();
+            p2.Left = E;
+            p2.Right.Add(E);
+            p2.Right.Add(minusSymbol);
+            p2.Right.Add(n);
+
+            // E -> n
+            Production p3 = new Production();
+            p3.Left = E;
+            p3.Right.Add(n);
+
+            productions.Add(p0);
+            productions.Add(p1);
+            productions.Add(p2);
+            productions.Add(p3);
         }
     }
 }
