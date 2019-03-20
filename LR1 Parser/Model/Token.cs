@@ -8,40 +8,30 @@ namespace LR1_Parser.Model
 {
     public class Token
     {
-        /*string content;
-        bool terminal; // Bandera para indicar si es terminal o no-terminal
-        string val; // Guarda lexema o el resultado de evaluar un conjunto de atributos
-        //Getters and Setters
-        public string Content { get => content; set => content = value; }
-        public bool Terminal { get => terminal; set => terminal = value; }
-        public string Val { get => val; set => val = value; }*/
         string content;
         bool terminal; // Bandera para indicar si es terminal o no-terminal
         string val; // Guarda lexema o el resultado de evaluar un conjunto de atributos
+
+        //Getters and Setters
+        public string Content { get => content; set => content = value; }
+        public bool Terminal { get => terminal; set => terminal = value; }
+        public string Val { get => val; set => val = value; }
+      
 
         public Token(string s, bool t)
         {
             terminal = t;
             content = s;
         }
+        public Token()
+        { }
 
-        //Getters and Setters
-        public string Content
+
+        public override string ToString()
         {
-            get { return content; }
-            set { content = value; }
+            return content;
         }
 
-        public bool Terminal
-        {
-            get { return terminal; }
-            set { terminal = value; }
-        }
-
-        public string Val
-        {
-            get { return val; }
-            set { val = value; }
-        }
+      
     }
 }

@@ -78,68 +78,71 @@ namespace LR1_Parser
 
         private void GenerarTabla_Click(object sender, RoutedEventArgs e)
         {
-            //Inicializacion de variables
-            producciones = new List<Production>();
-            tokenNT = new List<string>();
-            tokenT = new List<string>();
-            tokens = new List<Token>();
-            //TText.Text = NTtext.Text = "";
-            indice = 1;
-            List<string> grammar = new List<string>();
-            string aux = EntradaGramatica.Text.Replace("\r", "");
-            aux = aux.Replace("->", "→");
-            grammar = aux.Split('\n').ToList();
+            ////Inicializacion de variables
+            //producciones = new List<Production>();
+            //tokenNT = new List<string>();
+            //tokenT = new List<string>();
+            //tokens = new List<Token>();
+            ////TText.Text = NTtext.Text = "";
+            //indice = 1;
+            //List<string> grammar = new List<string>();
+            //string aux = EntradaGramatica.Text.Replace("\r", "");
+            //aux = aux.Replace("->", "→");
+            //grammar = aux.Split('\n').ToList();
 
-            //Separacion en NT y T
-            foreach (string s in grammar)
-            {
-                if (!tokenNT.Contains(s.Split('→')[0]))//Verifica que no exista ya en la lista
-                {
-                    tokenNT.Add(s.Split('→')[0]);
-                    tokens.Add(new Token(s.Split('→')[0], false));
-                }
-            }
-            foreach (string s in grammar)
-            {
-                foreach (string ss in s.Split('→')[1].Split(' '))//Separa los diferentes tokens de la parte derecha de la flecha
-                {
-                    if (!tokenNT.Contains(ss) && !tokenT.Contains(ss) && ss != "|")//Verifica que no sea un NT, aun no exista en la lista o sea el operador "|" de las gramaticas
-                    {
-                        tokenT.Add(ss);
-                        tokens.Add(new Token(ss, true));
-                    }
-                }
-            }
+            ////Separacion en NT y T
+            //foreach (string s in grammar)
+            //{
+            //    if (!tokenNT.Contains(s.Split('→')[0]))//Verifica que no exista ya en la lista
+            //    {
+            //        tokenNT.Add(s.Split('→')[0]);
+            //        tokens.Add(new Token(s.Split('→')[0], false));
+            //    }
+            //}
+            //foreach (string s in grammar)
+            //{
+            //    foreach (string ss in s.Split('→')[1].Split(' '))//Separa los diferentes tokens de la parte derecha de la flecha
+            //    {
+            //        if (!tokenNT.Contains(ss) && !tokenT.Contains(ss) && ss != "|")//Verifica que no sea un NT, aun no exista en la lista o sea el operador "|" de las gramaticas
+            //        {
+            //            tokenT.Add(ss);
+            //            tokens.Add(new Token(ss, true));
+            //        }
+            //    }
+            //}
 
-            foreach (string s in grammar)
-            {
-                string[] aux2 = s.Split('→');
-                List<string> list = aux2[1].Split('|').ToList();
+            //foreach (string s in grammar)
+            //{
+            //    string[] aux2 = s.Split('→');
+            //    List<string> list = aux2[1].Split('|').ToList();
 
-                foreach (string ss in list)
-                {
-                    producciones.Add(new Production(indice, getToken(aux2[0])));
-                    List<string> tokenProd = ss.Split(' ').ToList();
-                    foreach (string ss2 in tokenProd)
-                    {
-                        if (ss2 != "")
-                        {
-                            producciones[producciones.Count - 1].Right.Add(getToken(ss2));
-                        }
-                    }
-                    indice++;
-                }
-            }
+            //    foreach (string ss in list)
+            //    {
+            //        producciones.Add(new Production(indice, getToken(aux2[0])));
+            //        List<string> tokenProd = ss.Split(' ').ToList();
+            //        foreach (string ss2 in tokenProd)
+            //        {
+            //            if (ss2 != "")
+            //            {
+            //                producciones[producciones.Count - 1].Right.Add(getToken(ss2));
+            //            }
+            //        }
+            //        indice++;
+            //    }
+            //}
 
-            //Muestra en pantalla
-            foreach (string s in tokenNT)
-            {
-                //NTtext.Text += s + "\r\n";
-            }
-            foreach (string s in tokenT)
-            {
-                //TText.Text += s + "\r\n";
-            }
+            ////Muestra en pantalla
+            //foreach (string s in tokenNT)
+            //{
+            //    //NTtext.Text += s + "\r\n";
+            //}
+            //foreach (string s in tokenT)
+            //{
+            //    //TText.Text += s + "\r\n";
+            //}
+
+            TestPrimeros();
+
         }
 
         public Token getToken(string name)
@@ -176,6 +179,159 @@ namespace LR1_Parser
                 MessageBox.Show("Falta archivo xml de resaltado, no te preocupes solo no se verá bonito el texto de la gramatica, para activar el resaltado mueve el archivo GramaticaSyntaxHL.xshd a la carpeta del ejecutable ");
             }
            
+        }
+
+        public void TestPrimeros()
+        {
+            /*NO TERMINALES*/
+
+            Token n = new Token();
+            n.Content = "S";
+            n.Terminal = false;
+
+            Token n1 = new Token();
+            n1.Content = "A";
+            n1.Terminal = false;
+
+            Token n2 = new Token();
+            n2.Content = "B";
+            n2.Terminal = false;
+
+            Token n3 = new Token();
+            n3.Content = "C";
+            n3.Terminal = false;
+
+            Token n4 = new Token();
+            n4.Content = "D";
+            n4.Terminal = false;
+
+            /*TERMINALES*/
+            Token t = new Token();
+            t.Content = "x";
+            t.Terminal = true;
+
+            Token t1 = new Token();
+            t1.Content = "y";
+            t1.Terminal = true;
+
+            Token t2 = new Token();
+            t2.Content = "z";
+            t2.Terminal = true;
+
+            Token t3 = new Token();
+            t3.Content = "w";
+            t3.Terminal = true;
+
+            Token t4 = new Token();
+            t4.Content = "ε";
+            t4.Terminal = true;
+
+
+            // **********************PRODUCCIONES*****************************
+
+
+
+            // S ->ABCD
+            Production p = new Production();
+            p.Id = 0;
+            p.left = n;
+            List<Token> ltp = new List<Token>();
+            ltp.Add(n1);
+            ltp.Add(n2);
+            ltp.Add(n3);
+            ltp.Add(n4);
+            p.right = ltp;
+
+
+            /*A->Bx*/
+            Production p1 = new Production();
+            p1.Id = 1;
+            p1.left = n1;
+            List<Token> ltp1 = new List<Token>();
+            ltp1.Add(n2);
+            ltp1.Add(t);
+            p1.right = ltp1;
+
+
+            //Produccion con epsilon
+            //  A -> ε
+            Production p2 = new Production();
+            p2.Id = 2;
+            p2.left = n1;
+            List<Token> ltp2 = new List<Token>();
+            ltp2.Add(t4);
+            p2.right = ltp2;
+
+
+
+            /*B->Cy*/
+            Production p3 = new Production();
+            p3.Id = 3;
+            p3.left = n2;
+            List<Token> ltp3 = new List<Token>();
+            ltp3.Add(n3);
+            ltp3.Add(t1);
+            p3.right = ltp3;
+
+
+            //*B->ε/
+            Production p4 = new Production();
+            p4.Id = 4;
+            p4.left = n2;
+            List<Token> ltp4 = new List<Token>();
+            ltp4.Add(t4);
+            p4.right = ltp4;
+
+            /*TerceraProduccion*/
+            /*C->Dz*/
+            Production p5 = new Production();
+            p5.Id = 5;
+            p5.left = n3;
+            List<Token> ltp5 = new List<Token>();
+            ltp5.Add(n4);
+            ltp5.Add(t2);
+            p5.right = ltp5;
+
+
+            //*C->ε/
+            Production p6 = new Production();
+            p6.Id = 6;
+            p6.left = n3;
+            List<Token> ltp6 = new List<Token>();
+            ltp6.Add(t4);
+            p6.right = ltp6;
+
+            /*D->w*/
+            Production p7 = new Production();
+            p7.Id = 7;
+            p7.left = n4;
+            List<Token> ltp7 = new List<Token>();
+            ltp7.Add(t3);
+            p7.right = ltp7;
+
+            // D->ε
+            Production p8 = new Production();
+            p8.Id = 8;
+            p8.left = n4;
+            List<Token> ltp8 = new List<Token>();
+            ltp8.Add(t4);
+            p8.right = ltp8;
+
+
+            List<Production> Gramatica = new List<Production>();
+            Gramatica.Add(p);
+            Gramatica.Add(p1);
+            Gramatica.Add(p2);
+            Gramatica.Add(p3);
+            Gramatica.Add(p4);
+            Gramatica.Add(p5);
+            Gramatica.Add(p6);
+            Gramatica.Add(p7);
+            Gramatica.Add(p8);
+
+            Primeros primeros = new Primeros(Gramatica);
+            var nada = primeros.AllToStrings();
+
         }
 
     }
