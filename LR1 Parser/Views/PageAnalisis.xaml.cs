@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LR1_Parser.Model;
 
 namespace LR1_Parser
 {
@@ -23,6 +24,8 @@ namespace LR1_Parser
         public PageAnalisis()
         {
             InitializeComponent();
+
+            Parser parser = new Parser();
         }
 
        

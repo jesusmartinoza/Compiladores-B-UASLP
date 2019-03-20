@@ -18,6 +18,21 @@ namespace LR1_Parser.Model
         List<Node> AFD;
         List<State> states;
 
+        public Parser()
+        {
+            AFD = new List<Node>();
+            states = new List<State>();
+
+            InitTestAFD();
+            CreateSyntaxisAnalysisTable();
+        }
+
+        /// <summary>
+        /// 
+        /// Iterar sobre los nodos del AFD para
+        /// calcular tabla de analisis sintactico.
+        /// 
+        /// </summary>
         void CreateSyntaxisAnalysisTable()
         {
             states = new List<State>();
@@ -53,11 +68,13 @@ namespace LR1_Parser.Model
 
                 states.Add(state);
             }
+
+            Console.WriteLine("Test de Parser terminado");
         }
 
         /// Ejemeplo con la información absolutamente necesaria para
         /// representar el siguiente AFD
-        void InitTest()
+        void InitTestAFD()
         {
             AFD = new List<Node>();
 
