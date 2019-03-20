@@ -8,12 +8,12 @@ namespace LR1_Parser.Model
 {
     class LR1Element
     {
-        List<Token> left; // Conjunto de tokens del lado izquierdo de la flecha 
+        Token left; // Token del lado izquierdo de la flecha 
         List<Token> alpha; // Conjunto de tokens del lado izquierdo del punto
         List<Token> gamma; // Conjunto de tokens del lado derecho del punto
         List<Token> advance; //Conjunto de tokens de anticipación
         //Getters and Setters
-        internal List<Token> Left { get => left; set => left = value; }
+        internal Token Left { get => left; set => left = value; }
         internal List<Token> Alpha { get => alpha; set => alpha = value; }
         internal List<Token> Gamma { get => gamma; set => gamma = value; }
         internal List<Token> Advance { get => advance; set => advance = value; }
