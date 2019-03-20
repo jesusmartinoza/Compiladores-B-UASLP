@@ -15,17 +15,20 @@ namespace LR1_Parser.Model
     /// </summary>
     class Parser
     {
-        List<Node> AFD;
         List<State> states;
+
+        internal List<Node> AFD;
+        internal List<State> States { get => states; set => states = value; }
 
         public Parser()
         {
             AFD = new List<Node>();
-            states = new List<State>();
+            States = new List<State>();
 
             InitTestAFD();
             CreateSyntaxisAnalysisTable();
         }
+
 
         /// <summary>
         /// 
@@ -35,9 +38,9 @@ namespace LR1_Parser.Model
         /// </summary>
         void CreateSyntaxisAnalysisTable()
         {
-            states = new List<State>();
+            States = new List<State>();
 
-            foreach (var node in AFD)
+            foreach (var node in AFD1)
             {
                 State state = new State();
 
@@ -69,7 +72,7 @@ namespace LR1_Parser.Model
                     }
                 }
 
-                states.Add(state);
+                States.Add(state);
             }
 
             Console.WriteLine("Test de Parser terminado");
@@ -79,7 +82,7 @@ namespace LR1_Parser.Model
         /// representar el siguiente AFD
         void InitTestAFD()
         {
-            AFD = new List<Node>();
+            AFD1 = new List<Node>();
 
             // Lista auxiliar para guadar tokens de anticipacion {$, +, -}
             // Este conjunto de tokens se repiten varias veces en este test.
@@ -142,13 +145,13 @@ namespace LR1_Parser.Model
             Node n6 = new Node();
             n6.Elements.Add(n5elem0);
 
-            AFD.Add(n0);
-            AFD.Add(n1);
-            AFD.Add(n2);
-            AFD.Add(n3);
-            AFD.Add(n4);
-            AFD.Add(n5);
-            AFD.Add(n6);
+            AFD1.Add(n0);
+            AFD1.Add(n1);
+            AFD1.Add(n2);
+            AFD1.Add(n3);
+            AFD1.Add(n4);
+            AFD1.Add(n5);
+            AFD1.Add(n6);
         }
     }
 }
