@@ -42,7 +42,7 @@ namespace LR1_Parser.Model
         /// Metodo que regresa una representación en cadenas de el diccionario de primeros [UI]
         /// </summary>
         /// <returns>Representación para mostrar en la UI</returns>
-        public List<Tuple<string, string>> AllToStrings()
+        public List<Tuple<string, string>> GetView()
         {
             List<Tuple<string, string>> vista = new List<Tuple<string, string>>();
 
@@ -55,7 +55,7 @@ namespace LR1_Parser.Model
                 {
                     val2 += t.ToString();
                     if (t != item.Value.Last())
-                        val2 += ',';
+                        val2 += ", ";
                 }
                 val2 += " }";
 

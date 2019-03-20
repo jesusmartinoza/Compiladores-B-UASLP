@@ -15,7 +15,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="2"/>
-            <ColumnDefinition MaxWidth="300" />
+            <ColumnDefinition MaxWidth="600"  MinWidth="250"/>
             
         </Grid.ColumnDefinitions>
 
@@ -96,11 +96,11 @@
             
             >
 
-            <ListView>
+            <ListView Name="PrimerosTable">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Code}" Header="Terminal" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Conjunto Primeros" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Item1}" Header="No Terminal" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Item2}" Header="Conjunto Primeros" />
                         
                     </GridView>
                 </ListView.View>
