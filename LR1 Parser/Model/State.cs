@@ -18,6 +18,12 @@ namespace LR1_Parser.Model
 
         internal Dictionary<string, Action> Terminals { get => terminals; set => terminals = value; }
         internal Dictionary<string, Action> NonTerminals { get => nonTerminals; set => nonTerminals = value; }
+
+        public State()
+        {
+            nonTerminals = new Dictionary<string, Action>();
+            terminals = new Dictionary<string, Action>();
+        }
     }
 
     /// <summary>  

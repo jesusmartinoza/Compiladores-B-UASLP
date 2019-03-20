@@ -18,5 +18,11 @@ namespace LR1_Parser.Model
         //Getters and Setters
         internal List<LR1Element> Elements { get => elements; set => elements = value; }
         internal Dictionary<int, Token> Edges { get => edges; set => edges = value; }
+
+        public Node()
+        {
+            elements = new List<LR1Element>();
+            edges = new Dictionary<int, Token>();
+        }
     }
 }

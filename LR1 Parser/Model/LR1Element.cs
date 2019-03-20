@@ -21,6 +21,9 @@ namespace LR1_Parser.Model
 
         public LR1Element()
         {
+            alpha = new List<Token>();
+            gamma = new List<Token>();
+            advance = new List<Token>();
         }
 
         public override string ToString() {

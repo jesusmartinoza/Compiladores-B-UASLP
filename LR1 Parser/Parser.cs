@@ -138,6 +138,14 @@ namespace LR1_Parser.Model
             // _________________________________________________________________
             Node n6 = new Node();
             n6.Elements.Add(n5elem0);
+
+            AFD.Add(n0);
+            AFD.Add(n1);
+            AFD.Add(n2);
+            AFD.Add(n3);
+            AFD.Add(n4);
+            AFD.Add(n5);
+            AFD.Add(n6);
         }
     }
 }
