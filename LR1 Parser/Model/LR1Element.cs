@@ -24,7 +24,7 @@ namespace LR1_Parser.Model
         }
 
         public override string ToString() {
-            return ListTokenString(Left, "") + " -> " + ListTokenString(Alpha, "") +  "." 
+            return Left.Content + " -> " + ListTokenString(Alpha, "") +  "." 
                 + ListTokenString(Gamma, "") + ", { " + ListTokenString(advance,", ") + "}";
         }
 

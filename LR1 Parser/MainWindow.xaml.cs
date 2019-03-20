@@ -24,6 +24,7 @@ namespace LR1_Parser
     {
         Page gramaticaPage;
         Page analisisPage;
+
         public MainWindow()
         {
             InitializeComponent();

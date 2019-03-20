@@ -94,7 +94,7 @@ namespace LR1_Parser.Model
 
                 Token t = p.right[i];
 
-                if (t.Terminal == false)
+                if (t.IsTerminal == false)
                 {
                     //Se revisa si este NT tiene primeros
                     List<Token> primerosdelNT = ObtenerPrimerosdelNT(t);

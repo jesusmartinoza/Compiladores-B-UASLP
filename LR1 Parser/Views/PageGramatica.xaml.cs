@@ -35,8 +35,6 @@ namespace LR1_Parser
         public PageGramatica()
         {
             InitializeComponent();
-           
-            
         }
 
         private void Abrir_Click(object sender, RoutedEventArgs e)
