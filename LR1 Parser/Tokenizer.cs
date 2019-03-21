@@ -65,7 +65,7 @@ namespace LR1_Parser.Model
             //Separacion en NT y T
             SeparaNT(grammar);
             SeparaT(grammar);
-            
+
 
             foreach (string s in grammar)
             {
@@ -123,6 +123,24 @@ namespace LR1_Parser.Model
                     }
                 }
             }
+        }
+    
+        /// <summary>
+        /// Metodo para tokenizar una cadena
+        /// </summary>
+        /// <param name="input">Cadena de entrada</param>
+        /// <returns>Tokens de la cadena</returns>
+        static List<Token> Convert(string input)
+        {
+            List<Token> aux = new List<Token>();
+            List<string> list = input.Split(' ').ToList();
+            
+            foreach(string s in list)
+            {
+                aux.Add(new Token(s, true));
+            }
+
+            return aux;
         }
     }
 }
