@@ -26,6 +26,8 @@ namespace LR1_Parser
             InitializeComponent();
 
             Parser parser = new Parser();
+
+            parser.EvalString("3 + 4 - 12");
         }
 
        

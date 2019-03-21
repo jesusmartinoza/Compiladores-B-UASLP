@@ -110,88 +110,88 @@ namespace LR1_Parser
             // S ->ABCD
             Production p = new Production();
             p.Id = 0;
-            p.left = n;
+            p.Left = n;
             List<Token> ltp = new List<Token>();
             ltp.Add(n1);
             ltp.Add(n2);
             ltp.Add(n3);
             ltp.Add(n4);
-            p.right = ltp;
+            p.Right = ltp;
 
 
             /*A->Bx*/
             Production p1 = new Production();
             p1.Id = 1;
-            p1.left = n1;
+            p1.Left = n1;
             List<Token> ltp1 = new List<Token>();
             ltp1.Add(n2);
             ltp1.Add(t);
-            p1.right = ltp1;
+            p1.Right = ltp1;
 
 
             //Produccion con epsilon
             //  A -> ε
             Production p2 = new Production();
             p2.Id = 2;
-            p2.left = n1;
+            p2.Left = n1;
             List<Token> ltp2 = new List<Token>();
             ltp2.Add(t4);
-            p2.right = ltp2;
+            p2.Right = ltp2;
 
 
 
             /*B->Cy*/
             Production p3 = new Production();
             p3.Id = 3;
-            p3.left = n2;
+            p3.Left = n2;
             List<Token> ltp3 = new List<Token>();
             ltp3.Add(n3);
             ltp3.Add(t1);
-            p3.right = ltp3;
+            p3.Right = ltp3;
 
 
             //*B->ε/
             Production p4 = new Production();
             p4.Id = 4;
-            p4.left = n2;
+            p4.Left = n2;
             List<Token> ltp4 = new List<Token>();
             ltp4.Add(t4);
-            p4.right = ltp4;
+            p4.Right = ltp4;
 
             /*TerceraProduccion*/
             /*C->Dz*/
             Production p5 = new Production();
             p5.Id = 5;
-            p5.left = n3;
+            p5.Left = n3;
             List<Token> ltp5 = new List<Token>();
             ltp5.Add(n4);
             ltp5.Add(t2);
-            p5.right = ltp5;
+            p5.Right = ltp5;
 
 
             //*C->ε/
             Production p6 = new Production();
             p6.Id = 6;
-            p6.left = n3;
+            p6.Left = n3;
             List<Token> ltp6 = new List<Token>();
             ltp6.Add(t4);
-            p6.right = ltp6;
+            p6.Right = ltp6;
 
             /*D->w*/
             Production p7 = new Production();
             p7.Id = 7;
-            p7.left = n4;
+            p7.Left = n4;
             List<Token> ltp7 = new List<Token>();
             ltp7.Add(t3);
-            p7.right = ltp7;
+            p7.Right = ltp7;
 
             // D->ε
             Production p8 = new Production();
             p8.Id = 8;
-            p8.left = n4;
+            p8.Left = n4;
             List<Token> ltp8 = new List<Token>();
             ltp8.Add(t4);
-            p8.right = ltp8;
+            p8.Right = ltp8;
 
             productions.Add(p);
             productions.Add(p1);

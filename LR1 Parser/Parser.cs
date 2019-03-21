@@ -16,7 +16,7 @@ namespace LR1_Parser.Model
     class Parser
     {
         List<State> states;
-        Stack<TokenState> stackAnalysis; // Pila de analisis sintático
+        List<TokenState> stackAnalysis; // Pila de analisis sintático
         string input; // Cadena a evaluar
 
         internal List<Node> AFD;
@@ -26,6 +26,7 @@ namespace LR1_Parser.Model
         {
             AFD = new List<Node>();
             States = new List<State>();
+            stackAnalysis = new List<TokenState>();
 
             InitTestAFD();
             CreateSyntaxisAnalysisTable();
@@ -33,22 +34,31 @@ namespace LR1_Parser.Model
 
         public bool EvalString(String inputString)
         {
-            bool valid = false;
+            bool valid = true;
             List<Token> inputTokens = new List<Token>();
             input = inputString;
 
             // TODO: Tokenizar cadena 
-            // inputTokens = Tokenizer.Convert(input);
+            inputTokens = Tokenizer.Convert(input);
 
             inputTokens.Add(new Token("$", true));
             stackAnalysis.Clear();
-            stackAnalysis.Push(new TokenState() { token = new Token("$", true), state = 0 });
+            stackAnalysis.Add(new TokenState() { token = new Token("$", true), state = 0 });
             
-            while(true)
+            while(valid) // TODO: Condicion correcta 
             {
-                TokenState cAction = stackAnalysis.Peek(); // Current Action
+                TokenState cAction = stackAnalysis.Last(); // Current Action
                 Token cToken = inputTokens.First(); // Current Token
                 Action nextAction;
+
+                // Limpiar estados de la pila de A.S.
+                for(var i = 0; i < stackAnalysis.Count; i++)
+                    stackAnalysis[i].dirty = false;
+
+                // Verificar si el token existe en las listas
+                valid = states[cAction.state].Terminals.ContainsKey(cToken.Content) || states[cAction.state].NonTerminals.ContainsKey(cToken.Content);
+
+                if (!valid) break;
 
                 if (cToken.IsTerminal)
                     nextAction = states[cAction.state].Terminals[cToken.Content];
@@ -57,11 +67,41 @@ namespace LR1_Parser.Model
 
                 if(nextAction.action == 'S')
                 {
-                    stackAnalysis.Push(new TokenState() { token = cToken, state = nextAction.state });
+                    stackAnalysis.Add(new TokenState() { token = cToken, state = nextAction.state });
                     inputTokens.RemoveAt(0);
                 } else if(nextAction.action == 'R')
                 {
+                    Production production = MainWindow.productions[nextAction.state];
 
+                    // Encuentra match
+                    foreach(var r in production.Right)
+                    {
+                        for (var i = 0; i < stackAnalysis.Count; i++)
+                        {
+                            var itState = stackAnalysis[i];
+                            if (!itState.dirty && itState.token.Content == r.Content)
+                                itState.dirty = true;
+                        }
+                    }
+
+                    // Remplazar los TokenState sucios
+                    for (var i = stackAnalysis.Count - 1; i >= 0; i--)
+                    {
+                        var itState = stackAnalysis[i];
+
+                        if (itState.dirty)
+                            stackAnalysis.RemoveAt(i);
+                    }
+
+                    int newState;
+                    TokenState lastState = stackAnalysis.Last();
+
+                    if (production.Left.IsTerminal)
+                        newState = states[lastState.state].Terminals[production.Left.Content].state;
+                    else
+                        newState = states[lastState.state].NonTerminals[production.Left.Content].state;
+
+                    stackAnalysis.Add(new TokenState() { token = production.Left, state = newState});
                 }
             }
 
