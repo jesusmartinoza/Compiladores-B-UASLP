@@ -13,16 +13,14 @@ namespace LR1_Parser.Model
     /// </summary> 
     class Node
     {
-        List<LR1Element> elements;
-        Dictionary<int, Token> edges; // Guarda destinos del nodo. Diccionario indexado por numero del siguiente estado y que contiene el token para llegar a él.
         //Getters and Setters
-        internal List<LR1Element> Elements { get => elements; set => elements = value; }
-        internal Dictionary<int, Token> Edges { get => edges; set => edges = value; }
+        internal List<LR1Element> Elements { get; set; }
+        internal Dictionary<int, Token> Edges { get; set; }
 
         public Node()
         {
-            elements = new List<LR1Element>();
-            edges = new Dictionary<int, Token>();
+            Elements = new List<LR1Element>();
+            Edges = new Dictionary<int, Token>();
         }
     }
 }
