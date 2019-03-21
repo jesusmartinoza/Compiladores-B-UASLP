@@ -54,7 +54,5 @@ namespace LR1_Parser.Model
             }
             return strResult;
         }
-
-
     }
 }
