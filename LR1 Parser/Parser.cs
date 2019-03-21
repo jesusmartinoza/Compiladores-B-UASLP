@@ -15,12 +15,68 @@ namespace LR1_Parser.Model
     /// </summary>
     class Parser
     {
-        List<Node> AFD;
         List<State> states;
+        Stack<TokenState> stackAnalysis; // Pila de analisis sintático
+        string input; // Cadena a evaluar
 
-        void CreateSyntaxisAnalysisTable()
+        internal List<Node> AFD;
+        internal List<State> States { get => states; set => states = value; }
+
+        public Parser()
         {
-            states = new List<State>();
+            AFD = new List<Node>();
+            States = new List<State>();
+
+            InitTestAFD();
+            CreateSyntaxisAnalysisTable();
+        }
+
+        public bool EvalString(String inputString)
+        {
+            bool valid = false;
+            List<Token> inputTokens = new List<Token>();
+            input = inputString;
+
+            // TODO: Tokenizar cadena 
+            // inputTokens = Tokenizer.Convert(input);
+
+            inputTokens.Add(new Token("$", true));
+            stackAnalysis.Clear();
+            stackAnalysis.Push(new TokenState() { token = new Token("$", true), state = 0 });
+            
+            while(true)
+            {
+                TokenState cAction = stackAnalysis.Peek(); // Current Action
+                Token cToken = inputTokens.First(); // Current Token
+                Action nextAction;
+
+                if (cToken.IsTerminal)
+                    nextAction = states[cAction.state].Terminals[cToken.Content];
+                else
+                    nextAction = states[cAction.state].NonTerminals[cToken.Content];
+
+                if(nextAction.action == 'S')
+                {
+                    stackAnalysis.Push(new TokenState() { token = cToken, state = nextAction.state });
+                    inputTokens.RemoveAt(0);
+                } else if(nextAction.action == 'R')
+                {
+
+                }
+            }
+
+            return valid;
+        }
+
+        /// <summary>
+        /// 
+        /// Iterar sobre los nodos del AFD para
+        /// calcular tabla de analisis sintactico.
+        /// 
+        /// </summary>
+        public void CreateSyntaxisAnalysisTable()
+        {
+            States = new List<State>();
 
             foreach (var node in AFD)
             {
@@ -40,16 +96,27 @@ namespace LR1_Parser.Model
                 foreach (var elem in node.Elements)
                 {
                     if (elem.Gamma.Count == 0)
-                        state.Terminals.Add(elem.Left.Content, new Action() { action = 'R', state = 0}); // TODO: Poner el estado correcto
+                    {
+                        // Obtener produccion de la lista global usando el token left como elemento de busqueda
+                        Production production = MainWindow.productions.Where(p => p.Left.Content == elem.Left.Content).First();
+
+                        foreach(var advanceToken in elem.Advance)
+                        {
+                            state.Terminals.Add(
+                                advanceToken.Content,
+                                new Action() { action = 'R', state = MainWindow.productions.IndexOf(production) }
+                            );
+                        }
+                    }
                 }
 
-                states.Add(state);
+                States.Add(state);
             }
         }
 
         /// Ejemeplo con la información absolutamente necesaria para
         /// representar el siguiente AFD
-        void InitTest()
+        private void InitTestAFD()
         {
             AFD = new List<Node>();
 
@@ -113,6 +180,14 @@ namespace LR1_Parser.Model
             // _________________________________________________________________
             Node n6 = new Node();
             n6.Elements.Add(n5elem0);
+
+            AFD.Add(n0);
+            AFD.Add(n1);
+            AFD.Add(n2);
+            AFD.Add(n3);
+            AFD.Add(n4);
+            AFD.Add(n5);
+            AFD.Add(n6);
         }
     }
 }

@@ -30,6 +30,8 @@ namespace LR1_Parser.Model
 
         public Production()
         {
+            right = new List<Token>();
+            first = new HashSet<Token>();
         }
 
         //Getters and Setters

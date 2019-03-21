@@ -21,10 +21,13 @@ namespace LR1_Parser.Model
 
         public LR1Element()
         {
+            alpha = new List<Token>();
+            gamma = new List<Token>();
+            advance = new List<Token>();
         }
 
         public override string ToString() {
-            return ListTokenString(Left, "") + " -> " + ListTokenString(Alpha, "") +  "." 
+            return Left.Content + " -> " + ListTokenString(Alpha, "") +  "." 
                 + ListTokenString(Gamma, "") + ", { " + ListTokenString(advance,", ") + "}";
         }
 
