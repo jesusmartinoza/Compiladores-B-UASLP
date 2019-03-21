@@ -16,8 +16,8 @@ namespace LR1_Parser.Model
     class Parser
     {
         List<State> states;
-        Stack<Action> stackAnalysis; // Pila de analisis sintático
-        string input; // Cadena a evaluar TODO: Falta tokenizarla
+        Stack<TokenState> stackAnalysis; // Pila de analisis sintático
+        string input; // Cadena a evaluar
 
         internal List<Node> AFD;
         internal List<State> States { get => states; set => states = value; }
@@ -31,6 +31,42 @@ namespace LR1_Parser.Model
             CreateSyntaxisAnalysisTable();
         }
 
+        public bool EvalString(String inputString)
+        {
+            bool valid = false;
+            List<Token> inputTokens = new List<Token>();
+            input = inputString;
+
+            // TODO: Tokenizar cadena 
+            // inputTokens = Tokenizer.Convert(input);
+
+            inputTokens.Add(new Token("$", true));
+            stackAnalysis.Clear();
+            stackAnalysis.Push(new TokenState() { token = new Token("$", true), state = 0 });
+            
+            while(true)
+            {
+                TokenState cAction = stackAnalysis.Peek(); // Current Action
+                Token cToken = inputTokens.First(); // Current Token
+                Action nextAction;
+
+                if (cToken.IsTerminal)
+                    nextAction = states[cAction.state].Terminals[cToken.Content];
+                else
+                    nextAction = states[cAction.state].NonTerminals[cToken.Content];
+
+                if(nextAction.action == 'S')
+                {
+                    stackAnalysis.Push(new TokenState() { token = cToken, state = nextAction.state });
+                    inputTokens.RemoveAt(0);
+                } else if(nextAction.action == 'R')
+                {
+
+                }
+            }
+
+            return valid;
+        }
 
         /// <summary>
         /// 
@@ -38,7 +74,7 @@ namespace LR1_Parser.Model
         /// calcular tabla de analisis sintactico.
         /// 
         /// </summary>
-        void CreateSyntaxisAnalysisTable()
+        public void CreateSyntaxisAnalysisTable()
         {
             States = new List<State>();
 
@@ -76,13 +112,11 @@ namespace LR1_Parser.Model
 
                 States.Add(state);
             }
-
-            Console.WriteLine("Test de Parser terminado");
         }
 
         /// Ejemeplo con la información absolutamente necesaria para
         /// representar el siguiente AFD
-        void InitTestAFD()
+        private void InitTestAFD()
         {
             AFD = new List<Node>();
 

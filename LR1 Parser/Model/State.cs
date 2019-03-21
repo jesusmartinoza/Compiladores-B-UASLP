@@ -33,10 +33,24 @@ namespace LR1_Parser.Model
     /// S which means SHIFT
     /// R which means REDUX
     /// A which means ACCEPT
+    /// 
     /// </summary> 
     struct Action
     {
         internal char action; // Puede ser 'S', 'R' u 'A'
         internal int state; // Estado al que va
+    }
+
+    /// <summary>
+    /// 
+    /// Clase para guardar una estructura que tenga Token y estado
+    /// 
+    /// Queda más amigable que una tupla
+    /// </summary>
+    struct TokenState
+    {
+        internal int state; // Estado al que va
+        internal Token token; // Token
+
     }
 }
