@@ -16,6 +16,8 @@ namespace LR1_Parser.Model
     class Parser
     {
         List<State> states;
+        Stack<Action> stackAnalysis; // Pila de analisis sintático
+        string input; // Cadena a evaluar TODO: Falta tokenizarla
 
         internal List<Node> AFD;
         internal List<State> States { get => states; set => states = value; }
