@@ -22,5 +22,26 @@ namespace LR1_Parser.Model
             Elements = new List<LR1Element>();
             Edges = new Dictionary<int, Token>();
         }
+
+        /// <summary>
+        /// method that verify if a another node has the same data
+        /// </summary>
+        /// <param name="inputNode"></param>
+        /// <returns></returns>
+        public bool CheckNodesEquals(Node inputNode)
+        {
+            //TODO 
+            return false;
+        }
+
+        /// <summary>
+        /// Fast method that verifies if there is already an Lr1 token in the node's elements 
+        /// </summary>
+        /// <param name="Lr1Token"></param>
+        /// <returns></returns>
+        public bool CheckIfElementExist( LR1Element Lr1Token)
+        {
+            return Elements.Any(pred => pred.ToString() == Lr1Token.ToString());
+        }
     }
 }
