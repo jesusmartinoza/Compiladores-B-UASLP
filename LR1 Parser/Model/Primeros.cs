@@ -82,6 +82,17 @@ namespace LR1_Parser.Model
             return I;
         }
 
+	public List<char> PrimeroBA(Dictionary<char, List<char>> primeros, string betaa)
+        {
+            List<char> b = new List<char>();
+            for (int i = 0; i < betaa.Length; i++)
+            {
+                b.AddRange(primeros[betaa[i]]);
+                if (b.Contains('Ɛ') == false) return b;
+            }
+
+            return b;
+        }
 
         /// <summary>
         /// Constructor: Inicializa el diccionario de primeros en base a una lista de producciones dada
