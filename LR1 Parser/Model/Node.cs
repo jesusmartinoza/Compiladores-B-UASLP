@@ -24,18 +24,37 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// method that verify if a another node has the same data
+        /// Verify if another node's elements has the same data 
         /// </summary>
         /// <param name="inputNode"></param>
         /// <returns></returns>
-        public bool CheckNodesEquals(Node inputNode)
+        public bool CheckNodeEquals(Node inputNode)
         {
-            //TODO 
-            return false;
+            var Counter = new Dictionary<LR1Element, int>();
+            foreach (LR1Element s in Elements)
+            {
+                if (Counter.ContainsKey(s))
+                    Counter[s]++;
+                else
+                    Counter.Add(s, 1);
+            }
+            foreach (LR1Element s in inputNode.Elements)
+            {
+                if (Counter.ContainsKey(s))
+                    Counter[s]--;
+                else
+                    return false;
+            }
+            return Counter.Values.All(c => c == 0);
+
+
+            //bool deletedItems = Elements.Except(inputNode.Elements).Any();
+            //bool newItems = inputNode.Elements.Except(Elements).Any();
+            //return !newItems && !deletedItems;
         }
 
         /// <summary>
-        /// Fast method that verifies if there is already an Lr1 token in the node's elements 
+        /// Fast method that verifies if there is already an Lr1 token in the node's elements. 
         /// </summary>
         /// <param name="Lr1Token"></param>
         /// <returns></returns>

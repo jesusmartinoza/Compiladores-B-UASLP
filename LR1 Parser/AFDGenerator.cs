@@ -15,6 +15,13 @@ namespace LR1_Parser.Model
         private Tokenizer Productions;
         private List<Node> AFD;
 
+        enum ValidationOutput { NothingToDo, AlreadyExisit, NewRelation };
+        struct ValNodeResult
+        {
+            public ValidationOutput ValOut;
+            public int IndexFinded;
+        }
+
         /// <summary>
         /// AFD Generator constructor.
         /// </summary>
@@ -32,7 +39,7 @@ namespace LR1_Parser.Model
         public List<Node> GenerateAFD()
         {
             AddAugmentedProduction(); //Augmented production 
-            Node I0 = GenerateFirstNode(); //TODO solo soporta gramaticas en orden de importancia descendente?
+            Node I0 = GenerateFirstNode(); //olo soporta gramaticas en orden de importancia descendente? creo que si wey
             AFD.Add(I0);
 
             bool SomethingIsAdded;
@@ -44,10 +51,24 @@ namespace LR1_Parser.Model
                     foreach (var GrammarSymbol in Productions.tokens)
                     {
                         Node J = Ir_A(Nodeitem, GrammarSymbol);
-                        if(CheckNodeValidityToAdd(J))    //Verify if its Ok to add J 
-                        {                                //TODO makes a Relation here 
-                            AFD.Add(J);
-                            SomethingIsAdded = true;
+                        ValNodeResult Result = CheckNodeValidityToAdd(J); //Verify J content 
+                        switch (Result.ValOut)
+                        {
+                            case ValidationOutput.NothingToDo:
+                                //Literally nothing to do LOL
+                                break;
+                            case ValidationOutput.AlreadyExisit:
+                                //Create Relation: Nodeitem -> GrammarSymbol -> J_index(already exist)
+                                if(!Nodeitem.Edges.ContainsKey(Result.IndexFinded))
+                                    Nodeitem.Edges.Add(Result.IndexFinded, GrammarSymbol);
+                                break;
+                            case ValidationOutput.NewRelation:
+                                AFD.Add(J);
+                                SomethingIsAdded = true;
+                                //Create Relation: Nodeitem -> GrammarSymbol -> J_index(new node)
+                                if (!Nodeitem.Edges.ContainsKey(AFD.Count-1))
+                                    Nodeitem.Edges.Add(AFD.Count - 1, GrammarSymbol);
+                                break;
                         }
                     }
                 }
@@ -57,7 +78,7 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Method that adds augmented production to the grammar
+        /// Creates and returns the grammar's augmented production.
         /// </summary>
         private void AddAugmentedProduction()
         {
@@ -67,13 +88,14 @@ namespace LR1_Parser.Model
             Production ProductionToAdd = new Production();
             ProductionToAdd.Left = new Token(FirstProduction + "'", false); //example [FirstProduction = Num] -> Num'
             ProductionToAdd.Right.Add(new Token(FirstProduction, false));   //Adds the first production NT to the rigth
+            ProductionToAdd.Id = 0;
 
             //adding all the stuff 
             Productions.producciones.Insert(0,ProductionToAdd);  //finally adds the Augmented Production at the start
         }
 
         /// <summary>
-        /// Construction of the first: LR1 element and node
+        /// Construction of the first: LR1 element and node.
         /// </summary>
         /// <returns></returns>
         private Node GenerateFirstNode()
@@ -89,7 +111,7 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Method method that handles the expansion of Lr1 elements
+        /// Handles the expansion of Lr1 elements.
         /// </summary>
         /// <param name="CurrentNode"></param>
         /// <returns></returns>
@@ -130,7 +152,7 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// method that links a node with a grammatical symbol to generate new nodes 
+        /// Links a node with a grammatical symbol to generate new nodes.
         /// </summary>
         /// <param name="CurrentNode"></param>
         /// <param name="X"></param>
@@ -153,22 +175,34 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Verify that the input node can be added to the AFD
+        /// Verify that the input node can be added to the AFD.
         /// </summary>
         /// <param name="j"></param>
         /// <returns></returns>
-        private bool CheckNodeValidityToAdd(Node J)
+        private ValNodeResult CheckNodeValidityToAdd(Node J)
         {
-            if (J.Elements.Count <= 0)  //it's empty, doing nothing here
-                return false;
+            ValNodeResult Result;
+            Result.IndexFinded = -1;
+
+            if (J.Elements.Count <= 0)
+            {   //it's empty, doing nothing here
+                Result.ValOut = ValidationOutput.NothingToDo;
+                return Result;
+            }   
             else
             {
-                foreach (var IteratorNode in AFD)
-                    if(IteratorNode.CheckNodesEquals(J)) //already exist the same node on the AFD, 
-                    {                                    //TODO but makes a Relation here 
-                        return false;
+                for (int i = 0; i < AFD.Count; i++)
+                {
+                    if(AFD[i].CheckNodeEquals(J))
+                    {   //already exist the same node on the AFD
+                        Result.ValOut = ValidationOutput.AlreadyExisit;
+                        Result.IndexFinded = i;
+                        return Result;
                     }
-                return true;  //it's OK to add the input node
+                }
+                //it's OK to add the input node
+                Result.ValOut = ValidationOutput.NewRelation;
+                return Result;           
             }
         }
     }

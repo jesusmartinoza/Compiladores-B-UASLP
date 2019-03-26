@@ -50,7 +50,7 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Override ToString method that converts a Lr1 element into a structured string
+        /// Override ToString method that converts a Lr1 element into a structured string.
         /// </summary>
         /// <returns></returns>
         public override string ToString() {
@@ -59,7 +59,7 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Simple tool that concatenates a list of tokens with a defined separator  
+        /// Simple tool that concatenates a list of tokens with a defined separator.
         /// </summary>
         /// <param name="inputList"></param>
         /// <param name="elementBetween"></param>
