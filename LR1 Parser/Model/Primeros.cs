@@ -20,7 +20,23 @@ namespace LR1_Parser.Model
         /// <returns> Lista de elementos de la clase Token</returns>
         public static List<Token> GetPrimerosDe(List<Token> tokens)
         {
-           
+            List<Token> listaPrimeros = new List<Token>();//E->.E+n,$
+            
+           try{
+                foreach(tokens it in list<Token>) {
+                    //Si es NT
+                    if(it.terminal == false) { 
+                        listaPrimeros.add(ObtenerPrimerosdelNT(it.content.Split('→')[1]));//A->Sd  y S es NT
+                    } else {
+                        listaPrimeros.add(it.content.Split('→')[1][0]);        //A   ->  sdF 
+                    }
+                }
+               return listaPrimeros;
+           }
+            catch(Ex){
+                //Error
+                return null;
+           }
         }
 
 
