@@ -10,6 +10,6 @@ namespace LR1_Parser.Model
     {
         internal string Stack;
         internal string Input;
-        internal string action;
+        internal string Action;
     }
 }

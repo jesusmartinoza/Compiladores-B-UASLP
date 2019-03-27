@@ -44,7 +44,7 @@ namespace LR1_Parser.Model
         // Se sobrecarga metodo para facilitar despliegue
         public override string ToString()
         {
-            return action + " " +state.ToString();
+            return action + "" +state.ToString();
         }
     }
 
@@ -59,5 +59,11 @@ namespace LR1_Parser.Model
         internal int state; // Estado al que va
         internal Token token; // Token
         internal bool dirty;
+
+        // Se sobrecarga metodo para facilitar despliegue
+        public override string ToString()
+        {
+            return token.Content + state;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace LR1_Parser
 
             Parser parser = new Parser();
 
-            parser.EvalString("3 + 4 - 12");
+            parser.EvalString("n + n - n");
         }
 
        

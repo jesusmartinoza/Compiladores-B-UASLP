@@ -34,6 +34,24 @@ namespace LR1_Parser.Model
             first = new HashSet<Token>();
         }
 
+        /// <summary>
+        /// Comparar una produccion con informacion de una segunda produccion.
+        /// 
+        /// </summary>
+        /// <param name="p1">Production 1</param>
+        /// <param name="p2Left">Left token of production 2</param>
+        /// <param name="p2Right">Right tokens of producion 2</param>
+        /// <returns></returns>
+        public static bool Comparator(Production p1, Token p2Left, List<Token> p2Right)
+        {
+            bool isRightEqual = p1.Right.Count == p2Right.Count;
+
+            for (var i = 0; i < p1.Right.Count && isRightEqual; i++)
+                isRightEqual = p1.Right[i].Content == p2Right[i].Content;
+
+            return p1.Left.Content == p2Left.Content && isRightEqual;
+        }
+
         //Getters and Setters
         public int Id
         {
