@@ -8,38 +8,42 @@ namespace LR1_Parser.Model
 {
     class Primeros
     {
+        public Dictionary<Token, List<Token>> primeros = new Dictionary<Token, List<Token>>();
 
-
-        Dictionary<Token, List<Token>> primeros = new Dictionary<Token, List<Token>>();
-      
 
         /// <summary>
         /// Regresa el conjunto de primeros para una lista de Tokens Terminales o No Terminales.
         /// </summary>
-        /// <param name="tokens">Lista de Tokens</param>
+        /// <param name="cadenaDeEntrada">Lista de Tokens</param>
         /// <returns> Lista de elementos de la clase Token</returns>
-        public static List<Token> GetPrimerosDe(List<Token> tokens)
+        public List<Token> GetPrimerosDe(List<Token> cadenaDeEntrada)
         {
-            List<Token> listaPrimeros = new List<Token>();//E->.E+n,$
-            
-           try{
-                foreach(tokens it in list<Token>) {
-                    //Si es NT
-                    if(it.terminal == false) { 
-                        listaPrimeros.add(ObtenerPrimerosdelNT(it.content.Split('→')[1]));//A->Sd  y S es NT
-                    } else {
-                        listaPrimeros.add(it.content.Split('→')[1][0]);        //A   ->  sdF 
+            List<Token> cadenaPrimeros = new List<Token>();
+            for (int i = 0; i < cadenaDeEntrada.Count ; i++)
+            {
+                if(!cadenaDeEntrada[i].IsTerminal)
+                {   //Es No Terminal, se agrega
+                    cadenaPrimeros.AddRange(primeros[cadenaDeEntrada[i]]);
+                    if(primeros[cadenaDeEntrada[i]].Any(token => token.Val == "ε"))
+                    {   //No Terminal contiene Epsilon
+                        if(i + 1 < cadenaDeEntrada.Count)
+                        {   //No es el ultimo elemento de la cadena, se quita Epsilon al Resultado
+                            cadenaPrimeros.RemoveAll(token => token.Val == "ε");
+                        }
+                    }
+                    else
+                    {   //No Terminal sin Epsilon
+                        i = cadenaDeEntrada.Count; //Se termina el ciclo
                     }
                 }
-               return listaPrimeros;
-           }
-            catch(Ex){
-                //Error
-                return null;
-           }
+                else
+                {   //Terminal, se agrega
+                    cadenaPrimeros.Add(cadenaDeEntrada[i]);
+                    i = cadenaDeEntrada.Count; //Se termina el ciclo
+                }
+            }
+            return cadenaPrimeros;
         }
-
-
 
         /// <summary>
         /// Constructor: Inicializa el diccionario de primeros en base a una lista de producciones dada
@@ -208,10 +212,6 @@ namespace LR1_Parser.Model
             }
             return null;
         }
-
-
-
-
     }
 
 

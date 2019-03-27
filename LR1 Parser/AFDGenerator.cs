@@ -13,6 +13,7 @@ namespace LR1_Parser.Model
     class AFDGenerator
     {
         private Tokenizer Productions;
+        private Primeros Prims;
         private List<Node> AFD;
 
         enum ValidationOutput { NothingToDo, AlreadyExisit, NewRelation };
@@ -26,9 +27,10 @@ namespace LR1_Parser.Model
         /// AFD Generator constructor.
         /// </summary>
         /// <param name="productions"></param>
-        public AFDGenerator(Tokenizer productions)
+        public AFDGenerator(Tokenizer productions, Primeros inPrims)
         {
             Productions = productions;
+            Prims = inPrims;
             AFD = new List<Node>();
         }
 
@@ -132,7 +134,7 @@ namespace LR1_Parser.Model
                         βa.RemoveAt(0);                 //Except for the first token
                         βa.AddRange(NodeItem.Advance);  //Add all the Advance tokens
                         //b is each terminal of Primero(βa).
-                        List<Token> b = Primeros.GetPrimerosDe(βa); 
+                        List<Token> b = Prims.GetPrimerosDe(βa); 
 
                         List<Production> BProductions = Productions.producciones.FindAll(pred => pred.Left.Content == B.Content); 
                         foreach (var BProduction in BProductions)
