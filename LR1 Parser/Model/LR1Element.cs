@@ -26,6 +26,17 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
+        /// Constructor that make a copy a input Lr1Element
+        /// </summary>
+        public LR1Element(LR1Element inputLR1)
+        {
+            Left = inputLR1.Left;
+            Alpha = inputLR1.Alpha;
+            Gamma = inputLR1.Gamma;
+            Advance = inputLR1.Advance;
+        }
+
+        /// <summary>
         /// Constructor that makes Lr1elements of the form [B-> .γ, b]
         /// </summary>
         /// <param name="InProduction"></param>
@@ -38,11 +49,21 @@ namespace LR1_Parser.Model
             Advance = new List<Token>(inAdvance);
         }
 
+        /// <summary>
+        /// Override ToString method that converts a Lr1 element into a structured string.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString() {
             return Left.Content + " -> " + ListTokenString(Alpha, "") +  "." 
                 + ListTokenString(Gamma, "") + ", { " + ListTokenString(Advance,", ") + "}";
         }
 
+        /// <summary>
+        /// Simple tool that concatenates a list of tokens with a defined separator.
+        /// </summary>
+        /// <param name="inputList"></param>
+        /// <param name="elementBetween"></param>
+        /// <returns></returns>
         private string ListTokenString(List<Token> inputList, string elementBetween)
         {
             string strResult = "";

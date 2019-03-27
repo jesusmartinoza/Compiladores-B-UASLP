@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using LR1_Parser.Model;
 using Microsoft.Win32;
-
+using Action = LR1_Parser.Model.Action;
 
 namespace LR1_Parser
 {
@@ -68,16 +69,34 @@ namespace LR1_Parser
             if (!String.IsNullOrEmpty(EntradaGramatica.Text))
             {
                 // Se separan el texto de entrada de la gramática y se crea la lista de producciones 
-                Tokenizer obtenProd = new Tokenizer();
+                Tokenizer obtenProd = new Tokenizer();   
                 MainWindow.productions = obtenProd.obtenProducciones(EntradaGramatica.Text);
+                List<Token> simbolosGramaticales = obtenProd.tokens;
 
                 // Se calcula el conjunto de primeros para la gramática
                 Primeros primeros = new Primeros(MainWindow.productions);
 
+                //Se calcula el AFD de la lista de producciones 
+                //TODO !! no se testear XD nomams mañana le pregunto a granja mejor. Atte: Charly Cuervos.
+                //AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
+                //List<Node> AFD = AFDGen.GenerateAFD();
+
                 // Se muestran los primeros en la UI
                 PrimerosTable.ItemsSource = primeros.GetView();
+
+                // Se muestra la tabla de Analisis Sintáctico
+
+
+               
+
+
+             
+
+                
             }
         }
+
+        
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -110,6 +129,50 @@ namespace LR1_Parser
             Primeros primeros = new Primeros(MainWindow.productions);
             var nada = primeros.GetView();
             PrimerosTable.ItemsSource = nada;
+        }
+
+        /// <summary>
+        /// Recibe la lista de estados del AFD que conforman la tabla de analisis sintáctico y los despliega en la GUI
+        /// </summary>
+        /// <param name="states">Lista de estados</param>
+        private void ShowTablaAS(List<State> states)
+        {
+            DataTable tabla = new DataTable();
+            for (int i = 0; i < states.Count; i++)
+            {
+
+                Dictionary<string, Action> allTokens = states[i].NonTerminals.Concat(states[i].Terminals).ToDictionary(x => x.Key, x => x.Value);
+
+                if (i == 0)
+                {
+                    DataColumn colEstado = new DataColumn();
+                    colEstado.ColumnName = "Estado";
+                    tabla.Columns.Add(colEstado);
+                    colEstado.ReadOnly = true;
+                    foreach (KeyValuePair<string, Action> token in allTokens)
+                    {
+                        DataColumn col = new DataColumn();
+                        col.ColumnName = token.Key;
+                        tabla.Columns.Add(col);
+                        col.ReadOnly = true;
+
+                    }
+
+                }
+
+                DataRow r = tabla.NewRow();
+
+                r[0] = i;
+                foreach (KeyValuePair<string, Action> token in allTokens)
+                {
+                    r[token.Key] = token.Value;
+
+                }
+                tabla.Rows.Add(r);
+
+            }
+            TablaAnalisis.ItemsSource = tabla.DefaultView;
+
         }
 
     }
