@@ -23,6 +23,7 @@ namespace LR1_Parser.Model
         {
             nonTerminals = new Dictionary<string, Action>();
             terminals = new Dictionary<string, Action>();
+            
         }
     }
 
@@ -39,6 +40,12 @@ namespace LR1_Parser.Model
     {
         internal char action; // Puede ser 'S', 'R' u 'A'
         internal int state; // Estado al que va
+
+        // Se sobrecarga metodo para facilitar despliegue
+        public override string ToString()
+        {
+            return action + " " +state.ToString();
+        }
     }
 
     /// <summary>
