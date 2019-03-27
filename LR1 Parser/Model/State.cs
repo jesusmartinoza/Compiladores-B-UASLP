@@ -16,8 +16,8 @@ namespace LR1_Parser.Model
         Dictionary<string, Action> nonTerminals; // Conjunto de acciones de los no terminales
         Dictionary<string, Action> terminals; // Conjunto de acciones de los terminales
 
-        internal Dictionary<string, Action> Terminals { get => terminals; set => terminals = value; }
-        internal Dictionary<string, Action> NonTerminals { get => nonTerminals; set => nonTerminals = value; }
+        internal Dictionary<string, Action> Terminals { get { return terminals; } set { terminals = value; } }
+        internal Dictionary<string, Action> NonTerminals { get { return nonTerminals; } set { nonTerminals = value; } }
 
         public State()
         {
