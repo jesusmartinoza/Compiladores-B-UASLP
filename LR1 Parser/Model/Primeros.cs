@@ -20,79 +20,10 @@ namespace LR1_Parser.Model
         /// <returns> Lista de elementos de la clase Token</returns>
         public static List<Token> GetPrimerosDe(List<Token> tokens)
         {
-            bool agregar = false;
-            
-            do
-            {
-                string betaa = "";
-                List<token> b;                
-
-                for (int k = 0; k < I.Count; k++)
-                {     
-                    
-                    KeyValuePair<string, char> elemento = new KeyValuePair<string, char>(I[k].produccion, I[k].symbol);
-
-                    string body = elemento.Key.Split(':')[1];
-                    int punto = body.IndexOf('.');
-                    if (punto + 1 >= body.Length) continue;
-                    char B = body[punto + 1];
-                    agregar = false;
-
-                    foreach (KeyValuePair<char, List<tokens>> p in gram)
-                    {
-                        if (p.Key != B) continue;                        
-
-                        for (int c = 0; c < p.Value.Count; c++)
-                        {
-                            //if (p.Value[c].Contains("Ɛ") == true) p.Value[c] = ".";
-
-                            if (punto + 2 >= body.Length)
-                            {
-                                betaa = elemento.Value.ToString();
-                            }
-                            else
-                            {
-                                betaa = body.Substring(punto + 2) + elemento.Value;
-                            }
-
-                            string a;
-
-                            b = PrimeroBA(primeros, betaa);
-                            for (int i = 0; i < b.Count; i++)
-                            {
-                                if (b[i] == 'Ɛ') continue;
-                                a = p.Key.ToString() + ":.";
-                                for (int j = 0; j < p.Value[c].Length; j++) a += p.Value[c][j].ToString();
-
-                                bool tt = false;
-                                for (int t = 0; t < I.Count; t++)
-                                {
-                                    if (I[t].produccion == a && I[t].symbol == b[i]) { tt = true; break; }
-                                }
-
-                                if (tt == true) continue;
-								I.Add(new Conjunto(a, b[i]));
-                                agregar = true;
-                            }
-                        }
-                    }
-                }
-            } while (agregar == true);
-            
-            return I;
+           
         }
 
-	public List<char> PrimeroBA(Dictionary<char, List<char>> primeros, string betaa)
-        {
-            List<char> b = new List<char>();
-            for (int i = 0; i < betaa.Length; i++)
-            {
-                b.AddRange(primeros[betaa[i]]);
-                if (b.Contains('Ɛ') == false) return b;
-            }
 
-            return b;
-        }
 
         /// <summary>
         /// Constructor: Inicializa el diccionario de primeros en base a una lista de producciones dada
