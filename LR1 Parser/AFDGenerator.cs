@@ -127,7 +127,7 @@ namespace LR1_Parser.Model
             do  //repeat until there are no more new elements
             {
                 SomethingIsAdded = false;
-                foreach (var NodeItem in CurrentNode.Elements)
+                foreach (var NodeItem in CurrentNode.Elements.ToList())
                 {   
                     // General syntax [A -> α.Bβ, a]
                     Token B = NodeItem.Gamma.First();
@@ -167,7 +167,7 @@ namespace LR1_Parser.Model
         {
             Node J = new Node();
             // for each element [A -> α.Xβ, a] on CurrentNode
-            foreach (var Lr1item in CurrentNode.Elements)
+            foreach (var Lr1item in CurrentNode.Elements.ToList())
             {
                 if(Lr1item.Gamma.First().Content == X.Content) //finded 
                 {

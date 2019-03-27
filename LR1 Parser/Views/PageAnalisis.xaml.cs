@@ -24,10 +24,6 @@ namespace LR1_Parser
         public PageAnalisis()
         {
             InitializeComponent();
-
-            Parser parser = new Parser();
-
-            parser.EvalString("n + n - n");
         }
 
        

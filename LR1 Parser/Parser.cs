@@ -24,14 +24,14 @@ namespace LR1_Parser.Model
         internal List<State> States { get { return states; } set { states = value; } }
         internal List<ActionLog> Log { get { return log; } set { log = value; } }
 
-        public Parser()
+        public Parser(List<Node> AFDList)
         {
-            AFD = new List<Node>();
+            AFD = AFDList;
             States = new List<State>();
             stackAnalysis = new List<TokenState>();
             log = new List<ActionLog>();
 
-            InitTestAFD();
+            //InitTestAFD();
             CreateSyntaxisAnalysisTable();
         }
 

@@ -78,8 +78,11 @@ namespace LR1_Parser
 
                 //Se calcula el AFD de la lista de producciones 
                 //TODO !! no se testear XD nomams mañana le pregunto a granja mejor. Atte: Charly Cuervos.
-                //AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
-                //List<Node> AFD = AFDGen.GenerateAFD();
+                AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
+                List<Node> AFD = AFDGen.GenerateAFD();
+                Parser parser = new Parser(AFD);
+
+                parser.EvalString("n + n - n");
 
                 // Se muestran los primeros en la UI
                 PrimerosTable.ItemsSource = primeros.GetView();
