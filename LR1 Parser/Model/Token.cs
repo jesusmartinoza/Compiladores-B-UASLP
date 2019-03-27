@@ -13,9 +13,9 @@ namespace LR1_Parser.Model
         string val; // Guarda lexema o el resultado de evaluar un conjunto de atributos
 
         //Getters and Setters
-        public string Content { get => content; set => content = value; }
-        public bool IsTerminal { get => terminal; set => terminal = value; }
-        public string Val { get => val; set => val = value; }
+        public string Content { get { return content; } set { content = value; } }
+        public bool IsTerminal { get { return terminal; } set { terminal = value; } }
+        public string Val { get { return val; } set { val = value; } }
       
 
         public Token(string s, bool t)

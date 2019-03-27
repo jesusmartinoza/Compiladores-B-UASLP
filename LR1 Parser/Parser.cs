@@ -21,8 +21,8 @@ namespace LR1_Parser.Model
         List<ActionLog> log;
 
         internal List<Node> AFD;
-        internal List<State> States { get => states; set => states = value; }
-        internal List<ActionLog> Log { get => log; set => log = value; }
+        internal List<State> States { get { return states; } set { states = value; } }
+        internal List<ActionLog> Log { get { return log; } set { log = value; } }
 
         public Parser()
         {
