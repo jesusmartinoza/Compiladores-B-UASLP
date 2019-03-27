@@ -116,6 +116,7 @@ namespace LR1_Parser.Model
             {
                 foreach (string ss in s.Split('→')[1].Split(' '))//Separa los diferentes tokens de la parte derecha de la flecha
                 {
+                    ss.Replace(" ", "");
                     if (!tokenNT.Contains(ss) && !tokenT.Contains(ss) && ss != "|")//Verifica que no sea un NT, aun no exista en la lista o sea el operador "|" de las gramaticas
                     {
                         tokenT.Add(ss);
