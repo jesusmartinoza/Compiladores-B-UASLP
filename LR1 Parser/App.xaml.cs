@@ -14,5 +14,6 @@ namespace LR1_Parser
     public partial class App : Application
     {
     }
+    
 
 }

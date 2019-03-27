@@ -12,16 +12,29 @@ namespace LR1_Parser.Model
     /// </summary> 
     class AFDGenerator
     {
-        private Tokenizer Productions;
+        private List<Production> Productions;
+        private List<Token> GrammarSymbols;
+        private Primeros Prims;
         private List<Node> AFD;
+
+        enum ValidationOutput { NothingToDo, AlreadyExisit, NewRelation };
+        struct ValNodeResult
+        {
+            public ValidationOutput ValOut;
+            public int IndexFinded;
+        }
 
         /// <summary>
         /// AFD Generator constructor.
         /// </summary>
         /// <param name="productions"></param>
-        public AFDGenerator(Tokenizer productions)
+        /// <param name="inPrims"></param>
+        /// <param name="inGramSim"></param>
+        public AFDGenerator(List<Production> productions, Primeros inPrims, List<Token> inGramSim)
         {
             Productions = productions;
+            GrammarSymbols = inGramSim;
+            Prims = inPrims;
             AFD = new List<Node>();
         }
 
@@ -32,7 +45,7 @@ namespace LR1_Parser.Model
         public List<Node> GenerateAFD()
         {
             AddAugmentedProduction(); //Augmented production 
-            Node I0 = GenerateFirstNode(); //TODO solo soporta gramaticas en orden de importancia descendente?
+            Node I0 = GenerateFirstNode(); //olo soporta gramaticas en orden de importancia descendente? creo que si wey
             AFD.Add(I0);
 
             bool SomethingIsAdded;
@@ -41,13 +54,27 @@ namespace LR1_Parser.Model
                 SomethingIsAdded = false;
                 foreach (var Nodeitem in AFD)
                 {
-                    foreach (var GrammarSymbol in Productions.tokens)
+                    foreach (var GrammarSymbol in GrammarSymbols)
                     {
                         Node J = Ir_A(Nodeitem, GrammarSymbol);
-                        if(CheckNodeValidityToAdd(J))    //Verify if its Ok to add J 
-                        {                                //TODO makes a Relation here 
-                            AFD.Add(J);
-                            SomethingIsAdded = true;
+                        ValNodeResult Result = CheckNodeValidityToAdd(J); //Verify J content 
+                        switch (Result.ValOut)
+                        {
+                            case ValidationOutput.NothingToDo:
+                                //Literally nothing to do LOL
+                                break;
+                            case ValidationOutput.AlreadyExisit:
+                                //Create Relation: Nodeitem -> GrammarSymbol -> J_index(already exist)
+                                if(!Nodeitem.Edges.ContainsKey(Result.IndexFinded))
+                                    Nodeitem.Edges.Add(Result.IndexFinded, GrammarSymbol);
+                                break;
+                            case ValidationOutput.NewRelation:
+                                AFD.Add(J);
+                                SomethingIsAdded = true;
+                                //Create Relation: Nodeitem -> GrammarSymbol -> J_index(new node)
+                                if (!Nodeitem.Edges.ContainsKey(AFD.Count-1))
+                                    Nodeitem.Edges.Add(AFD.Count - 1, GrammarSymbol);
+                                break;
                         }
                     }
                 }
@@ -57,28 +84,29 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Method that adds augmented production to the grammar
+        /// Creates and returns the grammar's augmented production.
         /// </summary>
         private void AddAugmentedProduction()
         {
-            string FirstProduction = Productions.producciones.First().left.Content;
+            string FirstProduction = Productions.First().left.Content;
 
             //Construction the first production 
             Production ProductionToAdd = new Production();
             ProductionToAdd.Left = new Token(FirstProduction + "'", false); //example [FirstProduction = Num] -> Num'
             ProductionToAdd.Right.Add(new Token(FirstProduction, false));   //Adds the first production NT to the rigth
+            ProductionToAdd.Id = 0;
 
             //adding all the stuff 
-            Productions.producciones.Insert(0,ProductionToAdd);  //finally adds the Augmented Production at the start
+            Productions.Insert(0,ProductionToAdd);  //finally adds the Augmented Production at the start
         }
 
         /// <summary>
-        /// Construction of the first: LR1 element and node
+        /// Construction of the first: LR1 element and node.
         /// </summary>
         /// <returns></returns>
         private Node GenerateFirstNode()
         {   
-            Production FirstProduction = Productions.producciones.First();
+            Production FirstProduction = Productions.First();
             Node I0 = new Node();
 
             //first LR1 element
@@ -89,7 +117,7 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Method method that handles the expansion of Lr1 elements
+        /// Handles the expansion of Lr1 elements.
         /// </summary>
         /// <param name="CurrentNode"></param>
         /// <returns></returns>
@@ -110,9 +138,9 @@ namespace LR1_Parser.Model
                         βa.RemoveAt(0);                 //Except for the first token
                         βa.AddRange(NodeItem.Advance);  //Add all the Advance tokens
                         //b is each terminal of Primero(βa).
-                        List<Token> b = Primeros.GetPrimerosDe(βa); 
+                        List<Token> b = Prims.GetPrimerosDe(βa); 
 
-                        List<Production> BProductions = Productions.producciones.FindAll(pred => pred.Left.Content == B.Content); 
+                        List<Production> BProductions = Productions.FindAll(pred => pred.Left.Content == B.Content); 
                         foreach (var BProduction in BProductions)
                         {   //Finds all productions of B and convert to the Lr1elements of the form [B -> .γ, b]
                             
@@ -130,7 +158,7 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// method that links a node with a grammatical symbol to generate new nodes 
+        /// Links a node with a grammatical symbol to generate new nodes.
         /// </summary>
         /// <param name="CurrentNode"></param>
         /// <param name="X"></param>
@@ -153,22 +181,34 @@ namespace LR1_Parser.Model
         }
 
         /// <summary>
-        /// Verify that the input node can be added to the AFD
+        /// Verify that the input node can be added to the AFD.
         /// </summary>
         /// <param name="j"></param>
         /// <returns></returns>
-        private bool CheckNodeValidityToAdd(Node J)
+        private ValNodeResult CheckNodeValidityToAdd(Node J)
         {
-            if (J.Elements.Count <= 0)  //it's empty, doing nothing here
-                return false;
+            ValNodeResult Result;
+            Result.IndexFinded = -1;
+
+            if (J.Elements.Count <= 0)
+            {   //it's empty, doing nothing here
+                Result.ValOut = ValidationOutput.NothingToDo;
+                return Result;
+            }   
             else
             {
-                foreach (var IteratorNode in AFD)
-                    if(IteratorNode.CheckNodesEquals(J)) //already exist the same node on the AFD, 
-                    {                                    //TODO but makes a Relation here 
-                        return false;
+                for (int i = 0; i < AFD.Count; i++)
+                {
+                    if(AFD[i].CheckNodeEquals(J))
+                    {   //already exist the same node on the AFD
+                        Result.ValOut = ValidationOutput.AlreadyExisit;
+                        Result.IndexFinded = i;
+                        return Result;
                     }
-                return true;  //it's OK to add the input node
+                }
+                //it's OK to add the input node
+                Result.ValOut = ValidationOutput.NewRelation;
+                return Result;           
             }
         }
     }
