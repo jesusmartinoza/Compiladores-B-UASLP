@@ -54,10 +54,10 @@ namespace LR1_Parser.Model
     /// 
     /// Queda más amigable que una tupla
     /// </summary>
-    struct TokenState
+    class TokenState
     {
         internal int state; // Estado al que va
         internal Token token; // Token
-
+        internal bool dirty;
     }
 }

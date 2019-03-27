@@ -43,9 +43,9 @@ namespace LR1_Parser.Model
         /// <param name="inAdvance"></param>
         public LR1Element(Production InProduction, List<Token> inAdvance )
         {
-            Left = new Token(InProduction.left.Content, false);
+            Left = new Token(InProduction.Left.Content, false);
             Alpha = new List<Token>();
-            Gamma = new List<Token>(InProduction.right);
+            Gamma = new List<Token>(InProduction.Right);
             Advance = new List<Token>(inAdvance);
         }
 

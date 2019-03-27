@@ -108,10 +108,10 @@ namespace LR1_Parser.Model
         {
             int cambio = 0;
 
-            for (int i = 0; i < p.right.Count; i++)
+            for (int i = 0; i < p.Right.Count; i++)
             {
 
-                Token t = p.right[i];
+                Token t = p.Right[i];
 
                 if (t.IsTerminal == false)
                 {
@@ -128,12 +128,12 @@ namespace LR1_Parser.Model
                             primerosdelNT.Remove(ep);
 
                             //Regreso algo en la lista, tiene primeros
-                            cambio += Agregaprimeros(p.left, primerosdelNT);
+                            cambio += Agregaprimeros(p.Left, primerosdelNT);
                         }
                         else
                         {
                             //Regreso algo en la lista, tiene primeros
-                            cambio += Agregaprimeros(p.left, primerosdelNT);
+                            cambio += Agregaprimeros(p.Left, primerosdelNT);
                             break;
                         }
 
@@ -148,7 +148,7 @@ namespace LR1_Parser.Model
                 }
                 else
                 {
-                    cambio += Agregaprimeros(p.left, t);
+                    cambio += Agregaprimeros(p.Left, t);
                 }
             }
 

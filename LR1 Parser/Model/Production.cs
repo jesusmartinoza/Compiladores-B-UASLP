@@ -18,8 +18,8 @@ namespace LR1_Parser.Model
         internal List<Token> Right { get => right; set => right = value; }
         internal HashSet<Token> First { get => first; set => first = value; }*/
         int id;
-        public Token left; // Conjunto de tokens del lado izquierdo de la flecha 
-        public List<Token> right;  // Conjunto de tokens del lado derecho de la flecha 
+        Token left; // Conjunto de tokens del lado izquierdo de la flecha 
+        List<Token> right;  // Conjunto de tokens del lado derecho de la flecha 
         HashSet<Token> first; // Conjunto de primeros de forma desordenada
 
         public Production(int i, Token l){

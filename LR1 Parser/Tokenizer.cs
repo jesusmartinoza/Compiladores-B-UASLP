@@ -130,7 +130,7 @@ namespace LR1_Parser.Model
         /// </summary>
         /// <param name="input">Cadena de entrada</param>
         /// <returns>Tokens de la cadena</returns>
-        static List<Token> Convert(string input)
+        public static List<Token> Convert(string input)
         {
             List<Token> aux = new List<Token>();
             List<string> list = input.Split(' ').ToList();

@@ -88,7 +88,7 @@ namespace LR1_Parser.Model
         /// </summary>
         private void AddAugmentedProduction()
         {
-            string FirstProduction = Productions.First().left.Content;
+            string FirstProduction = Productions.producciones[0].Left.Content;
 
             //Construction the first production 
             Production ProductionToAdd = new Production();
