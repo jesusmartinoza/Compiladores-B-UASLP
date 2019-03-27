@@ -12,7 +12,8 @@ namespace LR1_Parser.Model
     /// </summary> 
     class AFDGenerator
     {
-        private Tokenizer Productions;
+        private List<Production> Productions;
+        private List<Token> GrammarSymbols;
         private Primeros Prims;
         private List<Node> AFD;
 
@@ -27,9 +28,12 @@ namespace LR1_Parser.Model
         /// AFD Generator constructor.
         /// </summary>
         /// <param name="productions"></param>
-        public AFDGenerator(Tokenizer productions, Primeros inPrims)
+        /// <param name="inPrims"></param>
+        /// <param name="inGramSim"></param>
+        public AFDGenerator(List<Production> productions, Primeros inPrims, List<Token> inGramSim)
         {
             Productions = productions;
+            GrammarSymbols = inGramSim;
             Prims = inPrims;
             AFD = new List<Node>();
         }
@@ -50,7 +54,7 @@ namespace LR1_Parser.Model
                 SomethingIsAdded = false;
                 foreach (var Nodeitem in AFD)
                 {
-                    foreach (var GrammarSymbol in Productions.tokens)
+                    foreach (var GrammarSymbol in GrammarSymbols)
                     {
                         Node J = Ir_A(Nodeitem, GrammarSymbol);
                         ValNodeResult Result = CheckNodeValidityToAdd(J); //Verify J content 
@@ -84,7 +88,7 @@ namespace LR1_Parser.Model
         /// </summary>
         private void AddAugmentedProduction()
         {
-            string FirstProduction = Productions.producciones.First().left.Content;
+            string FirstProduction = Productions.First().left.Content;
 
             //Construction the first production 
             Production ProductionToAdd = new Production();
@@ -93,7 +97,7 @@ namespace LR1_Parser.Model
             ProductionToAdd.Id = 0;
 
             //adding all the stuff 
-            Productions.producciones.Insert(0,ProductionToAdd);  //finally adds the Augmented Production at the start
+            Productions.Insert(0,ProductionToAdd);  //finally adds the Augmented Production at the start
         }
 
         /// <summary>
@@ -102,7 +106,7 @@ namespace LR1_Parser.Model
         /// <returns></returns>
         private Node GenerateFirstNode()
         {   
-            Production FirstProduction = Productions.producciones.First();
+            Production FirstProduction = Productions.First();
             Node I0 = new Node();
 
             //first LR1 element
@@ -136,7 +140,7 @@ namespace LR1_Parser.Model
                         //b is each terminal of Primero(βa).
                         List<Token> b = Prims.GetPrimerosDe(βa); 
 
-                        List<Production> BProductions = Productions.producciones.FindAll(pred => pred.Left.Content == B.Content); 
+                        List<Production> BProductions = Productions.FindAll(pred => pred.Left.Content == B.Content); 
                         foreach (var BProduction in BProductions)
                         {   //Finds all productions of B and convert to the Lr1elements of the form [B -> .γ, b]
                             
