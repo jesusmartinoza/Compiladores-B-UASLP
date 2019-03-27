@@ -18,19 +18,23 @@ namespace LR1_Parser.Model
         List<State> states;
         List<TokenState> stackAnalysis; // Pila de analisis sintático
         string input; // Cadena a evaluar
+        List<ActionLog> log;
 
         internal List<Node> AFD;
         internal List<State> States { get => states; set => states = value; }
+        internal List<ActionLog> Log { get => log; set => log = value; }
 
         public Parser()
         {
             AFD = new List<Node>();
             States = new List<State>();
             stackAnalysis = new List<TokenState>();
+            log = new List<ActionLog>();
 
             InitTestAFD();
             CreateSyntaxisAnalysisTable();
         }
+
 
         public bool EvalString(String inputString)
         {
@@ -45,14 +49,17 @@ namespace LR1_Parser.Model
             stackAnalysis.Clear();
             stackAnalysis.Add(new TokenState() { token = new Token("$", true), state = 0 });
             
-            while(valid) // TODO: Condicion correcta 
+            while(valid) 
             {
                 TokenState cAction = stackAnalysis.Last(); // Current Action
                 Token cToken = inputTokens.First(); // Current Token
                 Action nextAction;
+                ActionLog lineLog;
+
+                // Imprimir pila de A.S.
 
                 // Limpiar estados de la pila de A.S.
-                for(var i = 0; i < stackAnalysis.Count; i++)
+                for (var i = 0; i < stackAnalysis.Count; i++)
                     stackAnalysis[i].dirty = false;
 
                 // Verificar si el token existe en las listas
@@ -72,6 +79,9 @@ namespace LR1_Parser.Model
                 } else if(nextAction.action == 'R')
                 {
                     Production production = MainWindow.productions[nextAction.state];
+
+                    if (nextAction.state == 0) // Estado R0 o aceptar
+                        break;
 
                     // Encuentra match
                     foreach(var r in production.Right)

@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AFDGenerator.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Model\ActionLog.cs" />
     <Compile Include="Model\LR1Element.cs" />
     <Compile Include="Model\Node.cs" />
     <Compile Include="Model\Primeros.cs" />
