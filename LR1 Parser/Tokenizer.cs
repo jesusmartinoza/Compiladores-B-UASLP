@@ -96,12 +96,14 @@ namespace LR1_Parser.Model
         /// <param name="grammar">Gramatica</param>
         private void SeparaNT(List<string> grammar)
         {
+            string g;
             foreach (string s in grammar)
             {
-                if (!tokenNT.Contains(s.Split('→')[0]))//Verifica que no exista ya en la lista
+                g = s.Split('→')[0].Replace(" ", "");
+                if (!tokenNT.Contains(g))//Verifica que no exista ya en la lista
                 {
-                    tokenNT.Add(s.Split('→')[0]);
-                    tokens.Add(new Token(s.Split('→')[0], false));
+                    tokenNT.Add(g);
+                    tokens.Add(new Token(g, false));
                 }
             }
         }
