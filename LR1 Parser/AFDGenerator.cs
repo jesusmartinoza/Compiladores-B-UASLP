@@ -13,7 +13,7 @@ namespace LR1_Parser.Model
     class AFDGenerator
     {
         private List<Production> Productions;
-        private List<Token> GrammarSymbols;
+        static internal List<Token> GrammarSymbols;
         private Primeros Prims;
         private List<Node> AFD;
 

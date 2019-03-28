@@ -176,6 +176,20 @@ namespace LR1_Parser.Model
                     }
                 }
 
+                // Agregar todos los tokens al estado
+                // Para tener consistencia en el diccionario
+                foreach (Token t in AFDGenerator.GrammarSymbols)
+                {
+                    if (t.IsTerminal && !state.Terminals.ContainsKey(t.Content))
+                        state.Terminals.Add(t.Content, new Action());
+
+                    if (!t.IsTerminal && !state.NonTerminals.ContainsKey(t.Content))
+                        state.NonTerminals.Add(t.Content, new Action());
+                }
+
+                if(!state.Terminals.ContainsKey("$"))
+                    state.Terminals.Add("$", new Action());
+
                 States.Add(state);
             }
         }
