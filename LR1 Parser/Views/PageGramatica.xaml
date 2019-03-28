@@ -56,11 +56,17 @@
                     <materialDesign:PackIcon Kind="ContentPaste" />
                 </Button>
 
+                <Button ToolTip="Copiar epsilon al portapapeles" ToolBar.OverflowMode="AsNeeded" Name="epsilon2clipboard" Click="Epsilon2clipboard_Click">
+                    <TextBlock Text="ε" Width="20" Height="20" FontSize="20" TextAlignment="Center"  />
+                </Button>
+
                 <Separator />
 
                 <Button ToolTip="Generar tabla de analisis sintácttico" ToolBar.OverflowMode="AsNeeded" Name="GenerarTabla" Click="GenerarTabla_Click" >
                     <materialDesign:PackIcon Kind="TableLarge" />
                 </Button>
+
+               
 
             </ToolBar>
         </ToolBarTray>

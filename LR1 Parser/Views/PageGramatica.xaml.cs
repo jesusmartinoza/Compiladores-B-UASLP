@@ -178,5 +178,9 @@ namespace LR1_Parser
 
         }
 
+        private void Epsilon2clipboard_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText("ε");
+        }
     }
 }
