@@ -105,7 +105,7 @@ namespace LR1_Parser
                 
 
 
-                parser.EvalString("n + n - n- n +n");
+                parser.EvalString("n + n - n - n + n");
 
                 // Se muestran los primeros en la UI
                 PrimerosTable.ItemsSource = primeros.GetView();
