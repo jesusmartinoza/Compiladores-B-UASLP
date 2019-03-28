@@ -83,7 +83,7 @@ namespace LR1_Parser
                 List<Node> AFD = AFDGen.GenerateAFD();
                 Parser parser = new Parser(AFD);
 
-                parser.EvalString("n + n - n");
+                parser.EvalString("n + n - n - n + n");
 
                 // Se muestran los primeros en la UI
                 PrimerosTable.ItemsSource = primeros.GetView();
