@@ -57,7 +57,7 @@ namespace LR1_Parser
 
         }
         
-        private void InitTestGrammar()
+        public void InitTestGrammar()
         {
             /*NO TERMINALES*/
 

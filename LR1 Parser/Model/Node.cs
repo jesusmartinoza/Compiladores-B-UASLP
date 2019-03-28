@@ -30,27 +30,17 @@ namespace LR1_Parser.Model
         /// <returns></returns>
         public bool CheckNodeEquals(Node inputNode)
         {
-            var Counter = new Dictionary<LR1Element, int>();
-            foreach (LR1Element s in Elements)
-            {
-                if (Counter.ContainsKey(s))
-                    Counter[s]++;
-                else
-                    Counter.Add(s, 1);
-            }
-            foreach (LR1Element s in inputNode.Elements)
-            {
-                if (Counter.ContainsKey(s))
-                    Counter[s]--;
-                else
-                    return false;
-            }
-            return Counter.Values.All(c => c == 0);
+            List<string> List1 = new List<string>();
+            foreach (LR1Element item in Elements)
+                List1.Add(item.ToString());
 
+            List<string> List2 = new List<string>();
+            foreach (LR1Element item in inputNode.Elements)
+                List2.Add(item.ToString());
 
-            //bool deletedItems = Elements.Except(inputNode.Elements).Any();
-            //bool newItems = inputNode.Elements.Except(Elements).Any();
-            //return !newItems && !deletedItems;
+            var deletedItems = List1.Except(List2).Any();
+            var newItems = List2.Except(List1).Any();
+            return !newItems && !deletedItems;
         }
 
         /// <summary>

@@ -30,10 +30,10 @@ namespace LR1_Parser.Model
         /// </summary>
         public LR1Element(LR1Element inputLR1)
         {
-            Left = inputLR1.Left;
-            Alpha = inputLR1.Alpha;
-            Gamma = inputLR1.Gamma;
-            Advance = inputLR1.Advance;
+            Left = new Token(inputLR1.Left.Content, inputLR1.Left.IsTerminal);
+            Alpha = new List<Token>(inputLR1.Alpha);
+            Gamma = new List<Token>(inputLR1.Gamma);
+            Advance = new List<Token>(inputLR1.Advance);
         }
 
         /// <summary>

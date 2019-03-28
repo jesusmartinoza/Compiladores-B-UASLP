@@ -52,9 +52,9 @@ namespace LR1_Parser.Model
             do  //repeat until there are no more new items
             {
                 SomethingIsAdded = false;
-                foreach (var Nodeitem in AFD)
+                foreach (Node Nodeitem in AFD.ToList())
                 {
-                    foreach (var GrammarSymbol in GrammarSymbols)
+                    foreach (Token GrammarSymbol in GrammarSymbols.ToList())
                     {
                         Node J = Ir_A(Nodeitem, GrammarSymbol);
                         ValNodeResult Result = CheckNodeValidityToAdd(J); //Verify J content 
@@ -127,34 +127,39 @@ namespace LR1_Parser.Model
             do  //repeat until there are no more new elements
             {
                 SomethingIsAdded = false;
-                foreach (var NodeItem in CurrentNode.Elements.ToList())
+                foreach (LR1Element NodeItem in CurrentNode.Elements.ToList())
                 {   
-                    // General syntax [A -> α.Bβ, a]
-                    Token B = NodeItem.Gamma.First();
-                    if (B.IsTerminal == false)
-                    {
-                        List<Token> βa = new List<Token>();
-                        βa.AddRange(NodeItem.Gamma);    //Add all the Gamma tokens
-                        βa.RemoveAt(0);                 //Except for the first token
-                        βa.AddRange(NodeItem.Advance);  //Add all the Advance tokens
-                        //b is each terminal of Primero(βa).
-                        List<Token> b = Prims.GetPrimerosDe(βa); 
+                    //General syntax [A -> α.Bβ, a]
+                    if(NodeItem.Gamma.Count > 0) //only if there is something after the dot
+                    {   
+                        Token B = NodeItem.Gamma.First();
+                        if (B.IsTerminal == false)
+                        {
+                            List<Token> βa = new List<Token>();
+                            βa.AddRange(NodeItem.Gamma);    //Add all the Gamma tokens
+                            βa.RemoveAt(0);                 //Except for the first token
+                            βa.AddRange(NodeItem.Advance);  //Add all the Advance tokens
+                                                            //b is each terminal of Primero(βa).
+                            List<Token> b = Prims.GetPrimerosDe(βa);
 
-                        List<Production> BProductions = Productions.FindAll(pred => pred.Left.Content == B.Content); 
-                        foreach (var BProduction in BProductions)
-                        {   //Finds all productions of B and convert to the Lr1elements of the form [B -> .γ, b]
-                            
-                            LR1Element BLr1Token = new LR1Element(BProduction,b); //construction B-Production
-                            if(!CurrentNode.CheckIfElementExist(BLr1Token))
-                            {   //isnt a repeated Lr1 token so its added to the elements list
-                                CurrentNode.Elements.Add(BLr1Token);
-                                SomethingIsAdded = true;
+                            List<Production> BProductions = Productions.FindAll(pred => pred.Left.Content == B.Content);
+                            foreach (Production BProduction in BProductions.ToList())
+                            {
+                                //Finds all productions of B and convert to the Lr1elements of the form [B -> .γ, b]
+                                LR1Element BLr1Token = new LR1Element(BProduction, b); //construction B-Production
+                                if (!CurrentNode.CheckIfElementExist(BLr1Token))
+                                {
+                                    //isnt a repeated Lr1 token so its added to the elements list
+                                    CurrentNode.Elements.Add(BLr1Token);
+                                    SomethingIsAdded = true;
+                                }
                             }
                         }
                     }
                 }
+
             } while (SomethingIsAdded);
-            return null;
+            return CurrentNode;
         }
 
         /// <summary>
@@ -167,14 +172,17 @@ namespace LR1_Parser.Model
         {
             Node J = new Node();
             // for each element [A -> α.Xβ, a] on CurrentNode
-            foreach (var Lr1item in CurrentNode.Elements.ToList())
+            foreach (LR1Element Lr1item in CurrentNode.Elements.ToList())
             {
-                if(Lr1item.Gamma.First().Content == X.Content) //finded 
+                if (Lr1item.Gamma.Count > 0) //only if there is something after the dot
                 {
-                    LR1Element Lr1ToAdd = new LR1Element(Lr1item); 
-                    Lr1ToAdd.Alpha.Add(Lr1ToAdd.Gamma.First()); //adds X on alpha
-                    Lr1ToAdd.Gamma.RemoveAt(0);                 //removes X from alpha
-                    J.Elements.Add(Lr1ToAdd);
+                    if (Lr1item.Gamma.First().Content == X.Content) //finded 
+                    {
+                        LR1Element Lr1ToAdd = new LR1Element(Lr1item);
+                        Lr1ToAdd.Alpha.Add(Lr1ToAdd.Gamma.First()); //adds X on alpha
+                        Lr1ToAdd.Gamma.RemoveAt(0);                 //removes X from gamma
+                        J.Elements.Add(Lr1ToAdd);
+                    }
                 }
             }
             return Cerradura(J);
@@ -199,7 +207,8 @@ namespace LR1_Parser.Model
             {
                 for (int i = 0; i < AFD.Count; i++)
                 {
-                    if(AFD[i].CheckNodeEquals(J))
+                    bool CheckResEquals = AFD[i].CheckNodeEquals(J);
+                    if (CheckResEquals)
                     {   //already exist the same node on the AFD
                         Result.ValOut = ValidationOutput.AlreadyExisit;
                         Result.IndexFinded = i;

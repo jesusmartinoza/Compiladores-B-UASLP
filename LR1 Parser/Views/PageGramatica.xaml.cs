@@ -71,13 +71,14 @@ namespace LR1_Parser
                 // Se separan el texto de entrada de la gramática y se crea la lista de producciones 
                 Tokenizer obtenProd = new Tokenizer();   
                 MainWindow.productions = obtenProd.obtenProducciones(EntradaGramatica.Text);
+
                 List<Token> simbolosGramaticales = obtenProd.tokens;
+                simbolosGramaticales.RemoveAll(pred => pred.Content == "ε");
 
                 // Se calcula el conjunto de primeros para la gramática
                 Primeros primeros = new Primeros(MainWindow.productions);
 
                 //Se calcula el AFD de la lista de producciones 
-                //TODO !! no se testear XD nomams mañana le pregunto a granja mejor. Atte: Charly Cuervos.
                 AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
                 List<Node> AFD = AFDGen.GenerateAFD();
                 Parser parser = new Parser(AFD);
