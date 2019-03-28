@@ -37,7 +37,7 @@
                     <materialDesign:PackIcon  Kind="FolderOpen" />
                 </Button>
 
-                <Button ToolTip="Guardar" Name="Guardar">
+                <Button ToolTip="Guardar" Name="Guardar" Click="Guardar_Click">
                     <materialDesign:PackIcon  Kind="ContentSave" />
                 </Button>
 

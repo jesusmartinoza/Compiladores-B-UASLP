@@ -43,31 +43,50 @@ namespace LR1_Parser
             dialog.AddExtension = true;
             
 
-
             if (dialog.ShowDialog() == true)
             {
-                //Stream file = dialog.OpenFile();
-
-                //string text = "";
-
-                //byte[] buffer = new byte[file.Length];
-                //file.ReadAsync(buffer, 0, (int)file.Length);
-
-                //foreach (byte b in buffer)
-                //    text += (char)b;
 
                 EntradaGramatica.Text = File.ReadAllText(dialog.FileName);
+                App.currentFilePath = dialog.FileName;
+                
             }
 
+        }
 
-        
+        private void Guardar_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(EntradaGramatica.Text))
+            {
+                if (File.Exists(App.currentFilePath))
+                {
+                    File.WriteAllText(App.currentFilePath, EntradaGramatica.Text);
+                }
+                else
+                {
+                    SaveFileDialog dialog = new SaveFileDialog();
+                    dialog.DefaultExt = "txt";
+                    dialog.AddExtension = true;
+                    
+                    if (dialog.ShowDialog() == true)
+                    {
+                        App.currentFilePath = dialog.FileName;
+                        File.WriteAllText(App.currentFilePath, EntradaGramatica.Text);
 
+                    }
+                }
+
+            }
         }
 
         private void GenerarTabla_Click(object sender, RoutedEventArgs e)
         {
             if (!String.IsNullOrEmpty(EntradaGramatica.Text))
             {
+
+                // Se limpia UI tabla A.S
+                TablaAnalisis.ItemsSource = null;
+
+
                 // Se separan el texto de entrada de la gramática y se crea la lista de producciones 
                 Tokenizer obtenProd = new Tokenizer();   
                 MainWindow.productions = obtenProd.obtenProducciones(EntradaGramatica.Text);
@@ -83,20 +102,27 @@ namespace LR1_Parser
                 List<Node> AFD = AFDGen.GenerateAFD();
                 Parser parser = new Parser(AFD);
 
+                
+
+
                 parser.EvalString("n + n - n");
 
                 // Se muestran los primeros en la UI
                 PrimerosTable.ItemsSource = primeros.GetView();
 
+                // Se crea la tabla de Analisis Sintáctico
+                parser.CreateSyntaxisAnalysisTable();
                 // Se muestra la tabla de Analisis Sintáctico
+                ShowTablaAS(parser.States);
 
 
-               
 
 
-             
 
-                
+
+
+
+
             }
         }
 
@@ -183,5 +209,7 @@ namespace LR1_Parser
         {
             Clipboard.SetText("ε");
         }
+
+       
     }
 }
