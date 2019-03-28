@@ -44,8 +44,12 @@ namespace LR1_Parser.Model
         // Se sobrecarga metodo para facilitar despliegue
         public override string ToString()
         {
-            return action + "" +state.ToString();
+            if(action!='\0')
+                return action + "" +state.ToString();
+            else
+                return " "; 
         }
+        
     }
 
     /// <summary>
