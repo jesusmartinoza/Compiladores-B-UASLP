@@ -100,20 +100,22 @@ namespace LR1_Parser
                 //Se calcula el AFD de la lista de producciones 
                 AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
                 List<Node> AFD = AFDGen.GenerateAFD();
-                Parser parser = new Parser(AFD);
+
+                App.currentParser= new Parser(AFD);
+                
 
                 
 
 
-                parser.EvalString("n + n - n - n + n");
+                App.currentParser.EvalString("n + n - n - n + n");
 
                 // Se muestran los primeros en la UI
                 PrimerosTable.ItemsSource = primeros.GetView();
 
                 // Se crea la tabla de Analisis Sintáctico
-                parser.CreateSyntaxisAnalysisTable();
+                App.currentParser.CreateSyntaxisAnalysisTable();
                 // Se muestra la tabla de Analisis Sintáctico
-                ShowTablaAS(parser.States);
+                ShowTablaAS(App.currentParser.States);
 
 
 

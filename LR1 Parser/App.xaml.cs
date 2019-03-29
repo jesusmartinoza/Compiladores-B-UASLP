@@ -15,6 +15,7 @@ namespace LR1_Parser
     {
         internal static string grammarFilePath= null;
         internal static string sourceFilePath = null;
+        internal static Model.Parser currentParser = null;
 
     }
 
