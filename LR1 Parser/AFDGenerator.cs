@@ -129,24 +129,29 @@ namespace LR1_Parser.Model
                 SomethingIsAdded = false;
                 foreach (LR1Element NodeItem in CurrentNode.Elements.ToList())
                 {   
-                    //General syntax [A -> α.Bβ, a]
+                    //General syntax [A -> α.Bβ, {a1, a2, ..an}]
                     if(NodeItem.Gamma.Count > 0) //only if there is something after the dot
                     {   
                         Token B = NodeItem.Gamma.First();
                         if (B.IsTerminal == false)
                         {
                             List<Token> βa = new List<Token>();
-                            βa.AddRange(NodeItem.Gamma);    //Add all the Gamma tokens
-                            βa.RemoveAt(0);                 //Except for the first token
-                            βa.AddRange(NodeItem.Advance);  //Add all the Advance tokens
-                                                            //b is each terminal of Primero(βa).
-                            List<Token> b = Prims.GetPrimerosDe(βa);
+                            List<Token> β = new List<Token>(NodeItem.Gamma); //Add all the Gamma tokens  
+                            β.RemoveAt(0);                                   //Except for the first token
+                            foreach (Token a in NodeItem.Advance)            //Loops for all the Elements from Advance
+                            {
+                                List<Token> ResPrimAdv = new List<Token>(β);
+                                ResPrimAdv.Add(a);
+                                ResPrimAdv = Prims.GetPrimerosDe(ResPrimAdv);
+                                βa.AddRange(ResPrimAdv);                    //Adding GetPrimerosDe() result
+                            }
+                            βa = βa.Distinct().ToList();                         //Deleting all the duplicates
 
                             List<Production> BProductions = Productions.FindAll(pred => pred.Left.Content == B.Content);
                             foreach (Production BProduction in BProductions.ToList())
                             {
                                 //Finds all productions of B and convert to the Lr1elements of the form [B -> .γ, b]
-                                LR1Element BLr1Token = new LR1Element(BProduction, b); //construction B-Production
+                                LR1Element BLr1Token = new LR1Element(BProduction, βa); //construction B-Production
                                 if (!CurrentNode.CheckIfElementExist(BLr1Token))
                                 {
                                     //isnt a repeated Lr1 token so its added to the elements list

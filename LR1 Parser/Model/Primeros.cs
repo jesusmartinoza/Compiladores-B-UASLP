@@ -42,7 +42,7 @@ namespace LR1_Parser.Model
                     i = cadenaDeEntrada.Count; //Se termina el ciclo
                 }
             }
-            return cadenaPrimeros;
+            return cadenaPrimeros.Distinct().ToList();
         }
 
         /// <summary>

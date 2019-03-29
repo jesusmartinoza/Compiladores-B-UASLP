@@ -161,17 +161,20 @@ namespace LR1_Parser.Model
                 {
                     if (elem.Gamma.Count == 0)
                     {
-                        // Obtener produccion de la lista global usando el token left y tokens como elemento de busqueda
-                        Production production = MainWindow.productions
-                            .Where(p => Production.Comparator(p, elem.Left, elem.Alpha))//p.Left.Content == elem.Left.Content)
-                            .First();
-
-                        foreach(var advanceToken in elem.Advance)
+                        if (elem.Alpha.Count > 0)   //verifica si no es un elemento LR1 del tipo A -> ., {a1, a2, ..an} 
                         {
-                            state.Terminals.Add(
-                                advanceToken.Content,
-                                new Action() { action = 'R', state = MainWindow.productions.IndexOf(production) }
-                            );
+                            // Obtener produccion de la lista global usando el token left y tokens como elemento de busqueda
+                            Production production = MainWindow.productions
+                                .Where(p => Production.Comparator(p, elem.Left, elem.Alpha))//p.Left.Content == elem.Left.Content)
+                                .First();
+
+                            foreach (var advanceToken in elem.Advance)
+                            {
+                                state.Terminals.Add(
+                                    advanceToken.Content,
+                                    new Action() { action = 'R', state = MainWindow.productions.IndexOf(production) }
+                                );
+                            }
                         }
                     }
                 }

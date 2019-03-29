@@ -44,8 +44,9 @@ namespace LR1_Parser.Model
         public LR1Element(Production InProduction, List<Token> inAdvance )
         {
             Left = new Token(InProduction.Left.Content, false);
-            Alpha = new List<Token>();
+            Alpha = new List<Token>();     
             Gamma = new List<Token>(InProduction.Right);
+            Gamma.RemoveAll(pred => pred.Content == "ε");
             Advance = new List<Token>(inAdvance);
         }
 
