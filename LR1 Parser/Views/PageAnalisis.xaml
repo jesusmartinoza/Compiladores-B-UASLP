@@ -7,6 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
 
       Title="Analisis">
 
@@ -19,22 +21,63 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
             <RowDefinition MinHeight="200"/>
             <RowDefinition Height="2"/>
             <RowDefinition MinHeight="100" Height="150"/>
 
         </Grid.RowDefinitions>
 
+
+        <ToolBarTray Grid.Row="0" Grid.ColumnSpan="3">
+            <ToolBar
+                
+                Style="{DynamicResource MaterialDesignToolBar}"
+                ClipToBounds="False">
+                <Button ToolTip="Abrir código fuente" Name="AbrirFuente"  Click="AbrirFuente_Click" >
+                    <materialDesign:PackIcon  Kind="FolderOpen" />
+                </Button>
+
+                <Button ToolTip="Guardar código fuente" Name="GuardarFuente" Click="GuardarFuente_Click" >
+                    <materialDesign:PackIcon  Kind="ContentSave" />
+                </Button>
+
+                <Separator />
+
+                <Button Command="Cut" ToolTip="Cortar" ToolBar.OverflowMode="AsNeeded">
+                    <materialDesign:PackIcon  Kind="ContentCut" />
+                </Button>
+
+                <Button Command="Copy"  ToolTip="Copiar" ToolBar.OverflowMode="AsNeeded">
+                    <materialDesign:PackIcon   Kind="ContentCopy" />
+                </Button>
+
+                <Separator />
+                <Button Command="Paste" ToolTip="Pegar" ToolBar.OverflowMode="AsNeeded">
+                    <materialDesign:PackIcon Kind="ContentPaste" />
+                </Button>
+
+                <Separator />
+
+                <Button ToolTip="Analizar código fuente" ToolBar.OverflowMode="AsNeeded" Name="AnalizarFuente" Click="AnalizarFuente_Click" >
+                    <materialDesign:PackIcon Kind="FileTick" />
+                </Button>
+
+
+
+            </ToolBar>
+        </ToolBarTray>
+
         <GroupBox
             Header="Código Fuente"
             Grid.Column="0" 
-            Grid.Row="0"
+            Grid.Row="1"
             Margin="1"
             
             >
             <DockPanel>
 
-                <avalon:TextEditor ShowLineNumbers="True" FontSize="18">
+                <avalon:TextEditor ShowLineNumbers="True" FontSize="18" Name="EntradaFuente">
 
                 </avalon:TextEditor>
 
@@ -42,26 +85,34 @@
 
         </GroupBox>
 
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2" Grid.Row="0"/>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="2" Grid.Row="1"/>
         <GroupBox
             Grid.Column="2"
             Header="Tabla De Acciones"
             Margin="1"
-            Grid.Row="0"
+            Grid.Row="1"
             
             >
-
+            <ListView Name="TablaAcciones">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Stack}" Header="Pila" Width="120"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Input}" Header="Entrada" Width="120" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Action}" Header="Accion" Width="100" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
 
         </GroupBox>
 
-        <GridSplitter Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Height="2" Grid.Row="1"/>
+        <GridSplitter Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Height="2" Grid.Row="2"/>
 
         <GroupBox
             Grid.Column="0"
             Header="Log"
             Margin="1"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.ColumnSpan="3"
             
             >

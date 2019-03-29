@@ -33,26 +33,26 @@
                 
                 Style="{DynamicResource MaterialDesignToolBar}"
                 ClipToBounds="False">
-                <Button ToolTip="Abrir" Name="Abrir"  Click="Abrir_Click" >
+                <Button ToolTip="Abrir gramática" Name="Abrir"  Click="Abrir_Click" >
                     <materialDesign:PackIcon  Kind="FolderOpen" />
                 </Button>
 
-                <Button ToolTip="Guardar" Name="Guardar" Click="Guardar_Click">
+                <Button ToolTip="Guardar gramática" Name="Guardar" Click="Guardar_Click">
                     <materialDesign:PackIcon  Kind="ContentSave" />
                 </Button>
 
                 <Separator />
 
-                <Button Command="Cut" ToolTip="Cut" ToolBar.OverflowMode="AsNeeded">
+                <Button Command="Cut" ToolTip="Cortar" ToolBar.OverflowMode="AsNeeded">
                     <materialDesign:PackIcon  Kind="ContentCut" />
                 </Button>
 
-                <Button Command="Copy"  ToolTip="Copy that stuff" ToolBar.OverflowMode="AsNeeded">
+                <Button Command="Copy"  ToolTip="Copiar" ToolBar.OverflowMode="AsNeeded">
                     <materialDesign:PackIcon   Kind="ContentCopy" />
                 </Button>
 
                 <Separator />
-                <Button Command="Paste" ToolTip="Paste some stuff" ToolBar.OverflowMode="AsNeeded">
+                <Button Command="Paste" ToolTip="Pegar" ToolBar.OverflowMode="AsNeeded">
                     <materialDesign:PackIcon Kind="ContentPaste" />
                 </Button>
 

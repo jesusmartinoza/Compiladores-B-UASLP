@@ -47,7 +47,7 @@ namespace LR1_Parser
             {
 
                 EntradaGramatica.Text = File.ReadAllText(dialog.FileName);
-                App.currentFilePath = dialog.FileName;
+                App.grammarFilePath = dialog.FileName;
                 
             }
 
@@ -57,9 +57,9 @@ namespace LR1_Parser
         {
             if (!string.IsNullOrEmpty(EntradaGramatica.Text))
             {
-                if (File.Exists(App.currentFilePath))
+                if (File.Exists(App.grammarFilePath))
                 {
-                    File.WriteAllText(App.currentFilePath, EntradaGramatica.Text);
+                    File.WriteAllText(App.grammarFilePath, EntradaGramatica.Text);
                 }
                 else
                 {
@@ -69,8 +69,8 @@ namespace LR1_Parser
                     
                     if (dialog.ShowDialog() == true)
                     {
-                        App.currentFilePath = dialog.FileName;
-                        File.WriteAllText(App.currentFilePath, EntradaGramatica.Text);
+                        App.grammarFilePath = dialog.FileName;
+                        File.WriteAllText(App.grammarFilePath, EntradaGramatica.Text);
 
                     }
                 }

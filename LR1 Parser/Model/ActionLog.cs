@@ -8,8 +8,8 @@ namespace LR1_Parser.Model
 {
     struct ActionLog
     {
-        internal string Stack;
-        internal string Input;
-        internal string Action;
+        public string Stack { get; set; }
+        public string Input { get; set; }
+        public string Action { get; set; }
     }
 }

@@ -13,7 +13,9 @@ namespace LR1_Parser
     /// </summary>
     public partial class App : Application
     {
-        internal static string currentFilePath= null;
+        internal static string grammarFilePath= null;
+        internal static string sourceFilePath = null;
+
     }
 
 
