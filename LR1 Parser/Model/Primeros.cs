@@ -107,11 +107,13 @@ namespace LR1_Parser.Model
         private int PrimerosdeProduccion(Production p, List<Production> Gramatica)
         {
             int cambio = 0;
-
-            for (int i = 0; i < p.Right.Count; i++)
+            int numEpsilons = 0;
+            int numRightTokens= p.Right.Count; 
+            for (int i = 0; i < numRightTokens; i++)
             {
 
                 Token t = p.Right[i];
+                
 
                 if (t.IsTerminal == false)
                 {
@@ -123,10 +125,16 @@ namespace LR1_Parser.Model
                         // Si el NT es anulable (contiene epsilon)
                         if (primerosdelNT.Any(x => x.Content == "ε"))
                         {
-                            // Se saca el token epsilon de los primeros que se agregarán 
-                            Token ep = primerosdelNT.Find(x => x.Content == "ε");
-                            primerosdelNT.Remove(ep);
+                            numEpsilons++;
 
+                            // Si no todos los del lado derecho son anulables
+                            if (numEpsilons < numRightTokens)
+                            {
+                                // Se saca el token epsilon de los primeros que se agregarán 
+                                Token ep = primerosdelNT.Find(x => x.Content == "ε");
+                                primerosdelNT.Remove(ep);
+                            }
+                            
                             //Regreso algo en la lista, tiene primeros
                             cambio += Agregaprimeros(p.Left, primerosdelNT);
                         }
@@ -136,23 +144,15 @@ namespace LR1_Parser.Model
                             cambio += Agregaprimeros(p.Left, primerosdelNT);
                             break;
                         }
-
-
-
-
-
                     }
                     else
                         break;
-
                 }
                 else
                 {
                     cambio += Agregaprimeros(p.Left, t);
                 }
             }
-
-
             return cambio;
         }
 
