@@ -58,7 +58,7 @@
 
                 <Separator />
 
-                <Button ToolTip="Generar tabla de analisis sintáctico" ToolBar.OverflowMode="AsNeeded" Name="GenerarTabla" Click="GenerarTabla_Click" >
+                <Button ToolTip="Generar tabla de analisis sintácttico" ToolBar.OverflowMode="AsNeeded" Name="GenerarTabla" Click="GenerarTabla_Click" >
                     <materialDesign:PackIcon Kind="TableLarge" />
                 </Button>
 
