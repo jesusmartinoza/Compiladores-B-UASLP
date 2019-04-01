@@ -17,6 +17,9 @@ namespace LR1_Parser.Model
         //Lista de T y NT
         public List<string> tokenNT;
         public List<string> tokenT;
+        public List<Token> NT;
+        public List<Token> T;
+
         //Lista de producciones
         public List<Production> producciones;
 
@@ -55,6 +58,8 @@ namespace LR1_Parser.Model
             tokenNT = new List<string>();
             tokenT = new List<string>();
             tokens = new List<Token>();
+            T = new List<Token>();
+            NT = new List<Token>();
             //TText.Text = NTtext.Text = "";
             indice = 1;
             List<string> grammar = new List<string>();
@@ -87,6 +92,14 @@ namespace LR1_Parser.Model
                 }
             }
 
+            foreach(string s in tokenNT)
+            {
+                NT.Add(new Token(s, false));
+            }
+            foreach(string s in tokenT)
+            {
+                T.Add(new Token(s, true));
+            }
             return producciones;
         }
 
