@@ -10,7 +10,6 @@ namespace LR1_Parser.Model
     {
         public Dictionary<Token, List<Token>> primeros = new Dictionary<Token, List<Token>>();
 
-
         /// <summary>
         /// Regresa el conjunto de primeros para una lista de Tokens Terminales o No Terminales.
         /// </summary>
@@ -50,11 +49,22 @@ namespace LR1_Parser.Model
         /// </summary>
         /// <param name="Gramatica">Lista de producciones en base a la cual se calculara el conjunto primero de cada No Terminal</param>
 
-        public Primeros(List<Production> Gramatica)
+        public Primeros(List<Production> Gramatica, List<Token> TokensNoTerminales)
         {
-            ObtenerPrimeros(Gramatica);
+            InicializarDiccionario(TokensNoTerminales);
+            ObtenerPrimeros(Gramatica);           
+        }
+        /// <summary>
+        /// Metodo que inicializa el diccionario para asegurar que todos los NoTerminales se encuentren en el
+        /// </summary>
+        /// <returns>n</returns>
+        private void InicializarDiccionario(List<Token> tokensNoTerminales)
+        {
+            foreach (Token t in tokensNoTerminales) {
+                primeros = new Dictionary<Token, List<Token>>();
+                primeros.Add(t,new List<Token>());
 
-
+            }
         }
 
         /// <summary>
@@ -85,7 +95,6 @@ namespace LR1_Parser.Model
 
         private Dictionary<Token, List<Token>> ObtenerPrimeros(List<Production> Gramatica)
         {
-
             int cambio = 0;
             do
             {
@@ -93,15 +102,10 @@ namespace LR1_Parser.Model
                 foreach (Production p in Gramatica)
                 {
                     cambio += PrimerosdeProduccion(p, Gramatica);
-
                 }
             }
             while (cambio != 0);
-
-
-
             return primeros;
-
         }
 
         private int PrimerosdeProduccion(Production p, List<Production> Gramatica)
@@ -111,30 +115,24 @@ namespace LR1_Parser.Model
             int numRightTokens= p.Right.Count; 
             for (int i = 0; i < numRightTokens; i++)
             {
-
-                Token t = p.Right[i];
-                
-
+                Token t = p.Right[i];                
                 if (t.IsTerminal == false)
                 {
                     //Se revisa si este NT tiene primeros
                     List<Token> primerosdelNT = ObtenerPrimerosdelNT(t);
                     if (primerosdelNT != null)
                     {
-
                         // Si el NT es anulable (contiene epsilon)
                         if (primerosdelNT.Any(x => x.Content == "ε"))
                         {
                             numEpsilons++;
-
                             // Si no todos los del lado derecho son anulables
                             if (numEpsilons < numRightTokens)
                             {
                                 // Se saca el token epsilon de los primeros que se agregarán 
                                 Token ep = primerosdelNT.Find(x => x.Content == "ε");
                                 primerosdelNT.Remove(ep);
-                            }
-                            
+                            }                            
                             //Regreso algo en la lista, tiene primeros
                             cambio += Agregaprimeros(p.Left, primerosdelNT);
                         }
