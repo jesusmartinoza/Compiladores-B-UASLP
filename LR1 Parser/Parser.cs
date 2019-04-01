@@ -41,6 +41,9 @@ namespace LR1_Parser.Model
             bool valid = true;
             List<Token> inputTokens = new List<Token>();
             input = inputString;
+            // Se limpia al log
+            Log.Clear();
+
 
             // TODO: Tokenizar cadena 
             inputTokens = Tokenizer.Convert(input);

@@ -74,6 +74,36 @@ namespace LR1_Parser
 
         private void AnalizarFuente_Click(object sender, RoutedEventArgs e)
         {
+            if (App.currentParser != null)
+            {
+                if (!string.IsNullOrEmpty(EntradaFuente.Text))
+                {
+                    TablaAcciones.ItemsSource = null;
+
+
+
+                    if (App.currentParser.EvalString(EntradaFuente.Text))
+                    {
+
+                        Log.Text = "La cadena de entrada es valida!";
+                        Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
+                    }
+                    else
+                    {
+                        Log.Text = "La cadena de entrada no es valida. :( ";
+                        Log.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+
+                    }
+
+                    TablaAcciones.ItemsSource = App.currentParser.Log;
+                }
+                else
+                    MessageBox.Show("Introduzca código fuente");
+
+            }
+            else
+                MessageBox.Show("Primero Cree una tabla de Analisis Sintáctico en la sección Gramática");
+            
 
         }
     }

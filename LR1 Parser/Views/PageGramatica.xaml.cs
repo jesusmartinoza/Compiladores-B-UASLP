@@ -107,13 +107,13 @@ namespace LR1_Parser
                 
 
 
-                App.currentParser.EvalString("n + n - n - n + n");
+                //App.currentParser.EvalString("n + n - n - n + n");
 
                 // Se muestran los primeros en la UI
                 PrimerosTable.ItemsSource = primeros.GetView();
 
                 // Se crea la tabla de Analisis Sintáctico
-                App.currentParser.CreateSyntaxisAnalysisTable();
+                //App.currentParser.CreateSyntaxisAnalysisTable();
                 // Se muestra la tabla de Analisis Sintáctico
                 ShowTablaAS(App.currentParser.States);
 

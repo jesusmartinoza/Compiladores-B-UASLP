@@ -77,7 +77,7 @@
             >
             <DockPanel>
 
-                <avalon:TextEditor ShowLineNumbers="True" FontSize="18" Name="EntradaFuente">
+                <avalon:TextEditor ShowLineNumbers="True" FontSize="18" Name="EntradaFuente" FontFamily="Consolas">
 
                 </avalon:TextEditor>
 
@@ -116,8 +116,9 @@
             Grid.ColumnSpan="3"
             
             >
-
-
+            <avalon:TextEditor IsReadOnly="True" Name="Log" FontSize="16" FontFamily="Consolas"  >
+                
+            </avalon:TextEditor>
 
         </GroupBox>
 

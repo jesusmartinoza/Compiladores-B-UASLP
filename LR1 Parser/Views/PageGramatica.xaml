@@ -62,7 +62,7 @@
 
                 <Separator />
 
-                <Button ToolTip="Generar tabla de analisis sintácttico" ToolBar.OverflowMode="AsNeeded" Name="GenerarTabla" Click="GenerarTabla_Click" >
+                <Button ToolTip="Generar tabla de analisis sintáctico" ToolBar.OverflowMode="AsNeeded" Name="GenerarTabla" Click="GenerarTabla_Click" >
                     <materialDesign:PackIcon Kind="TableLarge" />
                 </Button>
 
@@ -83,7 +83,7 @@
             >
                 <DockPanel>
 
-                    <avalon:TextEditor ShowLineNumbers="True" FontSize="18" Name="EntradaGramatica" >
+                    <avalon:TextEditor ShowLineNumbers="True" FontSize="18" Name="EntradaGramatica" FontFamily="Consolas" >
 
                     </avalon:TextEditor>
 
