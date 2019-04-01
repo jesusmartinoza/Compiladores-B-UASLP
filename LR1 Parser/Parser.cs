@@ -88,6 +88,9 @@ namespace LR1_Parser.Model
                     nextAction.ToString()
                 );
 
+                if (inputTokens.First().Content == "$" && nextAction.state == cAction.state)
+                    break;
+
                 // Continua Análisis Sintáctico
                 if (nextAction.action == 'S')
                 {

@@ -49,7 +49,12 @@ namespace LR1_Parser.Model
             else
                 return " "; 
         }
-        
+
+        public override bool Equals(object a2)
+        {
+            return action == ((Action)a2).action && state == ((Action)a2).state;
+        }
+
     }
 
     /// <summary>
