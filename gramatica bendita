@@ -1,60 +1,60 @@
-programa-><estructura> <def-main>|<def-main>
-estructura-><estructura> <def>|<def>
-def-><sent-declara>|<def-func>
-def-func->defid { <secuencia-sent> }
-def-vent->CreaVentana ( id, cadena , num , num , num , num )
+programa->estructura def-main | def-main
+estructura->estructura def | def
+def->sent-declara | def-func
+def-func->defid { secuencia-sent }
+def-vent->CreaVentana ( id , cadena , num , num , num , num )
 def-ctrl->crea-control ( id , id , num , num , num , num , num )
 def-ctrl->CreaLabel ( id , id , num , num , cadena )
-crea-control->CreaBoton|CreaTextbox
+crea-control->CreaBoton | CreaTextbox
 def-evnt->CreaEvento ( id , id )
-def-main->defmain { <secuencia-sent> }
-secuencia-sent-><secuencia-sent> <sentencia>
-secuencia-sent-><sentencia>
-sentencia-><sent-if>
-sentencia-><sent-repeat>
-sentencia-><sent-assign>
-sentencia-><sent-while>
-sentencia-><sent-switch>
-sentencia-><sent-for>
-sentencia-><sent-func>
-sentencia-><def-vent>
-sentencia-><def-ctrl>
-sentencia-><def-evnt>
-sentencia-><sent-declara>
-sent-if->if ( <exp> ) { <secuencia-sent> }
-sent-if->if ( <exp> ) { <secuencia-sent> } else { <secuencia-sent> }
-sent-repeat->repeat { <secuencia-sent> } until ( <exp> )
-sent-assign->id := <exp>
-sent-while->while ( <exp> ) { <secuencia-sent> }
-sent-switch->switch ( id ) { <secuencia-case> }
-secuencia-case-><secuencia-case><sentencia-case>|<sentencia-case>
-sentencia-case->case <const> { <secuencia-sent> } break
-sent-for->for( id = num : num , stepnum) { <secuencia-sent> }
+def-main->defmain { secuencia-sent }
+secuencia-sent->secuencia-sent sentencia
+secuencia-sent->sentencia
+sentencia->sent-if
+sentencia->sent-repeat
+sentencia->sent-assign
+sentencia->sent-while
+sentencia->sent-switch
+sentencia->sent-for
+sentencia->sent-func
+sentencia->def-vent
+sentencia->def-ctrl
+sentencia->def-evnt
+sentencia->sent-declara
+sent-if->if ( exp ) { secuencia-sent }
+sent-if->if ( exp ) { secuencia-sent } else { secuencia-sent }
+sent-repeat->repeat { secuencia-sent } until ( exp )
+sent-assign->id : = exp
+sent-while->while ( exp ) { secuencia-sent }
+sent-switch->switch ( id ) { secuencia-case }
+secuencia-case->secuencia-case sentencia-case | sentencia-case
+sentencia-case->case const { secuencia-sent } break
+sent-for->for( id = num : num , stepnum) { secuencia-sent }
 sent-func-> id ( )
 sent-func->CierraVentana ( id )
 sent-func->MBox ( cadena )
 sent-func->Loop ( id )
 sent-func->ImprimeTextBox ( id , id )
-sent-declara-><tipo> <identificadores>
-identificadores-><identificadores> , id|id
-exp-><exp-simple> <op-comparacion> <exp-simple>
-exp-><exp-simple>
+sent-declara->tipo identificadores
+identificadores->identificadores , id | id
+exp->exp-simple op-comparacion exp-simple
+exp->exp-simple
 op-comparacion->==
 op-comparacion->\>
 op-comparacion->\<
-exp-simple-><exp-simple> <opsuma> <term>
-exp-simple-><term>
+exp-simple->exp-simple opsuma term
+exp-simple->term
 opsuma->+
 opsuma->-
-tipo->int|string|vent|textBox|label
-term-><term><opmult><factor>
+tipo->int | string | vent | textBox | label
+term->term opmult factor
 opmult->**
 opmult->*
 opmult->/
 opmult->%
-factor->( <exp> )
+factor->( exp )
 factor->num
 factor->id
-const->num|cadena
-vector->[ <vectorN> ]
-vectorN-><vectorN> , n|n
+const->num | cadena
+vector->[ vectorN ]
+vectorN->vectorN , n | n
