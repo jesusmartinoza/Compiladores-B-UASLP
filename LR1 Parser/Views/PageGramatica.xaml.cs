@@ -184,8 +184,9 @@ namespace LR1_Parser
                     colEstado.ReadOnly = true;
                     foreach (KeyValuePair<string, Action> token in allTokens)
                     {
+                        
                         DataColumn col = new DataColumn();
-                        col.ColumnName = token.Key;
+                        col.ColumnName = token.Key.Replace("(","PI").Replace(")","PD").Replace("[","CI").Replace("]","CD");
                         tabla.Columns.Add(col);
                         col.ReadOnly = true;
 
@@ -198,7 +199,10 @@ namespace LR1_Parser
                 r[0] = i;
                 foreach (KeyValuePair<string, Action> token in allTokens)
                 {
-                    r[token.Key] = token.Value;
+
+                    string k= token.Key.Replace("(", "PI").Replace(")", "PD").Replace("[", "CI").Replace("]", "CD");
+                    r[k] = token.Value;
+
 
                 }
                 tabla.Rows.Add(r);
