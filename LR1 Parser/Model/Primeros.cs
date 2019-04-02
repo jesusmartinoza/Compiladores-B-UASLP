@@ -22,8 +22,9 @@ namespace LR1_Parser.Model
             {
                 if(!cadenaDeEntrada[i].IsTerminal)
                 {   //Es No Terminal, se agrega
-                    cadenaPrimeros.AddRange(primeros[cadenaDeEntrada[i]]);
-                    if(primeros[cadenaDeEntrada[i]].Any(token => token.Content == "ε"))
+                    Token FindedKey = primeros.Keys.ToList().First(pred => pred.Content == cadenaDeEntrada[i].Content);
+                    cadenaPrimeros.AddRange(primeros[FindedKey]);
+                    if (primeros[FindedKey].Any(token => token.Content == "ε"))
                     {   //No Terminal contiene Epsilon
                         if(i + 1 < cadenaDeEntrada.Count)
                         {   //No es el ultimo elemento de la cadena, se quita Epsilon al Resultado

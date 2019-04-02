@@ -77,6 +77,17 @@ namespace LR1_Parser.Model
             set { first = value; }
         }
 
+        public override string ToString()
+        {
+            string RightResult = "";
+            for (int i = 0; i < Right.Count; i++)
+            {
+                RightResult += Right[i].Content;
+                if (i != Right.Count - 1)
+                    RightResult += " ";
+            }
 
+            return Left.Content + " -> " + RightResult;
+        }
     }
 }
