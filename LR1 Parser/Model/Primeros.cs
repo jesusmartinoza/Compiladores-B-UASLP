@@ -51,19 +51,26 @@ namespace LR1_Parser.Model
 
         public Primeros(List<Production> Gramatica, List<Token> TokensNoTerminales)
         {
-            InicializarDiccionario(TokensNoTerminales);
+            InicializarDiccionario(Gramatica);
             ObtenerPrimeros(Gramatica);           
         }
         /// <summary>
         /// Metodo que inicializa el diccionario para asegurar que todos los NoTerminales se encuentren en el
         /// </summary>
         /// <returns>n</returns>
-        private void InicializarDiccionario(List<Token> tokensNoTerminales)
+        private void InicializarDiccionario(List<Production> Gramatica)
         {
             primeros = new Dictionary<Token, List<Token>>();
+            foreach (Production p in Gramatica) {
+                if (!primeros.ContainsKey(p.Left)) {
+                    primeros.Add(p.Left, new List<Token>());
+                }
+            }
+            /*primeros = new Dictionary<Token, List<Token>>();
             foreach (Token t in tokensNoTerminales) {
                 primeros.Add(t,new List<Token>());
-            }
+            }*/
+
         }
 
         /// <summary>
@@ -179,6 +186,7 @@ namespace LR1_Parser.Model
 
         private int Agregaprimeros(Token left, List<Token> primerosdelNT)
         {
+
             if (primeros.ContainsKey(left))
             {
                 bool agrego = false;
@@ -203,6 +211,12 @@ namespace LR1_Parser.Model
 
         private List<Token> ObtenerPrimerosdelNT(Token t)
         {
+            /*foreach (Token token in primeros.Keys) {
+                if (token.Content == t.Content) {
+                    return new List<Token>(primeros[token]);
+                }            
+            }
+            return null;*/
             if (primeros.ContainsKey(t))
             {
                 return new List<Token>(primeros[t]);
