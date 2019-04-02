@@ -34,6 +34,7 @@ namespace LR1_Parser
         {
             InitializeComponent();
         }
+        List<Token> noTerminales;
 
         private void Abrir_Click(object sender, RoutedEventArgs e)
         {
@@ -90,12 +91,12 @@ namespace LR1_Parser
                 // Se separan el texto de entrada de la gramática y se crea la lista de producciones 
                 Tokenizer obtenProd = new Tokenizer();   
                 MainWindow.productions = obtenProd.obtenProducciones(EntradaGramatica.Text);
-
+                noTerminales = obtenProd.NT;
                 List<Token> simbolosGramaticales = obtenProd.tokens;
                 simbolosGramaticales.RemoveAll(pred => pred.Content == "ε");
 
                 // Se calcula el conjunto de primeros para la gramática
-                Primeros primeros = new Primeros(MainWindow.productions);
+                Primeros primeros = new Primeros(MainWindow.productions, noTerminales);
 
                 //Se calcula el AFD de la lista de producciones 
                 AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
@@ -158,7 +159,7 @@ namespace LR1_Parser
         // Función con una gram'atica estatica para probar primeros...
         public void TestPrimeros()
         {
-            Primeros primeros = new Primeros(MainWindow.productions);
+            Primeros primeros = new Primeros(MainWindow.productions, noTerminales);
             var nada = primeros.GetView();
             PrimerosTable.ItemsSource = nada;
         }

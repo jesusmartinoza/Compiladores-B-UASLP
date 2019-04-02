@@ -60,10 +60,9 @@ namespace LR1_Parser.Model
         /// <returns>n</returns>
         private void InicializarDiccionario(List<Token> tokensNoTerminales)
         {
+            primeros = new Dictionary<Token, List<Token>>();
             foreach (Token t in tokensNoTerminales) {
-                primeros = new Dictionary<Token, List<Token>>();
                 primeros.Add(t,new List<Token>());
-
             }
         }
 
