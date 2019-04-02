@@ -27,34 +27,38 @@ namespace LR1_Parser.Model
         }
     }
 
-    /// <summary>  
-    /// Representa una acción, por ejemplo s2, r1, etc...
-    /// 
-    /// La acción puede tener los valores:
-    /// S which means SHIFT
-    /// R which means REDUX
-    /// A which means ACCEPT
-    /// 
-    /// </summary> 
-    struct Action
-    {
-        internal char action; // Puede ser 'S', 'R' u 'A'
-        internal int state; // Estado al que va
+	/// <summary>  
+	/// Representa una acción, por ejemplo s2, r1, etc...
+	/// 
+	/// La acción puede tener los valores:
+	/// S which means SHIFT
+	/// R which means REDUX
+	/// A which means ACCEPT
+	/// 
+	/// </summary> 
+	struct Action
+	{
+		internal char action; // Puede ser 'S', 'R' u 'A'
+		internal int state; // Estado al que va
 
-        // Se sobrecarga metodo para facilitar despliegue
-        public override string ToString()
-        {
-            if(action!='\0')
-                return action + "" +state.ToString();
-            else
-                return " "; 
-        }
+		// Se sobrecarga metodo para facilitar despliegue
+		public override string ToString()
+		{
+			if (action != '\0')
+				return action + "" + state.ToString();
+			else
+				return " ";
+		}
 
-        public override bool Equals(object a2)
-        {
-            return action == ((Action)a2).action && state == ((Action)a2).state;
-        }
+		public override bool Equals(object a2)
+		{
+			return action == ((Action)a2).action && state == ((Action)a2).state;
+		}
 
+		public bool IsEmpty()
+		{
+			return action == '\0';
+		}
     }
 
     /// <summary>
