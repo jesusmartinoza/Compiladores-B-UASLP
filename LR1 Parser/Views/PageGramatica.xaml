@@ -125,7 +125,7 @@
             Grid.ColumnSpan="3"
             
             >
-            <DataGrid Name="TablaAnalisis" >
+            <DataGrid Name="TablaAnalisis">
                 
             </DataGrid>
 

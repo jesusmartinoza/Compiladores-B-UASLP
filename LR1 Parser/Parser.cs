@@ -179,10 +179,13 @@ namespace LR1_Parser.Model
 
                             foreach (var advanceToken in elem.Advance)
                             {
-                                state.Terminals.Add(
-                                    advanceToken.Content,
-                                    new Action() { action = 'R', state = MainWindow.productions.IndexOf(production) }
-                                );
+                                if(!state.Terminals.ContainsKey(advanceToken.Content))
+                                {
+                                    state.Terminals.Add(
+                                        advanceToken.Content,
+                                        new Action() { action = 'R', state = MainWindow.productions.IndexOf(production) }
+                                    );
+                                }
                             }
                         }
                     }
