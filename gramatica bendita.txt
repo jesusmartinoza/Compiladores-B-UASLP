@@ -37,21 +37,12 @@ sent-func->Loop ( id )
 sent-func->ImprimeTextBox ( id , id )
 sent-declara->tipo identificadores
 identificadores->identificadores , id | id
-exp->exp-simple op-comparacion exp-simple
+exp->exp-simple opcomparacion exp-simple
 exp->exp-simple
-op-comparacion->==
-op-comparacion->\>
-op-comparacion->\<
 exp-simple->exp-simple opsuma term
 exp-simple->term
-opsuma->+
-opsuma->-
 tipo->int | string | vent | textBox | label
 term->term opmult factor
-opmult->**
-opmult->*
-opmult->/
-opmult->%
 factor->( exp )
 factor->num
 factor->id
