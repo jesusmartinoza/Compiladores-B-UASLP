@@ -74,6 +74,7 @@
     <Compile Include="Model\Production.cs" />
     <Compile Include="Model\State.cs" />
     <Compile Include="Model\Token.cs" />
+    <Compile Include="RegexLexer.cs" />
     <Compile Include="Tokenizer.cs" />
     <Compile Include="Views\PageAnalisis.xaml.cs">
       <DependentUpon>PageAnalisis.xaml</DependentUpon>

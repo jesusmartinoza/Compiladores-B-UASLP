@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace LR1_Parser.Model
 {
@@ -112,11 +113,14 @@ namespace LR1_Parser.Model
             string g;
             foreach (string s in grammar)
             {
-                g = s.Split('→')[0].Replace(" ", "");
-                if (!tokenNT.Contains(g))//Verifica que no exista ya en la lista
+                if (s != "")
                 {
-                    tokenNT.Add(g);
-                    tokens.Add(new Token(g, false));
+                    g = s.Split('→')[0].Replace(" ", "");
+                    if (!tokenNT.Contains(g))//Verifica que no exista ya en la lista
+                    {
+                        tokenNT.Add(g);
+                        tokens.Add(new Token(g, false));
+                    }
                 }
             }
         }
@@ -129,13 +133,16 @@ namespace LR1_Parser.Model
         {
             foreach (string s in grammar)
             {
-                foreach (string ss in s.Split('→')[1].Split(' '))//Separa los diferentes tokens de la parte derecha de la flecha
+                if (s != "")
                 {
-                    ss.Replace(" ", "");
-                    if (!tokenNT.Contains(ss) && !tokenT.Contains(ss) && ss != "|" && ss != "")//Verifica que no sea un NT, aun no exista en la lista o sea el operador "|" de las gramaticas
+                    foreach (string ss in s.Split('→')[1].Split(' '))//Separa los diferentes tokens de la parte derecha de la flecha
                     {
-                        tokenT.Add(ss);
-                        tokens.Add(new Token(ss, true));
+                        ss.Replace(" ", "");
+                        if (!tokenNT.Contains(ss) && !tokenT.Contains(ss) && ss != "|" && ss != "")//Verifica que no sea un NT, aun no exista en la lista o sea el operador "|" de las gramaticas
+                        {
+                            tokenT.Add(ss);
+                            tokens.Add(new Token(ss, true));
+                        }
                     }
                 }
             }
@@ -148,13 +155,43 @@ namespace LR1_Parser.Model
         /// <returns>Tokens de la cadena</returns>
         public static List<Token> Convert(string input)
         {
+            RegexLexer csLexer = new RegexLexer();
+            string inputAux = input.Replace("\r\n", " ");
             List<Token> aux = new List<Token>();
-            List<string> list = input.Split(' ').ToList();
+
+            inputAux = Regex.Replace(inputAux,@"\s", " ");
+            inputAux = Regex.Replace(inputAux,"/[*].*?[*]/", " ");
+            List<string> list = inputAux.Split(' ').ToList();
+
+            List<string> palabrasReservadas = new List<string>() { "defid","CreaVentana","CreaLabel","CreaBoton",
+                "CreaTextbox","CreaEvento","defmain","if","else","repeat","until","while","switch","case",
+                "break","for","CierraVentana","MBox","Loop","ImprimeTextBox","int","string","vent","textBox","label",
+                "{","}","[","]",",","(",")",":",":="};
+
+            csLexer.AddTokenRule("\".*?\"", "cadena");
+            csLexer.AddTokenRule(@"\d*\.?\d+", "num");
+            csLexer.AddTokenRule(@"[a-z].*", "id");
+            csLexer.AddTokenRule(@"[+]|[-]", "opsuma");
+            csLexer.AddTokenRule(@"\*\*|\*|/|%", "opmult");
+            csLexer.AddTokenRule(@"==|\\<|\\>", "opcomparacion");
+
+            csLexer.Compile(RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+
             
-            foreach(string s in list)
+            foreach (string s in list)
             {
-                aux.Add(new Token(s, true));
+                if (palabrasReservadas.Contains(s))
+                {
+                    aux.Add(new Token(s, true));
+                }else
+                {
+                    if (s != "")
+                    {
+                        aux.AddRange(csLexer.GetTokens(s).ToList());
+                    }
+                }
             }
+            
 
             return aux;
         }
