@@ -29,7 +29,7 @@ sent-while->while ( exp ) { secuencia-sent }
 sent-switch->switch ( id ) { secuencia-case }
 secuencia-case->secuencia-case sentencia-case | sentencia-case
 sentencia-case->case const { secuencia-sent } break
-sent-for->for( id = num : num , stepnum) { secuencia-sent }
+sent-for->for( id = num : num , num) { secuencia-sent }
 sent-func-> id ( )
 sent-func->CierraVentana ( id )
 sent-func->MBox ( cadena )
@@ -37,24 +37,15 @@ sent-func->Loop ( id )
 sent-func->ImprimeTextBox ( id , id )
 sent-declara->tipo identificadores
 identificadores->identificadores , id | id
-exp->exp-simple op-comparacion exp-simple
+exp->exp-simple opcomparacion exp-simple
 exp->exp-simple
-op-comparacion->==
-op-comparacion->\>
-op-comparacion->\<
 exp-simple->exp-simple opsuma term
 exp-simple->term
-opsuma->+
-opsuma->-
 tipo->int | string | vent | textBox | label
 term->term opmult factor
-opmult->**
-opmult->*
-opmult->/
-opmult->%
 factor->( exp )
 factor->num
 factor->id
 const->num | cadena
 vector->[ vectorN ]
-vectorN->vectorN , n | n
+vectorN->vectorN , num | num
