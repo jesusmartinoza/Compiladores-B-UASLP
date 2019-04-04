@@ -16,11 +16,11 @@ defmain
         CreaTextbox ( z2 , 70 , 70 , 50 , 20 ) ;
         CreaTextbox ( z3 , 130 , 70 , 50 , 20 ) ;
 
-        CreaLabel ( l1 , "El resultado del determinante es: " , 10 , 150 ) ;
+        CreaLabel ( l1 , "Resultado:" , 10 , 150 ) ;
 
-        CreaBoton ( boton , "Calcula" , 70 , 100 , 60 , 30 )
+        CreaBoton ( boton1 , "Calcula" , 70 , 100 , 60 , 30 )
         {
-            Click()
+            Click
             {
                 a1 := x1 ;
                 a2 := x2 ;
@@ -47,7 +47,7 @@ defmain
                 t1 := t2 - t1 ;
 
                 string cad 
-		cad := "El resultado del determinante es: " + t1 ; 
+		cad := "Resultado: " + t1 ; 
 		l1 := cad ;
             }    
         }
