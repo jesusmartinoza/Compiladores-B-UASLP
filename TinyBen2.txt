@@ -52,7 +52,7 @@ tipo -> textBox
 tipo -> label
 tipo -> boton
 tipo -> float
-term -> term opmult potencia
+term -> term opmult factor
 term -> factor
 factor -> ( exp )
 factor -> num
