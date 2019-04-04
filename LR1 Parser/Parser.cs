@@ -74,25 +74,20 @@ namespace LR1_Parser.Model
                 else
                     nextAction = states[cAction.state].NonTerminals[cToken.Content];
 
-                // Agregar acciones al log
-                log.Add(new ActionLog()
-                {
-                    Stack = Helpers.ListToString(stackAnalysis),
-                    Input = Helpers.ListToString(inputTokens),
-                    Action = nextAction.ToString()
-                });
-
-                Console.WriteLine(
-                    Helpers.ListToString(stackAnalysis) + " " +
-                    Helpers.ListToString(inputTokens) + " " +
-                    nextAction.ToString()
-                );
-
                 if (nextAction.IsEmpty())
 				{
 					valid = false;
 					break;
-				}
+				} else
+                {
+                    // Agregar acciones al log
+                    log.Add(new ActionLog()
+                    {
+                        Stack = Helpers.ListToString(stackAnalysis),
+                        Input = Helpers.ListToString(inputTokens),
+                        Action = nextAction.action == 'S' ? nextAction.ToString() : nextAction.ToString() + " (" + MainWindow.productions[nextAction.state].ToString() + " )"
+                    });
+                }
 
                 // Continua Análisis Sintáctico
                 if (nextAction.action == 'S')
