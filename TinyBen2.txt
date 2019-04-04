@@ -1,0 +1,70 @@
+programa -> estructura def-main
+programa -> def-main
+estructura -> estructura sent-declara
+estructura -> sent-declara
+def-vent -> C r e a V e n t a n a  (  i d ,  c a d e n a , n u m , n u m , n u m , n u m ) { secuencia-ctrl }
+def-vent -> C r e a V e n t a n a (  i d , c a d e n a ) { secuencia-ctrl }
+secuencia-ctrl -> secuencia-ctrl def-ctrl
+secuencia-ctrl -> def-ctrl
+def-ctrl -> C r e a B o t o n ( i d , c a d e n a , n u m , n u m , n u m , n u m ) { def-evnt }
+def-ctrl -> C r e a T e x t b o x ( i d , n u m , n u m , n u m , n u m ) ;
+def-ctrl -> C r e a L a b e l ( i d , c a d e n a , n u m , n u m ) ;
+def-evnt -> C l i c k { secuencia-sent }
+def-main -> d e f m a i n { secuencia-sent }
+secuencia-sent -> sentencia secuencia-sent
+secuencia-sent -> sentencia
+sentencia -> sent-if
+sentencia -> sent-repeat
+sentencia -> sent-assign
+sentencia -> sent-while
+sentencia -> sent-do-while
+sentencia -> sent-switch
+sentencia -> sent-for
+sentencia -> sent-func
+sentencia -> def-vent
+sentencia -> sent-declara
+sent-if -> i f ( exp ) { secuencia-sent }
+sent-if -> i f ( exp ) { secuencia-sent } e l s e { secuencia-sent }
+sent-repeat -> r e p e a t { secuencia-sent } u n t i l ( exp )
+sent-assign -> i d : = exp ;
+sent-assign -> i d : = i d [ n u m ] ;
+sent-assign -> i d [ n u m ] : = exp ;
+sent-while -> w h i l e ( exp ) { secuencia-sent }
+sent-do-while -> d o { secuencia-sent } w h i l e ( exp ) ;
+sent-switch -> s w i t c h ( i d ) { secuencia-case }
+secuencia-case -> secuencia-case sentencia-case
+secuencia-case -> sentencia-case
+sentencia-case -> c a s e i d { secuencia-sent } b r e a k ;
+sent-for -> f o r ( i d : = n u m : n u m , n u m ) { secuencia-sent }
+sent-func -> M e s s a g e B o x ( c a d e n a )
+sent-declara -> tipo identificadores
+sent-declara -> tipo [ n u m ] identificadores
+identificadores -> identificadores , i d
+identificadores -> i d
+exp -> exp-simple op-comparacion exp-simple
+exp -> exp-simple
+op-comparacion -> = =
+op-comparacion -> >
+op-comparacion -> <
+exp-simple -> exp-simple opsuma term
+exp-simple -> term
+opsuma -> +
+opsuma -> -
+tipo -> i n t
+tipo -> s t r i n g
+tipo -> v e n t
+tipo -> t e x t B o x
+tipo -> l a b e l
+tipo -> b o t o n
+tipo -> f l o a t
+term -> term opmult potencia
+term -> potencia
+potencia -> potencia ^ factor
+potencia -> factor
+opmult -> *
+opmult -> /
+factor -> ( exp )
+factor -> n u m
+factor -> i d
+factor -> f l o t a n t e
+factor -> c a d e n a
