@@ -102,19 +102,20 @@ namespace LR1_Parser.Model
                 } else if(nextAction.action == 'R')
                 {
                     Production production = MainWindow.productions[nextAction.state];
+                    var rLen = production.Right.Count;
 
                     if (nextAction.state == 0) // Estado R0 o aceptar
                         break;
 
                     // Encuentra match
-                    foreach(var r in production.Right)
+                    for (var i = 0; i < rLen; i++)
                     {
-                        for (var i = 0; i < stackAnalysis.Count; i++)
-                        {
-                            var itState = stackAnalysis[i];
-                            if (!itState.dirty && itState.token.Content == r.Content)
-                                itState.dirty = true;
-                        }
+                        Token r = production.Right[i];
+                        int indexStack = (stackAnalysis.Count) - rLen + i;
+                        var itState = stackAnalysis[indexStack];
+
+                        if (!itState.dirty && itState.token.Content == r.Content)
+                            itState.dirty = true;
                     }
 
                     // Remplazar los TokenState sucios
