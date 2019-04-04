@@ -2,15 +2,15 @@ programa -> estructura def-main
 programa -> def-main
 estructura -> estructura sent-declara
 estructura -> sent-declara
-def-vent -> C r e a V e n t a n a  (  i d ,  c a d e n a , n u m , n u m , n u m , n u m ) { secuencia-ctrl }
-def-vent -> C r e a V e n t a n a (  i d , c a d e n a ) { secuencia-ctrl }
+def-vent -> CreaVentana ( id , cadena , num , num , num , num ) { secuencia-ctrl }
+def-vent -> CreaVentana ( id , cadena ) { secuencia-ctrl }
 secuencia-ctrl -> secuencia-ctrl def-ctrl
 secuencia-ctrl -> def-ctrl
-def-ctrl -> C r e a B o t o n ( i d , c a d e n a , n u m , n u m , n u m , n u m ) { def-evnt }
-def-ctrl -> C r e a T e x t b o x ( i d , n u m , n u m , n u m , n u m ) ;
-def-ctrl -> C r e a L a b e l ( i d , c a d e n a , n u m , n u m ) ;
-def-evnt -> C l i c k { secuencia-sent }
-def-main -> d e f m a i n { secuencia-sent }
+def-ctrl -> CreaBoton ( id , cadena , num , num , num , num ) { def-evnt }
+def-ctrl -> CreaTextbox ( id , num , num , num , num ) ;
+def-ctrl -> CreaLabel ( id , cadena , num , num ) ;
+def-evnt -> Click { secuencia-sent }
+def-main -> defmain { secuencia-sent }
 secuencia-sent -> sentencia secuencia-sent
 secuencia-sent -> sentencia
 sentencia -> sent-if
@@ -23,48 +23,38 @@ sentencia -> sent-for
 sentencia -> sent-func
 sentencia -> def-vent
 sentencia -> sent-declara
-sent-if -> i f ( exp ) { secuencia-sent }
-sent-if -> i f ( exp ) { secuencia-sent } e l s e { secuencia-sent }
-sent-repeat -> r e p e a t { secuencia-sent } u n t i l ( exp )
-sent-assign -> i d : = exp ;
-sent-assign -> i d : = i d [ n u m ] ;
-sent-assign -> i d [ n u m ] : = exp ;
-sent-while -> w h i l e ( exp ) { secuencia-sent }
-sent-do-while -> d o { secuencia-sent } w h i l e ( exp ) ;
-sent-switch -> s w i t c h ( i d ) { secuencia-case }
+sent-if -> if ( exp ) { secuencia-sent }
+sent-if -> if ( exp ) { secuencia-sent } else { secuencia-sent }
+sent-repeat -> repeat { secuencia-sent } until ( exp )
+sent-assign -> id := exp ;
+sent-assign -> id := id [ num ] ;
+sent-assign -> id [ num ] := exp ;
+sent-while -> while ( exp ) { secuencia-sent }
+sent-do-while -> do { secuencia-sent } while ( exp ) ;
+sent-switch -> switch ( id ) { secuencia-case }
 secuencia-case -> secuencia-case sentencia-case
 secuencia-case -> sentencia-case
-sentencia-case -> c a s e i d { secuencia-sent } b r e a k ;
-sent-for -> f o r ( i d : = n u m : n u m , n u m ) { secuencia-sent }
-sent-func -> M e s s a g e B o x ( c a d e n a )
+sentencia-case -> case id { secuencia-sent } break ;
+sent-for -> for ( id := num : num , num ) { secuencia-sent }
+sent-func -> MessageBox ( cadena )
 sent-declara -> tipo identificadores
-sent-declara -> tipo [ n u m ] identificadores
-identificadores -> identificadores , i d
-identificadores -> i d
-exp -> exp-simple op-comparacion exp-simple
+sent-declara -> tipo [ num ] identificadores
+identificadores -> identificadores , id
+identificadores -> id
+exp -> exp-simple opcomparacion exp-simple
 exp -> exp-simple
-op-comparacion -> = =
-op-comparacion -> >
-op-comparacion -> <
 exp-simple -> exp-simple opsuma term
 exp-simple -> term
-opsuma -> +
-opsuma -> -
-tipo -> i n t
-tipo -> s t r i n g
-tipo -> v e n t
-tipo -> t e x t B o x
-tipo -> l a b e l
-tipo -> b o t o n
-tipo -> f l o a t
+tipo -> int
+tipo -> string
+tipo -> vent
+tipo -> textBox
+tipo -> label
+tipo -> boton
+tipo -> float
 term -> term opmult potencia
-term -> potencia
-potencia -> potencia ^ factor
-potencia -> factor
-opmult -> *
-opmult -> /
+term -> factor
 factor -> ( exp )
-factor -> n u m
-factor -> i d
-factor -> f l o t a n t e
-factor -> c a d e n a
+factor -> num
+factor -> id
+factor -> cadena
