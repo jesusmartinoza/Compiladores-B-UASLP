@@ -80,13 +80,13 @@ namespace LR1_Parser.Model
 
                 foreach (string ss in list)
                 {
-                    producciones.Add(new Production(indice, getToken(aux2[0])));
+                    producciones.Add(new Production(indice, getToken(aux2[0].Replace(" ",""))));
                     List<string> tokenProd = ss.Split(' ').ToList();
                     foreach (string ss2 in tokenProd)
                     {
                         if (ss2 != "")
                         {
-                            producciones[producciones.Count - 1].Right.Add(getToken(ss2));
+                            producciones[producciones.Count - 1].Right.Add(getToken(ss2.Replace(" ","")));
                         }
                     }
                     indice++;
@@ -164,16 +164,16 @@ namespace LR1_Parser.Model
             List<string> list = inputAux.Split(' ').ToList();
 
             List<string> palabrasReservadas = new List<string>() { "defid","CreaVentana","CreaLabel","CreaBoton",
-                "CreaTextbox","CreaEvento","defmain","if","else","repeat","until","while","switch","case",
-                "break","for","CierraVentana","MBox","Loop","ImprimeTextBox","int","string","vent","textBox","label",
-                "{","}","[","]",",","(",")",":",":="};
-
+                "CreaTextbox","defmain","Click","if","else","repeat","until","while","switch","case",
+                "break","for","MessageBox","Loop","ImprimeTextBox","int","string","vent","textBox","label","boton","float",
+                "{","}","[","]",",","(",")",":",":=",";"};
+                    
             csLexer.AddTokenRule("\".*?\"", "cadena");
             csLexer.AddTokenRule(@"\d*\.?\d+", "num");
             csLexer.AddTokenRule(@"[a-z].*", "id");
             csLexer.AddTokenRule(@"[+]|[-]", "opsuma");
             csLexer.AddTokenRule(@"\*\*|\*|/|%", "opmult");
-            csLexer.AddTokenRule(@"==|\\<|\\>", "opcomparacion");
+            csLexer.AddTokenRule(@"==|<|>|<=|>=", "opcomparacion");
 
             csLexer.Compile(RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
