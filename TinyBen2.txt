@@ -1,0 +1,60 @@
+programa -> estructura def-main
+programa -> def-main
+estructura -> estructura sent-declara
+estructura -> sent-declara
+def-vent -> CreaVentana ( id , cadena , num , num , num , num ) { secuencia-ctrl }
+def-vent -> CreaVentana ( id , cadena ) { secuencia-ctrl }
+secuencia-ctrl -> secuencia-ctrl def-ctrl
+secuencia-ctrl -> def-ctrl
+def-ctrl -> CreaBoton ( id , cadena , num , num , num , num ) { def-evnt }
+def-ctrl -> CreaTextbox ( id , num , num , num , num ) ;
+def-ctrl -> CreaLabel ( id , cadena , num , num ) ;
+def-evnt -> Click { secuencia-sent }
+def-main -> defmain { secuencia-sent }
+secuencia-sent -> sentencia secuencia-sent
+secuencia-sent -> sentencia
+sentencia -> sent-if
+sentencia -> sent-repeat
+sentencia -> sent-assign
+sentencia -> sent-while
+sentencia -> sent-do-while
+sentencia -> sent-switch
+sentencia -> sent-for
+sentencia -> sent-func
+sentencia -> def-vent
+sentencia -> sent-declara
+sent-if -> if ( exp ) { secuencia-sent }
+sent-if -> if ( exp ) { secuencia-sent } else { secuencia-sent }
+sent-repeat -> repeat { secuencia-sent } until ( exp )
+sent-assign -> id := exp ;
+sent-assign -> id := id [ num ] ;
+sent-assign -> id [ num ] := exp ;
+sent-while -> while ( exp ) { secuencia-sent }
+sent-do-while -> do { secuencia-sent } while ( exp ) ;
+sent-switch -> switch ( id ) { secuencia-case }
+secuencia-case -> secuencia-case sentencia-case
+secuencia-case -> sentencia-case
+sentencia-case -> case id { secuencia-sent } break ;
+sent-for -> for ( id := num : num , num ) { secuencia-sent }
+sent-func -> MessageBox ( cadena )
+sent-declara -> tipo identificadores
+sent-declara -> tipo [ num ] identificadores
+identificadores -> identificadores , id
+identificadores -> id
+exp -> exp-simple opcomparacion exp-simple
+exp -> exp-simple
+exp-simple -> exp-simple opsuma term
+exp-simple -> term
+tipo -> int
+tipo -> string
+tipo -> vent
+tipo -> textBox
+tipo -> label
+tipo -> boton
+tipo -> float
+term -> term opmult potencia
+term -> factor
+factor -> ( exp )
+factor -> num
+factor -> id
+factor -> cadena
