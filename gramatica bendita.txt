@@ -25,7 +25,7 @@ sent-if->if ( exp ) { secuencia-sent }
 sent-if->if ( exp ) { secuencia-sent } else { secuencia-sent }
 sent-repeat->repeat { secuencia-sent } until ( exp )
 sent-assign->id := const
-sent-while->while ( exp ) { secuencia-sent }
+sent-while->repeat ( exp ) { secuencia-sent }
 sent-switch->switch ( id ) { secuencia-case }
 secuencia-case->secuencia-case sentencia-case | sentencia-case
 sentencia-case->case const { secuencia-sent } break
@@ -43,6 +43,7 @@ exp-simple->exp-simple opsuma term
 exp-simple->term
 tipo->int | string | vent | textBox | label
 term->term opmult factor
+term->factor
 factor->( exp )
 factor->num
 factor->id
