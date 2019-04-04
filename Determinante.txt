@@ -4,17 +4,17 @@ defmain
     CreaVentana ( v1 , "Determinante" , 0 , 0 , 500 , 500 )
     {
 
-        CreaTextBox ( x1 , 10 , 10 , 50 , 20 ) ;
-        CreaTextBox ( x2 , 70 , 10 , 50 , 20 ) ;
-        CreaTextBox ( x3 , 130 , 10 , 50 , 20 ) ;
+        CreaTextbox ( x1 , 10 , 10 , 50 , 20 ) ;
+        CreaTextbox ( x2 , 70 , 10 , 50 , 20 ) ;
+        CreaTextbox ( x3 , 130 , 10 , 50 , 20 ) ;
 
-        CreaTextBox ( y1 , 10 , 40 , 50 , 20 ) ;
-        CreaTextBox ( y2 , 70 , 40 , 50 , 20 ) ;
-        CreaTextBox ( y3 , 130 , 40 , 50 , 20 ) ;
+        CreaTextbox ( y1 , 10 , 40 , 50 , 20 ) ;
+        CreaTextbox ( y2 , 70 , 40 , 50 , 20 ) ;
+        CreaTextbox ( y3 , 130 , 40 , 50 , 20 ) ;
 
-        CreaTextBox ( z1 , 10 , 70 , 50 , 20 ) ;
-        CreaTextBox ( z2 , 70 , 70 , 50 , 20 ) ;
-        CreaTextBox ( z3 , 130 , 70 , 50 , 20 ) ;
+        CreaTextbox ( z1 , 10 , 70 , 50 , 20 ) ;
+        CreaTextbox ( z2 , 70 , 70 , 50 , 20 ) ;
+        CreaTextbox ( z3 , 130 , 70 , 50 , 20 ) ;
 
         CreaLabel ( l1 , "El resultado del determinante es: " , 10 , 150 ) ;
 
@@ -46,8 +46,9 @@ defmain
                 t2 := t2 + t3 ;
                 t1 := t2 - t1 ;
 
-                string cad := "El resultado del determinante es: " + t1 ; 
-		l1 = cad
+                string cad 
+		cad := "El resultado del determinante es: " + t1 ; 
+		l1 := cad ;
             }    
         }
     }
