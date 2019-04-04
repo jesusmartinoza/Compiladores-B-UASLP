@@ -24,7 +24,7 @@ sentencia->sent-declara
 sent-if->if ( exp ) { secuencia-sent }
 sent-if->if ( exp ) { secuencia-sent } else { secuencia-sent }
 sent-repeat->repeat { secuencia-sent } until ( exp )
-sent-assign->id : = exp
+sent-assign->id := const
 sent-while->while ( exp ) { secuencia-sent }
 sent-switch->switch ( id ) { secuencia-case }
 secuencia-case->secuencia-case sentencia-case | sentencia-case
