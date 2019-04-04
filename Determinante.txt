@@ -1,52 +1,52 @@
-defmain()
+defmain
 {
-    int a1, a2, a3, b1, b2, b3, c1, c2, c3
-    CreaVentana(v1, "Determinante", 0, 0, 500, 500)
+    int a1 , a2 , a3 , b1 , b2 , b3 , c1 , c2 , c3
+    CreaVentana ( v1 , "Determinante" , 0 , 0 , 500 , 500 )
     {
 
-        CreaTextBox(x1, 10, 10, 50, 20);
-        CreaTextBox(x2, 70, 10, 50, 20);
-        CreaTextBox(x3, 130, 10, 50, 20);
+        CreaTextBox ( x1 , 10 , 10 , 50 , 20 ) ;
+        CreaTextBox ( x2 , 70 , 10 , 50 , 20 ) ;
+        CreaTextBox ( x3 , 130 , 10 , 50 , 20 ) ;
 
-        CreaTextBox(y1, 10, 40, 50, 20);
-        CreaTextBox(y2, 70, 40, 50, 20);
-        CreaTextBox(y3, 130, 40, 50, 20);
+        CreaTextBox ( y1 , 10 , 40 , 50 , 20 ) ;
+        CreaTextBox ( y2 , 70 , 40 , 50 , 20 ) ;
+        CreaTextBox ( y3 , 130 , 40 , 50 , 20 ) ;
 
-        CreaTextBox(z1, 10, 70, 50, 20);
-        CreaTextBox(z2, 70, 70, 50, 20);
-        CreaTextBox(z3, 130, 70, 50, 20);
+        CreaTextBox ( z1 , 10 , 70 , 50 , 20 ) ;
+        CreaTextBox ( z2 , 70 , 70 , 50 , 20 ) ;
+        CreaTextBox ( z3 , 130 , 70 , 50 , 20 ) ;
 
-        CreaLabel(l1, "El resultado del determinante es: ", 10, 150);
+        CreaLabel ( l1 , "El resultado del determinante es: " , 10 , 150 ) ;
 
-        CreaBoton(boton, "Calcula", 70, 100, 60, 30)
+        CreaBoton ( boton , "Calcula" , 70 , 100 , 60 , 30 )
         {
             Click()
             {
-                a1 := x1;
-                a2 := x2;
-                a3 := x3;
+                a1 := x1 ;
+                a2 := x2 ;
+                a3 := x3 ;
 
-                b1 := y1;
-                b2 := y2;
-                b3 := y3;
+                b1 := y1 ;
+                b2 := y2 ;
+                b3 := y3 ;
 
-                c1 := z1;
-                c2 := z2;
-                c3 := z3;
+                c1 := z1 ;
+                c2 := z2 ;
+                c3 := z3 ;
 
-                t1 := a2 * b1 * c3;
-                t2 := a1 * b3 * c2;
-                t1 := t1 + t2;
-                t2 := a3 * b2 * c1;
-                t1 := t1 + t2;
-                t2 := a2 * b3 * c1;
-                t3 := a3 * b1 * c2;
-                t2 := t2 + t3;
-                t3 := a1 * b2 * c3;
-                t2 := t2 + t3;
-                t1 := t2 - t1;
+                t1 := a2 * b1 * c3 ;
+                t2 := a1 * b3 * c2 ;
+                t1 := t1 + t2 ;
+                t2 := a3 * b2 * c1 ;
+                t1 := t1 + t2 ;
+                t2 := a2 * b3 * c1 ;
+                t3 := a3 * b1 * c2 ;
+                t2 := t2 + t3 ;
+                t3 := a1 * b2 * c3 ;
+                t2 := t2 + t3 ;
+                t1 := t2 - t1 ;
 
-                string cad := "El resultado del determinante es: " + t1; 
+                string cad := "El resultado del determinante es: " + t1 ; 
 		l1 = cad
             }    
         }
