@@ -156,12 +156,12 @@ namespace LR1_Parser.Model
         public static List<Token> Convert(string input)
         {
             RegexLexer csLexer = new RegexLexer();
-            string inputAux = input.Replace("\r\n", " ");
+            string inputAux = input.Replace("\r", "");
             List<Token> aux = new List<Token>();
 
-            inputAux = Regex.Replace(inputAux,@"\s", " ");
+           // inputAux = Regex.Replace(inputAux,@"\s", " ");
             inputAux = Regex.Replace(inputAux,"/[*].*?[*]/", " ");
-            List<string> list = inputAux.Split(' ').ToList();
+            List<string> list = inputAux.Split('\n').ToList();
 
             List<string> palabrasReservadas = new List<string>() { "defid","CreaVentana","CreaLabel","CreaBoton",
                 "CreaTextbox","defmain","Click","if","else","repeat","until","while","switch","case",
@@ -169,27 +169,38 @@ namespace LR1_Parser.Model
                 "{","}","[","]",",","(",")",":",":=",";"};
                     
             csLexer.AddTokenRule("\".*?\"", "cadena");
+            csLexer.AddTokenRule(@"\s+", "ESPACIO", true);
             csLexer.AddTokenRule(@"\d*\.?\d+", "num");
-            csLexer.AddTokenRule(@"[a-z].*", "id");
+            csLexer.AddTokenRule(@"\b[_a-zA-Z][\w]*\b", "id");
             csLexer.AddTokenRule(@"[+]|[-]", "opsuma");
             csLexer.AddTokenRule(@"\*\*|\*|/|%", "opmult");
+            csLexer.AddTokenRule(@":=?", "operador");
             csLexer.AddTokenRule(@"==|<|>|<=|>=", "opcomparacion");
-
+            csLexer.AddTokenRule(@"[\(\)\{\}\[\];,]", "DELIMITADOR");
             csLexer.Compile(RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
             
             foreach (string s in list)
             {
-                if (palabrasReservadas.Contains(s))
+                /*if (palabrasReservadas.Contains(s))
                 {
                     aux.Add(new Token(s, true));
                 }else
-                {
+                {*/
                     if (s != "")
                     {
-                        aux.AddRange(csLexer.GetTokens(s).ToList());
+                        foreach(Token t in csLexer.GetTokens(s))
+                        {
+                            if (palabrasReservadas.Contains(t.Val))
+                            {
+                                t.Content = t.Val;
+                            }
+                            aux.Add(t);
+                        }
+                        
+                        //aux.AddRange(csLexer.GetTokens(s).ToList());
                     }
-                }
+                //}
             }
             
 

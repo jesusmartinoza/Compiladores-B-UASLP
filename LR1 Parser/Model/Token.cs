@@ -26,6 +26,12 @@ namespace LR1_Parser.Model
         public Token()
         { }
 
+        public Token(string s, bool t, string v)
+        {
+            terminal = t;
+            content = s;
+            val = v;
+        }
 
         public override string ToString()
         {

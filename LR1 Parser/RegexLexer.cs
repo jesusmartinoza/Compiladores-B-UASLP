@@ -89,7 +89,7 @@ namespace LR1_Parser.Model
                     {
                         string name = rex.GroupNameFromNumber(GNumbers[i]);
 
-                        yield return new Token(name, true);// match.Value, match.Index, line, (match.Index - start) + 1);
+                        yield return new Token(name, true, match.Value);// match.Value, match.Index, line, (match.Index - start) + 1);
 
                         break;
                     }
