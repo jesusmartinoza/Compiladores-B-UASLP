@@ -1,0 +1,25 @@
+/* 0:=true 1:=false */ 
+
+defmain{
+  int numero, cont, mod
+	int r
+	CreaVentana(v1,"Numero Primo",100,100,150,200){
+		CreaTexBox(entrada,10,10,15,20);
+		CreaTexBox(salida,20,10,25,20);
+		CreaBoton(b1,"Validar",30,170,60,30){
+			Click{
+				numero := entrada;
+				r := 0;
+				cont := 2;
+				while(cont <= num) {
+					mod = num % cont;
+					if (mod == 0){
+						r := 1;
+					}
+				cont := cont + 1;		
+				}
+		salida := r;
+			}
+		}
+	}
+}
