@@ -27,8 +27,8 @@ sent-if -> if ( exp ) { secuencia-sent }
 sent-if -> if ( exp ) { secuencia-sent } else { secuencia-sent }
 sent-repeat -> repeat { secuencia-sent } until ( exp )
 sent-assign -> id := exp ;
-sent-assign -> id := id [ num ] ;
-sent-assign -> id [ num ] := exp ;
+sent-assign -> id := id [ indice ] ;
+sent-assign -> id [ indice ] := exp ;
 sent-while -> while ( exp ) { secuencia-sent }
 sent-do-while -> do { secuencia-sent } while ( exp ) ;
 sent-switch -> switch ( id ) { secuencia-case }
@@ -38,7 +38,9 @@ sentencia-case -> case id { secuencia-sent } break ;
 sent-for -> for ( id := num : num , num ) { secuencia-sent }
 sent-func -> MessageBox ( cadena )
 sent-declara -> tipo identificadores
-sent-declara -> tipo [ num ] identificadores
+sent-declara -> tipo [ indice ] identificadores
+indice -> num
+indice -> id
 identificadores -> identificadores , id
 identificadores -> id
 exp -> exp-simple opcomparacion exp-simple
