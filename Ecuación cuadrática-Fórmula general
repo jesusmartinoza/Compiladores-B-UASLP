@@ -3,20 +3,20 @@ defmain
   int a , b , c , x1 , x2 , t1 , t2 , t3
   CreaVentana ( v1 , "Determinante" , 0 , 0 , 500 , 500 )
   {
-    CreaLabel ( la , "a: " , 10 , 5 ) ; 
+    CreaLabel ( la , "a:" , 10 , 5 ) ; 
     CreaTextbox ( ta , 10 , 10 , 50 , 20 ) ;
 
-    CreaLabel ( lb , "b: " , 70 , 5 ) ;
+    CreaLabel ( lb , "b:" , 70 , 5 ) ;
     CreaTextbox ( tb , 70 , 10 , 50 , 20 ) ;
 
-    CreaLabel ( lc , "c: " , 130 , 5 ) ;
+    CreaLabel ( lc , "c:" , 130 , 5 ) ;
     CreaTextbox ( tc , 130 , 10 , 50 , 20 ) ;
 
-    CreaLabel ( lx1 , "Respuesta x1: " , 20 , 45 ) ;
+    CreaLabel ( lx1 , "Respuesta_x1:" , 20 , 45 ) ;
 
-    CreaLabel ( lx2 , "Respuesta x2: " , 80 , 45 ) ;
+    CreaLabel ( lx2 , "Respuesta_x2:" , 80 , 45 ) ;
 
-    CreaBoton ( boton1 , "Calcula Ecuacion" , 80 , 100 , 60 , 30 )
+    CreaBoton ( boton1 , "Calcula_Ecuacion" , 80 , 100 , 60 , 30 )
     {
       Click
       {
@@ -24,17 +24,17 @@ defmain
         b := tb ;
         c := tc ;
         t1 := 4 * a * c ;
-        t2 := b ^ 2 - t1 ;
+        t2 := b ** 2 - t1 ;
 	t1 := 2 * a ;
-        t3 := - b + t2 ^ 0.5 ;
+        t3 := - b + t2 ** 0.5 ;
 	x1 := t3 / t1 ;
-        t3 := - b - t2 ^ 0.5 ;
+        t3 := - b - t2 ** 0.5 ;
         x2 := t3 / t1 ;
         
         string res 
-	res := "Resultado x1: " + x1 ; 
+	res := "Resultado_x1: " + x1 ; 
 	lx1 := res ;
-        res := "Resultado x2: " + x2 ; 
+        res := "Resultado_x2: " + x2 ; 
 	lx2 := res ;
       }
     }
