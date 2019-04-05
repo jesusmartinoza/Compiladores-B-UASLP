@@ -1,0 +1,19 @@
+defmain
+{
+	int a , b , cont
+	CreaVentana ( vent1 , "factorial" , 250 , 250 , 500 , 500 ) {
+		CreaTextbox ( boxA , 30 , 30 , 200 , 50 ) ;
+		CreaTextbox ( boxB , 30 , 100 , 200 , 50 ) ;
+		CreaBoton ( ejecuta , "Calcular" , 30 , 170 , 60 , 30 ) {
+			Click {
+				b := 1 ;
+				a := boxA ;
+				cont := 1 ;
+				while ( cont < a + 1 ) {
+					b := b * cont ;
+					cont := cont + 1 ;
+				}
+			}
+		}
+	}
+}
