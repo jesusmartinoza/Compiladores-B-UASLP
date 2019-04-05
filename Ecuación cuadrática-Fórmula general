@@ -1,6 +1,6 @@
 defmain
 {
-  int a , b , c , x1 , x2 , t1 , t2 , t3 , t4
+  int a , b , c , x1 , x2 , t1 , t2 , t3
   CreaVentana ( v1 , "Determinante" , 0 , 0 , 500 , 500 )
   {
     CreaLabel ( la , "a: " , 10 , 5 ) ; 
@@ -24,18 +24,18 @@ defmain
         b := tb ;
         c := tc ;
         t1 := 4 * a * c ;
-        t2 := b^2 - t1 ;
-        t3 := - b + t2^0.5 ;
-        t4 := - b - t2^0.5 ;
-        t1 := 2 * a ;
-        x1 := t3 / t1 ;
-        x2 := t4 / t1 ;
+        t2 := b ^ 2 - t1 ;
+	t1 := 2 * a ;
+        t3 := - b + t2 ^ 0.5 ;
+	x1 := t3 / t1 ;
+        t3 := - b - t2 ^ 0.5 ;
+        x2 := t3 / t1 ;
         
         string res 
-		    res := "Resultado x1: " + x1 ; 
-		    lx1 := res ;
+	res := "Resultado x1: " + x1 ; 
+	lx1 := res ;
         res := "Resultado x2: " + x2 ; 
-		    lx2 := res ;
+	lx2 := res ;
       }
     }
   }
