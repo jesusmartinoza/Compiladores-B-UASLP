@@ -1,0 +1,57 @@
+
+defmain {
+
+	int numDatos
+	vent pideNumDatos
+	textBox tbPideNumDatos
+	float media
+	float difCuadrada
+	float desvEstandar
+	
+	CreaVentana ( pideNumDatos , "Numero_De_Datos" , 100 , 100 , 100 , 100 )
+	{
+		CreaTextbox ( tbPideNumDatos , 20 , 20 , 50 , 50 ) ;
+	}
+ 
+	numDatos := tbPideNumDatos ; 
+	int [numDatos] datos
+	
+	 
+	int i
+	i := 0 ;
+ 
+	while(i<numDatos)
+	{
+	 	vent auxVent
+	 	textBox auxTextBox
+	 	
+	 	CreaVentana ( auxVent , "Dame dato" , 100 , 100 , 100 , 100 )
+	 	{
+	 		CreaTextbox ( auxTextBox , 20 , 20 , 50 , 50 ) ;
+	 	}
+	 	
+	 	datos [ i ] := auxTextBox;
+	 	media := auxTextBox / numDAtos;
+	 	
+	 	i := i+1;
+	}
+  	
+
+ 	i := 0;
+
+	while(i < numDatos)
+	{
+		difCuadrada := difCuadrada + (datos[ i ] - media)**2;
+		i := i+1;
+	}
+	
+	desvEstandar :=( difCuadrada/numDatos)**0.5 ; 
+	
+	
+	CreaVentana ( desvEstandar, "Numero_De_Datos" , 100 , 100 , 100 , 100 )
+	{
+		CreaLabel ( desvEstandar,"Resultado",50,50) ;
+	}
+
+ 
+}
