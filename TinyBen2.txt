@@ -27,7 +27,6 @@ sent-if -> if ( exp ) { secuencia-sent }
 sent-if -> if ( exp ) { secuencia-sent } else { secuencia-sent }
 sent-repeat -> repeat { secuencia-sent } until ( exp )
 sent-assign -> id := exp ;
-sent-assign -> id := id [ indice ] ;
 sent-assign -> id [ indice ] := exp ;
 sent-while -> while ( exp ) { secuencia-sent }
 sent-do-while -> do { secuencia-sent } while ( exp ) ;
@@ -60,3 +59,4 @@ factor -> ( exp )
 factor -> num
 factor -> id
 factor -> cadena
+factor -> id [ indice ]
