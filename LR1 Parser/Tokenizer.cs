@@ -175,7 +175,7 @@ namespace LR1_Parser.Model
             csLexer.AddTokenRule(@"[+]|[-]", "opsuma");
             csLexer.AddTokenRule(@"\*\*|\*|/|%", "opmult");
             csLexer.AddTokenRule(@":=?", "operador");
-            csLexer.AddTokenRule(@"==|<|>|<=|>=", "opcomparacion");
+            csLexer.AddTokenRule(@"==|<|>|<=|>=|!=", "opcomparacion");
             csLexer.AddTokenRule(@"[\(\)\{\}\[\];,]", "DELIMITADOR");
             csLexer.Compile(RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
