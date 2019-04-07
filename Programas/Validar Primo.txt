@@ -11,9 +11,9 @@ defmain{
 				numero := entrada;
 				r := 0;
 				cont := 2;
-				while(cont <= num) {
+				while(cont < num) {
 					mod = num % cont;
-					if (mod == 0){
+					if (mod != 0){
 						r := 1;
 					}
 				cont := cont + 1;		
