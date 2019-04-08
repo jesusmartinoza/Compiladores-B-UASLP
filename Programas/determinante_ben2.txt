@@ -1,6 +1,6 @@
 defmain {
     int a1, a2, a3, b1, b2, b3, c1, c2, c3
-    textBox x1,x2,x3,y1,y2,y3,z1,z2,z3,txsalida
+    textBox x1, x2, x3, y1, y2, y3, z1, z2, z3, txsalida
     boton boton1
     label l1
     vent v1
