@@ -1,0 +1,76 @@
+/*         Programa para encontrar el Error Cuadrático Medio      */
+
+/* http://mccormickml.com/2014/03/04/gradient-descent-derivation  */
+
+defmain {
+	int numDatos
+	vent pideNumDatos
+	textBox tbPideNumDatos, tbTheta1, tbTheta2
+	
+	float ecm /* Error Cuadratico Medio */
+	float theta1, theta2
+	float sigma
+	int [numDatos] datosX
+	int [numDatos] datosY
+	sigma := 0 ;
+
+	/* Pedir el numero de datos m */
+	CreaVentana ( pideNumDatos , "Numero de datos" , 100 , 100 , 100 , 100 )
+	{
+		CreaTextbox ( tbPideNumDatos , 20 , 20 , 50 , 50 ) ;
+	}
+ 
+	numDatos := tbPideNumDatos ; 
+	
+	int i
+	i := 0 ;
+ 
+	while ( i < numDatos )
+	{
+	 	vent auxVent
+	 	textBox auxTextBoxX
+	 	textBox auxTextBoxY
+	 	
+	 	CreaVentana ( auxVent , "Dame un valor de X y su respectivo resultado en Y" , 100 , 100 , 100 , 100 )
+	 	{
+	 		CreaTextbox ( auxTextBoxX , 20 , 20 , 50 , 50 ) ;
+		 	CreaTextbox ( auxTextBoxY , 20 , 40 , 50 , 50 ) ;
+	 	}
+	 	
+	 	datosX [ i ] := auxTextBoxX ;
+	 	datosY [ i ] := auxTextBoxY ;
+	 	
+	 	i := i+1;
+	}
+	
+	/* Una vez que se tienen los datos entonces pedir el vector Theta  */
+	CreaVentana ( pideNumDatos , "Ingresa vector Theta " , 100 , 100 , 100 , 100 )
+	{
+		CreaTextbox ( tbTheta1 , 20 , 40 , 50 , 50 ) ;
+		CreaTextbox ( tbTheta2 , 20 , 60 , 50 , 50 ) ;
+	}
+	
+ 	theta1 := tbTheta1 ; 
+ 	theta2 := tbTheta2 ;
+
+	float aux
+ 	i := 0;
+	
+	/* Por ultimo calcular el Error Cuadrático Medio */
+	while ( i < numDatos )
+	{
+		aux := theta1 + theta2 * datosX [ i ] ; /* Evaluar hipotesis */
+		aux := aux - datosY [ i ] ;
+		sigma := sigma + aux ** 2;
+		
+		i := i+1;
+	}
+
+	float res 
+	res := res / numDatos ;
+	
+	CreaVentana ( desvEstandar, "Resultado" , 100 , 100 , 100 , 100 )
+	{
+		CreaLabel ( res , "Resultado" , 50 , 50 ) ;
+	}
+}
