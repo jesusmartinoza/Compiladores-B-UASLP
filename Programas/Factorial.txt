@@ -9,7 +9,7 @@ defmain
 				b := 1 ;
 				a := boxA ;
 				cont := 1 ;
-				while ( cont < a + 1 ) {
+				while ( cont <= a ) {
 					b := b * cont ;
 					cont := cont + 1 ;
 				}
