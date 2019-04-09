@@ -1,7 +1,7 @@
 defmain
 {
   int a , b , c , x1 , x2 , t1 , t2 , t3
-  CreaVentana ( v1 , "Determinante" , 0 , 0 , 500 , 500 )
+  CreaVentana ( v1 , "Ecuacion Cuadratica" , 0 , 0 , 500 , 500 )
   {
     CreaLabel ( la , "a:" , 10 , 5 ) ; 
     CreaTextbox ( ta , 10 , 10 , 50 , 20 ) ;
