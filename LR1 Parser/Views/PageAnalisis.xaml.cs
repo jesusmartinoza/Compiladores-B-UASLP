@@ -35,15 +35,12 @@ namespace LR1_Parser
             dialog.Filter = "Archivos de texto (*.txt)| *.txt";
             dialog.AddExtension = true;
 
-
             if (dialog.ShowDialog() == true)
             {
 
                 EntradaFuente.Text = File.ReadAllText(dialog.FileName);
                 App.sourceFilePath = dialog.FileName;
-
             }
-
         }
 
         private void GuardarFuente_Click(object sender, RoutedEventArgs e)

@@ -19,6 +19,7 @@ namespace LR1_Parser.Model
         List<TokenState> stackAnalysis; // Pila de analisis sintático
         string input; // Cadena a evaluar
         List<ActionLog> log;
+        Stack<BinaryTreeNode> nodesStack;
 
         internal List<Node> AFD;
         internal List<State> States { get { return states; } set { states = value; } }
@@ -30,6 +31,7 @@ namespace LR1_Parser.Model
             States = new List<State>();
             stackAnalysis = new List<TokenState>();
             log = new List<ActionLog>();
+            nodesStack = new Stack<BinaryTreeNode>();
 
             //InitTestAFD();
             CreateSyntaxisAnalysisTable();
@@ -44,8 +46,6 @@ namespace LR1_Parser.Model
             // Se limpia al log
             Log.Clear();
 
-
-            // TODO: Tokenizar cadena 
             inputTokens = Tokenizer.Convert(input);
 
             inputTokens.Add(new Token("$", true));
@@ -99,6 +99,8 @@ namespace LR1_Parser.Model
                     Production production = MainWindow.productions[nextAction.state];
                     var rLen = production.Right.Count;
 
+                    SemanticAnalysis(production, nextAction.state);
+
                     if (nextAction.state == 0) // Estado R0 o aceptar
                         break;
 
@@ -135,6 +137,41 @@ namespace LR1_Parser.Model
             }
 
             return valid;
+        }
+
+        /// <summary>
+        /// Ejecutar esquema de traduccion.
+        /// 
+        /// Indirectamente va generando el árbol de analisis sintáctico.
+        /// 
+        /// TODO: 
+        /// ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ P E L I G R O   !!!!!!!!!!!!!!!!!!!!!
+        /// SI CAMBIA LA GRAMATICA, CAMBIAN LOS INDICES Y POR LO TANTO HAY QUE REACOMODAR ESTE SWITCH
+        /// </summary>
+        /// <param name="p">Produccion</param>
+        private void SemanticAnalysis(Production p, int productionIndex)
+        {
+            switch(productionIndex)
+            {
+                case 25:
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+                    nodesStack.Push(new BinaryTreeNode("sent-if", a, b));
+                    break;
+
+                case 26:
+                    BinaryTreeNode c = nodesStack.Pop();
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+
+                    BinaryTreeNode n = CreaNodo("else", b, c);
+                    nodesStack.Push("if", a, n);
+                    break;
+
+                case 27:
+                    break;
+
+            }
         }
 
         /// <summary>
