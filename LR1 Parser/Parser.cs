@@ -194,6 +194,41 @@ namespace LR1_Parser.Model
         {
             switch (productionIndex)
             {
+                // def-vent -> CreaVentana ( id , cadena , num , num1 , num2 , num3 ) { secuencia-ctrl }
+                case 4:
+                {
+                        BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
+                        BinaryTreeNode b = new BinaryTreeNode("posV", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
+                        BinaryTreeNode c = new BinaryTreeNode("tamV", new BinaryTreeNode(p.Right[10].Content), new BinaryTreeNode(p.Right[12].Content));
+                        BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
+
+                        b = new BinaryTreeNode("at", a, n);
+                        c = nodesStack.Pop();
+
+                        nodesStack.Push(new BinaryTreeNode("CV1", b, c));
+                }
+                break;
+
+                // def-vent -> CreaVentana ( id , cadena ) { secuencia-ctrl }
+                case 5:
+                {
+                    BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Content), nodesStack.Peek());
+                    BinaryTreeNode b = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode("CV2", a, b));
+                }
+                break;
+
+                // secuencia-ctrl -> secuencia-ctrl def-ctrl
+                case 6:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode(";", a, b));
+                }
+                break;
+
                 // sent -if -> if (exp) { secuencia - sent }
                 case 25:
                 {
