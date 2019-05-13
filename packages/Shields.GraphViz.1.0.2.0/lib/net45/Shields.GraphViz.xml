@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Shields.GraphViz</name>
+    </assembly>
+    <members>
+        <member name="T:Shields.GraphViz.Services.IRenderer">
+            <summary>
+            Provides access to GraphViz applications.
+            </summary>
+        </member>
+        <member name="M:Shields.GraphViz.Services.IRenderer.RunAsync(Shields.GraphViz.Models.Graph,System.IO.Stream,Shields.GraphViz.Services.RendererLayouts,Shields.GraphViz.Services.RendererFormats,System.Threading.CancellationToken)">
+            <summary>
+            Runs GraphViz to render a graph.
+            </summary>
+            <param name="graph">The graph to render.</param>
+            <param name="outputStream">The output is written to the output stream using the specified output format.</param>
+            <param name="layout">The layout algorithm to use.</param>
+            <param name="format">The output format.</param>
+            <param name="cancellationToken">The cancellation token for the asynchronous operation.</param>
+            <returns>The task that signals completion.</returns>
+        </member>
+        <member name="F:Shields.GraphViz.Services.RendererLayouts.Dot">
+            <summary>
+            Draws graphs as hierarchies.
+            </summary>
+        </member>
+        <member name="T:Shields.GraphViz.Models.CompassPoints">
+            <summary>
+            The eight ordinal and cardinal directions on a compass.
+            </summary>
+        </member>
+    </members>
+</doc>

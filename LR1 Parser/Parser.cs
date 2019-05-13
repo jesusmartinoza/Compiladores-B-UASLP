@@ -1,9 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Shields.GraphViz.Components;
+using Shields.GraphViz.Models;
+using Shields.GraphViz.Services;
 
 namespace LR1_Parser.Model
 {
@@ -21,6 +27,10 @@ namespace LR1_Parser.Model
         List<ActionLog> log;
         Stack<BinaryTreeNode> nodesStack;
 
+        // Stuff for graphviz
+        List<EdgeStatement> graphVizEdges;
+        IRenderer renderer;
+
         internal List<Node> AFD;
         internal List<State> States { get { return states; } set { states = value; } }
         internal List<ActionLog> Log { get { return log; } set { log = value; } }
@@ -32,11 +42,12 @@ namespace LR1_Parser.Model
             stackAnalysis = new List<TokenState>();
             log = new List<ActionLog>();
             nodesStack = new Stack<BinaryTreeNode>();
+            renderer = new Renderer(@"C:\Program Files (x86)\Graphviz2.38\bin");
+            graphVizEdges = new List<EdgeStatement>();
 
             //InitTestAFD();
             CreateSyntaxisAnalysisTable();
         }
-
 
         public bool EvalString(String inputString)
         {
@@ -136,7 +147,35 @@ namespace LR1_Parser.Model
                 }
             }
 
+            // TODO: Descomentar cuando esten todos los esquemas de traduccion
+            /*if(valid)
+            {
+                DFSSearch(nodesStack.Peek(), 1);
+                CreateGraphFile();
+            }*/
+
             return valid;
+        }
+
+        private async void CreateGraphFile()
+        {
+            var graph = Graph.Directed
+                //.Add(AttributeStatement.Graph.Set("rankdir", "LR"))
+                .Add(AttributeStatement.Graph.Set("labelloc", "t"))
+                //.Add(AttributeStatement.Graph.Set("bgcolor", "#34495e"))
+                .Add(AttributeStatement.Node.Set("style", "filled"))
+                .Add(AttributeStatement.Node.Set("fillcolor", "#ECF0F1"))
+                .Add(AttributeStatement.Graph.Set("label", "Arbol semántico"))
+                .AddRange(graphVizEdges);
+
+            using (Stream file = File.Create("Semantic Tree.png"))
+            {
+                await renderer.RunAsync(
+                    graph, file,
+                    RendererLayouts.Dot,
+                    RendererFormats.Png,
+                    CancellationToken.None);
+            }
         }
 
         /// <summary>
@@ -145,7 +184,9 @@ namespace LR1_Parser.Model
         /// Indirectamente va generando el árbol de analisis sintáctico.
         /// 
         /// TODO: 
-        /// ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡ P E L I G R O   !!!!!!!!!!!!!!!!!!!!!
+        /// 
+        /// ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ¡ P E L I G R O   ! ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ 
+        /// 
         /// SI CAMBIA LA GRAMATICA, CAMBIAN LOS INDICES Y POR LO TANTO HAY QUE REACOMODAR ESTE SWITCH
         /// </summary>
         /// <param name="p">Produccion</param>
@@ -153,6 +194,7 @@ namespace LR1_Parser.Model
         {
             switch (productionIndex)
             {
+                // sent -if -> if (exp) { secuencia - sent }
                 case 25:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
@@ -162,6 +204,7 @@ namespace LR1_Parser.Model
                 }
                 break;
 
+                // sent -if -> if (exp) { secuencia - sent } else { secuencia - sent }
                 case 26:
                 {
                     BinaryTreeNode c = nodesStack.Pop();
@@ -172,7 +215,8 @@ namespace LR1_Parser.Model
                     nodesStack.Push(new BinaryTreeNode("sent-if", a, n));
                 }
                 break;
-
+               
+                // sent - repeat->repeat { secuencia - sent } until(exp)
                 case 27:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
@@ -218,6 +262,34 @@ namespace LR1_Parser.Model
                     nodesStack.Push(new BinaryTreeNode("do", a, b));
                     break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Iterate over graph to create graphviz visualization.
+        /// </summary>
+        private void DFSSearch(BinaryTreeNode parent, int counter)
+        {
+            List<EdgeStatement> edges = new List<EdgeStatement>();
+            var parentId = parent.Content + " " + counter;
+
+            if (parent.Id == 0)
+                parent.Id = counter;
+
+            parent.Visited = true;
+            counter++;
+
+            if (parent.Left != null && !parent.Left.Visited)
+            {
+                var leftId = parent.Left.Content + " " + counter;
+                edges.Add(EdgeStatement.For(parentId, leftId));
+                DFSSearch(parent.Left, counter);
+            }
+            else if (parent.Right != null && !parent.Right.Visited)
+            {
+                var rightId = parent.Right.Content + " " + counter;
+                edges.Add(EdgeStatement.For(parentId, rightId));
+                DFSSearch(parent.Right, counter);
             }
         }
 
