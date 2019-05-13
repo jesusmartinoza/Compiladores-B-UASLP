@@ -154,22 +154,32 @@ namespace LR1_Parser.Model
             switch(productionIndex)
             {
                 case 25:
+                {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
                     nodesStack.Push(new BinaryTreeNode("sent-if", a, b));
-                    break;
+                }
+                break;
 
                 case 26:
+                {
                     BinaryTreeNode c = nodesStack.Pop();
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
 
-                    BinaryTreeNode n = CreaNodo("else", b, c);
-                    nodesStack.Push("if", a, n);
-                    break;
+                    BinaryTreeNode n = new BinaryTreeNode("else", b, c);
+                    nodesStack.Push(new BinaryTreeNode("sent-if", a, n));
+                }
+                break;
 
                 case 27:
-                    break;
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode("repeat", a, b));
+                }
+                break;
 
             }
         }
