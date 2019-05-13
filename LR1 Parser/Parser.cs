@@ -151,12 +151,13 @@ namespace LR1_Parser.Model
         /// <param name="p">Produccion</param>
         private void SemanticAnalysis(Production p, int productionIndex)
         {
-            switch(productionIndex)
+            switch (productionIndex)
             {
                 case 25:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
+                        
                     nodesStack.Push(new BinaryTreeNode("sent-if", a, b));
                 }
                 break;
@@ -181,6 +182,42 @@ namespace LR1_Parser.Model
                 }
                 break;
 
+                // sent - assign->id := exp;
+                case 29:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Content);
+                    nodesStack.Push(new BinaryTreeNode(":=", a, b));
+                }
+                break;
+
+                // sent-assign -> id [ indice ] := exp ;
+                case 30:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = new BinaryTreeNode("[ ]", new BinaryTreeNode(p.Right[0].Content), new BinaryTreeNode(p.Right[2].Content));
+                    nodesStack.Push(new BinaryTreeNode(":=", a, b));
+                }
+                break;
+
+                // sent-while -> while ( exp ) { secuencia-sent }
+                case 31:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+                    nodesStack.Push(new BinaryTreeNode("while", a, b));
+
+                    break;
+                }
+
+                // sent-while -> while ( exp ) { secuencia-sent }
+                case 32:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+                    nodesStack.Push(new BinaryTreeNode("do", a, b));
+                    break;
+                }
             }
         }
 
