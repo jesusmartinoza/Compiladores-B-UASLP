@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -297,6 +297,12 @@ namespace LR1_Parser.Model
                     nodesStack.Push(new BinaryTreeNode("do", a, b));
                     break;
                 }
+                case 44:{
+                	BinaryTreeNode a = nodesStack.Pop();
+                	BinaryTreeNode b = nodesStack.Pop();
+                	nodesStack.Push(new BinaryTreeNode("opmult", a , b));
+                }
+
             }
         }
 
