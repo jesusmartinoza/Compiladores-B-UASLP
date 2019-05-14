@@ -229,6 +229,58 @@ namespace LR1_Parser.Model
                 }
                 break;
 
+                // def-ctrl -> CreaBoton ( id , cadena , num , num , num , num ) { def-evnt }
+                case 8:
+                {
+                    BinaryTreeNode a = new BinaryTreeNode("idB", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
+                    BinaryTreeNode b = new BinaryTreeNode("posB", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
+                    BinaryTreeNode c = new BinaryTreeNode("tamB", new BinaryTreeNode(p.Right[10].Content), new BinaryTreeNode(p.Right[12].Content));
+                    BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
+
+                    b = new BinaryTreeNode("at", a, n);
+
+                    c = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode("CB", b, c));
+                }
+                break;
+
+                // def-ctrl -> CreaTextbox ( id , num , num , num , num ) ;
+                case 9:
+                {
+                    BinaryTreeNode a = new BinaryTreeNode("idT", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
+                    BinaryTreeNode b = new BinaryTreeNode("posT", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
+                    BinaryTreeNode c = new BinaryTreeNode("tamT", new BinaryTreeNode(p.Right[10].Content), new BinaryTreeNode(p.Right[12].Content));
+                    BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
+
+                    b = new BinaryTreeNode("at", a, n);
+
+                    c = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode("CT", b, c));
+                }
+                break;
+
+                // def-ctrl -> CreaLabel ( id , cadena , num , num ) ;
+                case 10:
+                {
+                    BinaryTreeNode a = new BinaryTreeNode("idL", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
+                    BinaryTreeNode b = new BinaryTreeNode("posL", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
+
+                    nodesStack.Push(new BinaryTreeNode("CL", a, b));
+                }
+                break;
+
+                // secuencia-sent -> sentencia secuencia-sent
+                case 13:
+                {
+                    var b = nodesStack.Pop();
+                    var a = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode(";", a, b));
+                }
+                break;
+
                 // sent-if -> if (exp) { secuencia - sent }
                 case 25:
                 {
@@ -289,7 +341,7 @@ namespace LR1_Parser.Model
 
                 break;
 
-                // sent-while -> while ( exp ) { secuencia-sent }
+                // sent-do-while -> do { secuencia-sent } while ( exp ) ;
                 case 31:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
@@ -298,11 +350,64 @@ namespace LR1_Parser.Model
                 }
                 break;
 
-                case 44:
+                // sent-switch -> switch ( id ) { secuencia-case }
+                case 32:
                 {
-                    BinaryTreeNode a = nodesStack.Pop();
                     BinaryTreeNode b = nodesStack.Pop();
-                    nodesStack.Push(new BinaryTreeNode("opmult", a, b));
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
+
+                    nodesStack.Push(new BinaryTreeNode("switch", a, b));
+                }
+                break;
+
+                // secuencia-case -> secuencia-case sentencia-case
+                case 33:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode(";", a, b));
+                }
+                break;
+
+                // sentencia-case -> case id { secuencia-sent } break ;
+                case 35:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[1].Content);
+                    
+                    nodesStack.Push(new BinaryTreeNode("case", a, b));
+                }
+                break;
+
+                // sent-for -> for ( id := num : num , num ) { secuencia-sent }
+                case 36:
+                {
+                    BinaryTreeNode c = nodesStack.Pop();
+                    BinaryTreeNode b = new BinaryTreeNode("incremento", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
+                    BinaryTreeNode n = new BinaryTreeNode(";", b, c);
+                    BinaryTreeNode a = new BinaryTreeNode(":=", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
+
+                    nodesStack.Push(new BinaryTreeNode("for", a, n));
+                }
+                break;
+
+                // sent-func -> MessageBox ( cadena )
+                case 37:
+                {
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
+                    nodesStack.Push(new BinaryTreeNode("MS", a, null));
+                }
+                break;
+
+                // exp -> exp-simple opcomparacion exp-simple
+                // exp-simple -> exp-simple opsuma term
+                case 44:
+                case 46:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+                    nodesStack.Push(new BinaryTreeNode(operatorsStack.Pop(), a, b));
                 }
                 break;
             }
