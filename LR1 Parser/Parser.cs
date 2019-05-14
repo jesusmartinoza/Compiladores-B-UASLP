@@ -229,7 +229,7 @@ namespace LR1_Parser.Model
                 }
                 break;
 
-                // sent -if -> if (exp) { secuencia - sent }
+                // sent-if -> if (exp) { secuencia - sent }
                 case 25:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
@@ -239,7 +239,7 @@ namespace LR1_Parser.Model
                 }
                 break;
 
-                // sent -if -> if (exp) { secuencia - sent } else { secuencia - sent }
+                // sent-if -> if (exp) { secuencia - sent } else { secuencia - sent }
                 case 26:
                 {
                     BinaryTreeNode c = nodesStack.Pop();
@@ -251,7 +251,7 @@ namespace LR1_Parser.Model
                 }
                 break;
                
-                // sent - repeat->repeat { secuencia - sent } until(exp)
+                // sent-repeat->repeat { secuencia - sent } until(exp)
                 case 27:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
@@ -261,8 +261,8 @@ namespace LR1_Parser.Model
                 }
                 break;
 
-                // sent - assign->id := exp;
-                case 29:
+                // sent-assign->id := exp;
+                case 28:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Content);
@@ -271,7 +271,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-assign -> id [ indice ] := exp ;
-                case 30:
+                case 29:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = new BinaryTreeNode("[ ]", new BinaryTreeNode(p.Right[0].Content), new BinaryTreeNode(p.Right[2].Content));
@@ -280,29 +280,31 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-while -> while ( exp ) { secuencia-sent }
-                case 31:
+                case 30:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
                     nodesStack.Push(new BinaryTreeNode("while", a, b));
-
-                    break;
                 }
 
+                break;
+
                 // sent-while -> while ( exp ) { secuencia-sent }
-                case 32:
+                case 31:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
                     nodesStack.Push(new BinaryTreeNode("do", a, b));
-                    break;
                 }
-                case 44:{
-                	BinaryTreeNode a = nodesStack.Pop();
-                	BinaryTreeNode b = nodesStack.Pop();
-                	nodesStack.Push(new BinaryTreeNode("opmult", a , b));
-                }
+                break;
 
+                case 44:
+                {
+                    BinaryTreeNode a = nodesStack.Pop();
+                    BinaryTreeNode b = nodesStack.Pop();
+                    nodesStack.Push(new BinaryTreeNode("opmult", a, b));
+                }
+                break;
             }
         }
 
