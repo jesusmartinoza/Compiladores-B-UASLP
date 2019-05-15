@@ -12,6 +12,7 @@ namespace LR1_Parser.Model
         BinaryTreeNode left;
         BinaryTreeNode right;
         Boolean visited;
+        Boolean solved;
         int id;
 
         internal BinaryTreeNode Right { get => right; set => right = value; }
@@ -19,7 +20,7 @@ namespace LR1_Parser.Model
         public string Content { get => content; set => content = value; }
         public bool Visited { get => visited; set => visited = value; }
         public int Id { get => id; set => id = value; }
-
+        public bool Solved { get => solved; set => solved=value; }
         public BinaryTreeNode(String content)
         {
             Content = content;
