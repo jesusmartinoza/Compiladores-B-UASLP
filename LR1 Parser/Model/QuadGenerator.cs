@@ -11,8 +11,9 @@ namespace LR1_Parser.Model
         delegate void  Instruct2Quads(BinaryTreeNode node);
         static List<Quad> Quads;
         static Stack<Quad> ReturnsStack;
-        static Stack<object> AuxValuesStack;
+        static Stack<string> TempValuesStack;
         static Dictionary<string, Instruct2Quads> Dictionary;
+        int TempCounter;
 
         public  List<Quad> Generate(BinaryTreeNode tree)
         {
@@ -88,6 +89,16 @@ namespace LR1_Parser.Model
 
 
 
+                    break;
+
+                case "while":
+
+                    SwitchNodes(node.Left);
+                    Quad condition = new Quad("GOTOFALSE", TempValuesStack.Pop(), null, null);
+                    Quads.Add(condition);
+                    SwitchNodes(node.Right);
+                    condition.OperandB = Quads.Count - 1;
+                    
                     break;
 
 

@@ -10,10 +10,10 @@ namespace LR1_Parser.Model
     {
 
 
-        string Operator;
-        object OperandA;
-        object OperandB;
-        object Result;
+        public string Operator { get; set; }
+        public object OperandA { get; set; }
+        public object OperandB { get; set; }
+        public object Result { get; set; }
 
         public Quad(string oprtr, string opA, string opB, string result)
         {
