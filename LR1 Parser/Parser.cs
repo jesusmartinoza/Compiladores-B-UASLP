@@ -28,6 +28,7 @@ namespace LR1_Parser.Model
         Stack<BinaryTreeNode> nodesStack;
         Stack<string> operatorsStack;
         string globalType;
+        int counter; // Contador de nodos visitados en DFSSearch
 
         // Stuff for graphviz
         List<EdgeStatement> graphVizEdges;
@@ -47,6 +48,7 @@ namespace LR1_Parser.Model
             operatorsStack = new Stack<string>();
             renderer = new Renderer(@"C:\Program Files\Graphviz2.38\bin");
             graphVizEdges = new List<EdgeStatement>();
+            counter = 1;
 
             //InitTestAFD();
             CreateSyntaxisAnalysisTable();
@@ -56,14 +58,11 @@ namespace LR1_Parser.Model
         {
             bool valid = true;
             List<Token> inputTokens = new List<Token>();
-            List<Token> inputTokensAux = new List<Token>();
-            int analyzedTokens = 0;
             input = inputString;
             // Se limpia al log
             Log.Clear();
 
             inputTokens = Tokenizer.Convert(input);
-            inputTokensAux = Tokenizer.Convert(input);
 
             inputTokens.Add(new Token("$", true));
             stackAnalysis.Clear();
@@ -111,8 +110,6 @@ namespace LR1_Parser.Model
                 {
                     stackAnalysis.Add(new TokenState() { token = cToken, state = nextAction.state });
                     inputTokens.RemoveAt(0);
-
-                    analyzedTokens++;
                 } else if(nextAction.action == 'R')
                 {
                     Production production = MainWindow.productions[nextAction.state];
@@ -164,7 +161,7 @@ namespace LR1_Parser.Model
             if(valid)
             {
                 graphVizEdges.Clear();
-                DFSSearch(nodesStack.Peek(), 1);
+                DFSSearch(nodesStack.Peek());
                 CreateGraphFile();
             }
 
@@ -174,7 +171,6 @@ namespace LR1_Parser.Model
         private async void CreateGraphFile()
         {
             var graph = Graph.Directed
-                //.Add(AttributeStatement.Graph.Set("rankdir", "LR"))
                 .Add(AttributeStatement.Graph.Set("labelloc", "t"))
                 .Add(AttributeStatement.Graph.Set("bgcolor", "#F9ECD1"))
                 .Add(AttributeStatement.Node.Set("style", "filled"))
@@ -212,15 +208,15 @@ namespace LR1_Parser.Model
                 // def-vent -> CreaVentana ( id , cadena , num , num1 , num2 , num3 ) { secuencia-ctrl }
                 case 5:
                 {
-                        BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Val), new BinaryTreeNode(p.Right[4].Val));
-                        BinaryTreeNode b = new BinaryTreeNode("posV", new BinaryTreeNode(p.Right[6].Val), new BinaryTreeNode(p.Right[8].Val));
-                        BinaryTreeNode c = new BinaryTreeNode("tamV", new BinaryTreeNode(p.Right[10].Val), new BinaryTreeNode(p.Right[12].Val));
-                        BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
+                    BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Val), new BinaryTreeNode(p.Right[4].Val));
+                    BinaryTreeNode b = new BinaryTreeNode("posV", new BinaryTreeNode(p.Right[6].Val), new BinaryTreeNode(p.Right[8].Val));
+                    BinaryTreeNode c = new BinaryTreeNode("tamV", new BinaryTreeNode(p.Right[10].Val), new BinaryTreeNode(p.Right[12].Val));
+                    BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
 
-                        b = new BinaryTreeNode("at", a, n);
-                        c = nodesStack.Pop();
+                    b = new BinaryTreeNode("at", a, n);
+                    c = nodesStack.Pop();
 
-                        nodesStack.Push(new BinaryTreeNode("CV1", b, c));
+                    nodesStack.Push(new BinaryTreeNode("CV1", b, c));
                 }
                 break;
 
@@ -468,7 +464,7 @@ namespace LR1_Parser.Model
         /// <summary>
         /// Iterate over graph to create graphviz visualization.
         /// </summary>
-        private void DFSSearch(BinaryTreeNode parent, int counter)
+        private void DFSSearch(BinaryTreeNode parent)
         {
             var parentId = parent.Content + " " + counter;
 
@@ -477,19 +473,22 @@ namespace LR1_Parser.Model
             
             parent.Visited = true;
 
+            counter++;
             if (parent.Left != null && !parent.Left.Visited)
             {
-                counter++;
                 var leftId = parent.Left.Content + " " + counter;
+
+                parent.Left.Id = counter;
                 graphVizEdges.Add(EdgeStatement.For(parentId, leftId));
-                DFSSearch(parent.Left, counter);
+                DFSSearch(parent.Left);
             }
             if (parent.Right != null && !parent.Right.Visited)
             {
-                counter++;
                 var rightId = parent.Right.Content + " " + counter;
+
+                parent.Right.Id = counter;
                 graphVizEdges.Add(EdgeStatement.For(parentId, rightId));
-                DFSSearch(parent.Right, counter);
+                DFSSearch(parent.Right);
             }
         }
 
