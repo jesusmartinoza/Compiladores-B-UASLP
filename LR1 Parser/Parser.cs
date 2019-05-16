@@ -27,6 +27,7 @@ namespace LR1_Parser.Model
         List<ActionLog> log;
         Stack<BinaryTreeNode> nodesStack;
         Stack<string> operatorsStack;
+        string globalType;
 
         // Stuff for graphviz
         List<EdgeStatement> graphVizEdges;
@@ -150,11 +151,11 @@ namespace LR1_Parser.Model
             }
 
             // TODO: Descomentar cuando esten todos los esquemas de traduccion
-            /*if(valid)
+            if(valid)
             {
                 DFSSearch(nodesStack.Peek(), 1);
                 CreateGraphFile();
-            }*/
+            }
 
             return valid;
         }
@@ -409,6 +410,19 @@ namespace LR1_Parser.Model
                 }
                 break;
 
+                // tipos
+                case 49:
+                case 50:
+                case 51:
+                case 52:
+                case 53:
+                case 54:
+                case 55:
+                {
+                    globalType = p.Right[0].Content;
+                }
+                break;
+
                 // term->term opmult factor
                 case 56:
                 {
@@ -416,6 +430,13 @@ namespace LR1_Parser.Model
                     BinaryTreeNode a = nodesStack.Pop();
 
                     nodesStack.Push(new BinaryTreeNode(p.Right[1].Content, a, b));
+                }
+                break;
+
+                // term -> factor
+                case 57:
+                {
+                    nodesStack.Push(new BinaryTreeNode(p.Right[0].Content));
                 }
                 break;
 
