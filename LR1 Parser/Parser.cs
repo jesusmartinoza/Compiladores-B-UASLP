@@ -464,18 +464,19 @@ namespace LR1_Parser.Model
 
             if (parent.Id == 0)
                 parent.Id = counter;
-
+            
             parent.Visited = true;
-            counter++;
 
             if (parent.Left != null && !parent.Left.Visited)
             {
+                counter++;
                 var leftId = parent.Left.Content + " " + counter;
                 graphVizEdges.Add(EdgeStatement.For(parentId, leftId));
                 DFSSearch(parent.Left, counter);
             }
             if (parent.Right != null && !parent.Right.Visited)
             {
+                counter++;
                 var rightId = parent.Right.Content + " " + counter;
                 graphVizEdges.Add(EdgeStatement.For(parentId, rightId));
                 DFSSearch(parent.Right, counter);
