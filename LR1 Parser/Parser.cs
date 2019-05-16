@@ -45,7 +45,7 @@ namespace LR1_Parser.Model
             log = new List<ActionLog>();
             nodesStack = new Stack<BinaryTreeNode>();
             operatorsStack = new Stack<string>();
-            renderer = new Renderer(@"C:\Program Files (x86)\Graphviz2.38\bin");
+            renderer = new Renderer(@"C:\Program Files\Graphviz2.38\bin");
             graphVizEdges = new List<EdgeStatement>();
 
             //InitTestAFD();
@@ -153,6 +153,7 @@ namespace LR1_Parser.Model
             // TODO: Descomentar cuando esten todos los esquemas de traduccion
             if(valid)
             {
+                graphVizEdges.Clear();
                 DFSSearch(nodesStack.Peek(), 1);
                 CreateGraphFile();
             }
@@ -165,13 +166,14 @@ namespace LR1_Parser.Model
             var graph = Graph.Directed
                 //.Add(AttributeStatement.Graph.Set("rankdir", "LR"))
                 .Add(AttributeStatement.Graph.Set("labelloc", "t"))
-                //.Add(AttributeStatement.Graph.Set("bgcolor", "#34495e"))
+                .Add(AttributeStatement.Graph.Set("bgcolor", "#F9ECD1"))
                 .Add(AttributeStatement.Node.Set("style", "filled"))
-                .Add(AttributeStatement.Node.Set("fillcolor", "#ECF0F1"))
-                .Add(AttributeStatement.Graph.Set("label", "Arbol semántico"))
+                .Add(AttributeStatement.Node.Set("color", "#000000"))
+                .Add(AttributeStatement.Node.Set("fillcolor", "#5BC5BF"))
+                .Add(AttributeStatement.Graph.Set("label", "Árbol Semántico"))
                 .AddRange(graphVizEdges);
 
-            using (Stream file = File.Create("Semantic Tree.png"))
+            using (Stream file = File.Create("semantic_tree.png"))
             {
                 await renderer.RunAsync(
                     graph, file,
@@ -458,7 +460,6 @@ namespace LR1_Parser.Model
         /// </summary>
         private void DFSSearch(BinaryTreeNode parent, int counter)
         {
-            List<EdgeStatement> edges = new List<EdgeStatement>();
             var parentId = parent.Content + " " + counter;
 
             if (parent.Id == 0)
@@ -470,13 +471,13 @@ namespace LR1_Parser.Model
             if (parent.Left != null && !parent.Left.Visited)
             {
                 var leftId = parent.Left.Content + " " + counter;
-                edges.Add(EdgeStatement.For(parentId, leftId));
+                graphVizEdges.Add(EdgeStatement.For(parentId, leftId));
                 DFSSearch(parent.Left, counter);
             }
-            else if (parent.Right != null && !parent.Right.Visited)
+            if (parent.Right != null && !parent.Right.Visited)
             {
                 var rightId = parent.Right.Content + " " + counter;
-                edges.Add(EdgeStatement.For(parentId, rightId));
+                graphVizEdges.Add(EdgeStatement.For(parentId, rightId));
                 DFSSearch(parent.Right, counter);
             }
         }

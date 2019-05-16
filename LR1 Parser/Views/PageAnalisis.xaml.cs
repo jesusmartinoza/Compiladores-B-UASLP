@@ -69,15 +69,13 @@ namespace LR1_Parser
             }
         }
 
-        private void AnalizarFuente_Click(object sender, RoutedEventArgs e)
+        private async void AnalizarFuente_Click(object sender, RoutedEventArgs e)
         {
             if (App.currentParser != null)
             {
                 if (!string.IsNullOrEmpty(EntradaFuente.Text))
                 {
                     TablaAcciones.ItemsSource = null;
-
-
 
                     if (App.currentParser.EvalString(EntradaFuente.Text))
                     {
