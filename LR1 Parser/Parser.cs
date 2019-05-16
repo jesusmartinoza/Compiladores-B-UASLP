@@ -56,11 +56,14 @@ namespace LR1_Parser.Model
         {
             bool valid = true;
             List<Token> inputTokens = new List<Token>();
+            List<Token> inputTokensAux = new List<Token>();
+            int analyzedTokens = 0;
             input = inputString;
             // Se limpia al log
             Log.Clear();
 
             inputTokens = Tokenizer.Convert(input);
+            inputTokensAux = Tokenizer.Convert(input);
 
             inputTokens.Add(new Token("$", true));
             stackAnalysis.Clear();
@@ -108,12 +111,12 @@ namespace LR1_Parser.Model
                 {
                     stackAnalysis.Add(new TokenState() { token = cToken, state = nextAction.state });
                     inputTokens.RemoveAt(0);
+
+                    analyzedTokens++;
                 } else if(nextAction.action == 'R')
                 {
                     Production production = MainWindow.productions[nextAction.state];
                     var rLen = production.Right.Count;
-
-                    SemanticAnalysis(production, nextAction.state);
 
                     if (nextAction.state == 0) // Estado R0 o aceptar
                         break;
@@ -126,7 +129,10 @@ namespace LR1_Parser.Model
                         var itState = stackAnalysis[indexStack];
 
                         if (!itState.dirty && itState.token.Content == r.Content)
+                        {
                             itState.dirty = true;
+                            r.Val = itState.token.Val;
+                        }
                     }
 
                     // Remplazar los TokenState sucios
@@ -135,8 +141,12 @@ namespace LR1_Parser.Model
                         var itState = stackAnalysis[i];
 
                         if (itState.dirty)
+                        {
                             stackAnalysis.RemoveAt(i);
+                        }
                     }
+
+                    SemanticAnalysis(production, nextAction.state);
 
                     int newState;
                     TokenState lastState = stackAnalysis.Last();
@@ -202,9 +212,9 @@ namespace LR1_Parser.Model
                 // def-vent -> CreaVentana ( id , cadena , num , num1 , num2 , num3 ) { secuencia-ctrl }
                 case 5:
                 {
-                        BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
-                        BinaryTreeNode b = new BinaryTreeNode("posV", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
-                        BinaryTreeNode c = new BinaryTreeNode("tamV", new BinaryTreeNode(p.Right[10].Content), new BinaryTreeNode(p.Right[12].Content));
+                        BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Val), new BinaryTreeNode(p.Right[4].Val));
+                        BinaryTreeNode b = new BinaryTreeNode("posV", new BinaryTreeNode(p.Right[6].Val), new BinaryTreeNode(p.Right[8].Val));
+                        BinaryTreeNode c = new BinaryTreeNode("tamV", new BinaryTreeNode(p.Right[10].Val), new BinaryTreeNode(p.Right[12].Val));
                         BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
 
                         b = new BinaryTreeNode("at", a, n);
@@ -217,7 +227,7 @@ namespace LR1_Parser.Model
                 // def-vent -> CreaVentana ( id , cadena ) { secuencia-ctrl }
                 case 6:
                 {
-                    BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Content), nodesStack.Peek());
+                    BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Val), nodesStack.Peek());
                     BinaryTreeNode b = nodesStack.Pop();
 
                     nodesStack.Push(new BinaryTreeNode("CV2", a, b));
@@ -237,9 +247,9 @@ namespace LR1_Parser.Model
                 // def-ctrl -> CreaBoton ( id , cadena , num , num , num , num ) { def-evnt }
                 case 9:
                 {
-                    BinaryTreeNode a = new BinaryTreeNode("idB", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
-                    BinaryTreeNode b = new BinaryTreeNode("posB", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
-                    BinaryTreeNode c = new BinaryTreeNode("tamB", new BinaryTreeNode(p.Right[10].Content), new BinaryTreeNode(p.Right[12].Content));
+                    BinaryTreeNode a = new BinaryTreeNode("idB", new BinaryTreeNode(p.Right[2].Val), new BinaryTreeNode(p.Right[4].Val));
+                    BinaryTreeNode b = new BinaryTreeNode("posB", new BinaryTreeNode(p.Right[6].Val), new BinaryTreeNode(p.Right[8].Val));
+                    BinaryTreeNode c = new BinaryTreeNode("tamB", new BinaryTreeNode(p.Right[10].Val), new BinaryTreeNode(p.Right[12].Val));
                     BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
 
                     b = new BinaryTreeNode("at", a, n);
@@ -254,8 +264,8 @@ namespace LR1_Parser.Model
                 case 10:
                 {
                     BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
-                    BinaryTreeNode b = new BinaryTreeNode("posT", new BinaryTreeNode(p.Right[4].Content), new BinaryTreeNode(p.Right[6].Content));
-                    BinaryTreeNode c = new BinaryTreeNode("tamT", new BinaryTreeNode(p.Right[8].Content), new BinaryTreeNode(p.Right[10].Content));
+                    BinaryTreeNode b = new BinaryTreeNode("posT", new BinaryTreeNode(p.Right[4].Val), new BinaryTreeNode(p.Right[6].Val));
+                    BinaryTreeNode c = new BinaryTreeNode("tamT", new BinaryTreeNode(p.Right[8].Val), new BinaryTreeNode(p.Right[10].Val));
                     BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
 
                     nodesStack.Push(new BinaryTreeNode("CT", a, n));
@@ -265,8 +275,8 @@ namespace LR1_Parser.Model
                 // def-ctrl -> CreaLabel ( id , cadena , num , num ) ;
                 case 11:
                 {
-                    BinaryTreeNode a = new BinaryTreeNode("idL", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
-                    BinaryTreeNode b = new BinaryTreeNode("posL", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
+                    BinaryTreeNode a = new BinaryTreeNode("idL", new BinaryTreeNode(p.Right[2].Val), new BinaryTreeNode(p.Right[4].Val));
+                    BinaryTreeNode b = new BinaryTreeNode("posL", new BinaryTreeNode(p.Right[6].Val), new BinaryTreeNode(p.Right[8].Val));
 
                     nodesStack.Push(new BinaryTreeNode("CL", a, b));
                 }
@@ -318,7 +328,7 @@ namespace LR1_Parser.Model
                 case 29:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
-                    BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Content);
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Val);
                     nodesStack.Push(new BinaryTreeNode(":=", a, b));
                 }
                 break;
@@ -327,7 +337,7 @@ namespace LR1_Parser.Model
                 case 30:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
-                    BinaryTreeNode a = new BinaryTreeNode("[ ]", new BinaryTreeNode(p.Right[0].Content), new BinaryTreeNode(p.Right[2].Content));
+                    BinaryTreeNode a = new BinaryTreeNode("[ ]", new BinaryTreeNode(p.Right[0].Val), new BinaryTreeNode(p.Right[2].Val));
                     nodesStack.Push(new BinaryTreeNode(":=", a, b));
                 }
                 break;
@@ -355,7 +365,7 @@ namespace LR1_Parser.Model
                 case 33:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
-                    BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Val);
 
                     nodesStack.Push(new BinaryTreeNode("switch", a, b));
                 }
@@ -375,7 +385,7 @@ namespace LR1_Parser.Model
                 case 36:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
-                    BinaryTreeNode a = new BinaryTreeNode(p.Right[1].Content);
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[1].Val);
                     
                     nodesStack.Push(new BinaryTreeNode("case", a, b));
                 }
@@ -385,9 +395,9 @@ namespace LR1_Parser.Model
                 case 37:
                 {
                     BinaryTreeNode c = nodesStack.Pop();
-                    BinaryTreeNode b = new BinaryTreeNode("incremento", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
+                    BinaryTreeNode b = new BinaryTreeNode("incremento", new BinaryTreeNode(p.Right[6].Val), new BinaryTreeNode(p.Right[8].Val));
                     BinaryTreeNode n = new BinaryTreeNode(";", b, c);
-                    BinaryTreeNode a = new BinaryTreeNode(":=", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
+                    BinaryTreeNode a = new BinaryTreeNode(":=", new BinaryTreeNode(p.Right[2].Val), new BinaryTreeNode(p.Right[4].Val));
 
                     nodesStack.Push(new BinaryTreeNode("for", a, n));
                 }
@@ -396,7 +406,7 @@ namespace LR1_Parser.Model
                 // sent-func -> MessageBox ( cadena )
                 case 38:
                 {
-                    BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Val);
                     nodesStack.Push(new BinaryTreeNode("MS", a, null));
                 }
                 break;
@@ -408,7 +418,7 @@ namespace LR1_Parser.Model
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
-                    nodesStack.Push(new BinaryTreeNode(p.Right[1].Content, a, b));
+                    nodesStack.Push(new BinaryTreeNode(p.Right[1].Val, a, b));
                 }
                 break;
 
@@ -431,14 +441,14 @@ namespace LR1_Parser.Model
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
 
-                    nodesStack.Push(new BinaryTreeNode(p.Right[1].Content, a, b));
+                    nodesStack.Push(new BinaryTreeNode(p.Right[1].Val, a, b));
                 }
                 break;
 
                 // term -> factor
                 case 57:
                 {
-                    nodesStack.Push(new BinaryTreeNode(p.Right[0].Content));
+                    nodesStack.Push(new BinaryTreeNode(p.Right[0].Val));
                 }
                 break;
 
@@ -449,7 +459,7 @@ namespace LR1_Parser.Model
                 case 60:
                 case 61:
                 {
-                    nodesStack.Push(new BinaryTreeNode(p.Right[0].Content));
+                    nodesStack.Push(new BinaryTreeNode(p.Right[0].Val));
                 }
                 break;
             }
