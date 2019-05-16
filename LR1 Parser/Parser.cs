@@ -161,6 +161,7 @@ namespace LR1_Parser.Model
             if(valid)
             {
                 graphVizEdges.Clear();
+                counter = 1;
                 DFSSearch(nodesStack.Peek());
                 CreateGraphFile();
             }
