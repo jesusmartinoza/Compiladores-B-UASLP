@@ -26,6 +26,7 @@ namespace LR1_Parser.Model
         string input; // Cadena a evaluar
         List<ActionLog> log;
         Stack<BinaryTreeNode> nodesStack;
+        Stack<string> operatorsStack;
 
         // Stuff for graphviz
         List<EdgeStatement> graphVizEdges;
@@ -42,6 +43,7 @@ namespace LR1_Parser.Model
             stackAnalysis = new List<TokenState>();
             log = new List<ActionLog>();
             nodesStack = new Stack<BinaryTreeNode>();
+            operatorsStack = new Stack<string>();
             renderer = new Renderer(@"C:\Program Files (x86)\Graphviz2.38\bin");
             graphVizEdges = new List<EdgeStatement>();
 
@@ -195,7 +197,7 @@ namespace LR1_Parser.Model
             switch (productionIndex)
             {
                 // def-vent -> CreaVentana ( id , cadena , num , num1 , num2 , num3 ) { secuencia-ctrl }
-                case 4:
+                case 5:
                 {
                         BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
                         BinaryTreeNode b = new BinaryTreeNode("posV", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
@@ -210,7 +212,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // def-vent -> CreaVentana ( id , cadena ) { secuencia-ctrl }
-                case 5:
+                case 6:
                 {
                     BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Content), nodesStack.Peek());
                     BinaryTreeNode b = nodesStack.Pop();
@@ -220,7 +222,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // secuencia-ctrl -> secuencia-ctrl def-ctrl
-                case 6:
+                case 7:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
@@ -230,7 +232,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // def-ctrl -> CreaBoton ( id , cadena , num , num , num , num ) { def-evnt }
-                case 8:
+                case 9:
                 {
                     BinaryTreeNode a = new BinaryTreeNode("idB", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
                     BinaryTreeNode b = new BinaryTreeNode("posB", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
@@ -246,23 +248,19 @@ namespace LR1_Parser.Model
                 break;
 
                 // def-ctrl -> CreaTextbox ( id , num , num , num , num ) ;
-                case 9:
+                case 10:
                 {
-                    BinaryTreeNode a = new BinaryTreeNode("idT", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
-                    BinaryTreeNode b = new BinaryTreeNode("posT", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
-                    BinaryTreeNode c = new BinaryTreeNode("tamT", new BinaryTreeNode(p.Right[10].Content), new BinaryTreeNode(p.Right[12].Content));
+                    BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
+                    BinaryTreeNode b = new BinaryTreeNode("posT", new BinaryTreeNode(p.Right[4].Content), new BinaryTreeNode(p.Right[6].Content));
+                    BinaryTreeNode c = new BinaryTreeNode("tamT", new BinaryTreeNode(p.Right[8].Content), new BinaryTreeNode(p.Right[10].Content));
                     BinaryTreeNode n = new BinaryTreeNode("vista", b, c);
 
-                    b = new BinaryTreeNode("at", a, n);
-
-                    c = nodesStack.Pop();
-
-                    nodesStack.Push(new BinaryTreeNode("CT", b, c));
+                    nodesStack.Push(new BinaryTreeNode("CT", a, n));
                 }
                 break;
 
                 // def-ctrl -> CreaLabel ( id , cadena , num , num ) ;
-                case 10:
+                case 11:
                 {
                     BinaryTreeNode a = new BinaryTreeNode("idL", new BinaryTreeNode(p.Right[2].Content), new BinaryTreeNode(p.Right[4].Content));
                     BinaryTreeNode b = new BinaryTreeNode("posL", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
@@ -272,7 +270,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // secuencia-sent -> sentencia secuencia-sent
-                case 13:
+                case 14:
                 {
                     var b = nodesStack.Pop();
                     var a = nodesStack.Pop();
@@ -282,7 +280,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-if -> if (exp) { secuencia - sent }
-                case 25:
+                case 26:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
@@ -292,7 +290,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-if -> if (exp) { secuencia - sent } else { secuencia - sent }
-                case 26:
+                case 27:
                 {
                     BinaryTreeNode c = nodesStack.Pop();
                     BinaryTreeNode b = nodesStack.Pop();
@@ -304,7 +302,7 @@ namespace LR1_Parser.Model
                 break;
                
                 // sent-repeat->repeat { secuencia - sent } until(exp)
-                case 27:
+                case 28:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
@@ -314,7 +312,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-assign->id := exp;
-                case 28:
+                case 29:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Content);
@@ -323,7 +321,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-assign -> id [ indice ] := exp ;
-                case 29:
+                case 30:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = new BinaryTreeNode("[ ]", new BinaryTreeNode(p.Right[0].Content), new BinaryTreeNode(p.Right[2].Content));
@@ -332,7 +330,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-while -> while ( exp ) { secuencia-sent }
-                case 30:
+                case 31:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
@@ -342,7 +340,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-do-while -> do { secuencia-sent } while ( exp ) ;
-                case 31:
+                case 32:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
@@ -351,7 +349,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-switch -> switch ( id ) { secuencia-case }
-                case 32:
+                case 33:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
@@ -361,7 +359,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // secuencia-case -> secuencia-case sentencia-case
-                case 33:
+                case 34:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
@@ -371,7 +369,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sentencia-case -> case id { secuencia-sent } break ;
-                case 35:
+                case 36:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = new BinaryTreeNode(p.Right[1].Content);
@@ -381,7 +379,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-for -> for ( id := num : num , num ) { secuencia-sent }
-                case 36:
+                case 37:
                 {
                     BinaryTreeNode c = nodesStack.Pop();
                     BinaryTreeNode b = new BinaryTreeNode("incremento", new BinaryTreeNode(p.Right[6].Content), new BinaryTreeNode(p.Right[8].Content));
@@ -393,7 +391,7 @@ namespace LR1_Parser.Model
                 break;
 
                 // sent-func -> MessageBox ( cadena )
-                case 37:
+                case 38:
                 {
                     BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Content);
                     nodesStack.Push(new BinaryTreeNode("MS", a, null));
@@ -402,12 +400,33 @@ namespace LR1_Parser.Model
 
                 // exp -> exp-simple opcomparacion exp-simple
                 // exp-simple -> exp-simple opsuma term
-                case 44:
-                case 46:
+                case 45:
+                case 47:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
-                    nodesStack.Push(new BinaryTreeNode(operatorsStack.Pop(), a, b));
+                    nodesStack.Push(new BinaryTreeNode(p.Right[1].Content, a, b));
+                }
+                break;
+
+                // term->term opmult factor
+                case 56:
+                {
+                    BinaryTreeNode b = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Pop();
+
+                    nodesStack.Push(new BinaryTreeNode(p.Right[1].Content, a, b));
+                }
+                break;
+
+                //  factor-> num
+                //  factor-> id
+                //  factor->cadena
+                case 59:
+                case 60:
+                case 61:
+                {
+                    nodesStack.Push(new BinaryTreeNode(p.Right[0].Content));
                 }
                 break;
             }
