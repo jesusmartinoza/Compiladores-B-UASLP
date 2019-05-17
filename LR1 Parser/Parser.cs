@@ -45,7 +45,7 @@ namespace LR1_Parser.Model
             log = new List<ActionLog>();
             nodesStack = new Stack<BinaryTreeNode>();
             operatorsStack = new Stack<string>();
-            renderer = new Renderer(@"C:\Program Files (x86)\Graphviz2.38\bin");
+            renderer = new Renderer(@"C:\Program Files (x86)\Graphviz2.38\bin"); //Ruta donde se encuentra Graphivz2
             graphVizEdges = new List<EdgeStatement>();
 
             //InitTestAFD();
