@@ -1,0 +1,35 @@
+defmain {
+	int numero, cont, mod
+	string res
+	string resAux
+	textBox txtBoxEntrada, txtBoxSalida
+	boton btnComenzar
+	vent ventana
+	
+	CreaVentana(ventana,"Numero_Pares_e_Impares",100,100,150,200) 
+	{
+		CreaTextbox(txtBoxEntrada,10,10,15,20); 
+		CreaTextbox(txtBoxSalida,20,10,25,20);
+		CreaBoton(btnComenzar,"Comenzar",30,170,60,30) 
+		{
+			Click
+			{
+				numero := entrada;
+				res := "Numeros_pares_e_impares...";				
+				cont := 1;
+				while(cont <= numero)
+				{
+					mod := numero % cont;
+					if (mod != 0) {
+						resAux := numero + "_Es_impar";
+					} else {
+						resAux := numero + "_Es_Par";
+					}
+					res := res + resAux;
+					cont := cont + 1;
+				}
+				salida := res;
+			}
+		}
+	}
+}

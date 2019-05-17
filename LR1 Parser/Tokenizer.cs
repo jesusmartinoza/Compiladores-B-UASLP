@@ -205,6 +205,6 @@ namespace LR1_Parser.Model
             
 
             return aux;
-        }
+        }		
     }
 }
