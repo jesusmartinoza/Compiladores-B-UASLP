@@ -66,6 +66,7 @@ namespace LR1_Parser.Model
 
             inputTokens.Add(new Token("$", true));
             stackAnalysis.Clear();
+            nodesStack.Clear();
             stackAnalysis.Add(new TokenState() { token = new Token("$", true), state = 0 });
             
             while(valid) 
@@ -235,7 +236,7 @@ namespace LR1_Parser.Model
                 case 7:
                 {
                     BinaryTreeNode b = nodesStack.Pop();
-                    BinaryTreeNode a = nodesStack.Pop();
+                    BinaryTreeNode a = nodesStack.Count == 0 ? null : nodesStack.Pop();
 
                     nodesStack.Push(new BinaryTreeNode(";", a, b));
                 }
@@ -283,7 +284,7 @@ namespace LR1_Parser.Model
                 case 14:
                 {
                     var b = nodesStack.Pop();
-                    var a = nodesStack.Pop();
+                    var a = nodesStack.Count == 0 ? null : nodesStack.Pop();
 
                     nodesStack.Push(new BinaryTreeNode(";", a, b));
                 }
@@ -445,7 +446,7 @@ namespace LR1_Parser.Model
                 // term -> factor
                 case 57:
                 {
-                    nodesStack.Push(new BinaryTreeNode(p.Right[0].Val));
+                    //nodesStack.Push(new BinaryTreeNode(p.Right[0].Val));
                 }
                 break;
 
