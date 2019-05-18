@@ -37,7 +37,6 @@ namespace LR1_Parser
 
             if (dialog.ShowDialog() == true)
             {
-
                 EntradaFuente.Text = File.ReadAllText(dialog.FileName);
                 App.sourceFilePath = dialog.FileName;
             }
@@ -71,33 +70,64 @@ namespace LR1_Parser
 
         private async void AnalizarFuente_Click(object sender, RoutedEventArgs e)
         {
-            if (App.currentParser != null)
-            {
-                if (!string.IsNullOrEmpty(EntradaFuente.Text))
-                {
-                    TablaAcciones.ItemsSource = null;
+			if (App.currentParser != null)
+			{
+				if (!string.IsNullOrEmpty(EntradaFuente.Text))
+				{
+					TablaAcciones.ItemsSource = null;
 
-                    if (App.currentParser.EvalString(EntradaFuente.Text))
-                    {
+					if (App.currentParser.EvalString(EntradaFuente.Text))
+					{
 
-                        Log.Text = "La cadena de entrada es valida!";
-                        Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
-                    }
-                    else
-                    {
-                        Log.Text = "La cadena de entrada no es valida. :( ";
-                        Log.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+						Log.Text = "La cadena de entrada es valida!";
+						Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
+					}
+					else
+					{
+						Log.Text = "La cadena de entrada no es valida. :( ";
+						Log.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
 
-                    }
+					}
 
-                    TablaAcciones.ItemsSource = App.currentParser.Log;
-                }
-                else
-                    MessageBox.Show("Introduzca código fuente");
+					TablaAcciones.ItemsSource = App.currentParser.Log;
+				}
+				else
+					MessageBox.Show("Introduzca código fuente");
 
-            }
-            else
-                MessageBox.Show("Primero Cree una tabla de Analisis Sintáctico en la sección Gramática");
+			}
+			else//Deserializar la lista de estados
+			{				
+				App.currentParser = new Parser();
+				if (App.currentParser != null)
+				{
+					if (!string.IsNullOrEmpty(EntradaFuente.Text))
+					{
+						TablaAcciones.ItemsSource = null;
+
+						if (App.currentParser.EvalString(EntradaFuente.Text))
+						{
+
+							Log.Text = "La cadena de entrada es valida!";
+							Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
+						}
+						else
+						{
+							Log.Text = "La cadena de entrada no es valida. :( ";
+							Log.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+
+						}
+
+						TablaAcciones.ItemsSource = App.currentParser.Log;
+					}
+					else
+						MessageBox.Show("Introduzca código fuente");
+
+				}
+				else
+				{
+					MessageBox.Show("Primero Cree una tabla de Analisis Sintáctico en la sección Gramática");
+				}
+			}
             
 
         }

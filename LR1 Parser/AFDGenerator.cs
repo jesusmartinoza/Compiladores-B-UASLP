@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 namespace LR1_Parser.Model
 {
@@ -227,32 +225,5 @@ namespace LR1_Parser.Model
                 return Result;           
             }
         }
-
-		//**************************SERIALIZACION - DESERIALIZACION*********************************************
-		public void serializacionBinaria()
-		{
-			//Seleccion de formateador
-			BinaryFormatter formateador = new BinaryFormatter();
-			//Se crea el Stream
-			Stream miStream = new FileStream(Environment.CurrentDirectory + "\\estadosSerializados", FileMode.Create, FileAccess.Write, FileShare.None);
-			//Serializacion
-			formateador.Serialize(miStream, AFD);
-			//Cerrar Stream
-			miStream.Close();
-		}
-
-		public List<Node> deserializacionBinaria()
-		{
-			//Seleccion de formateador
-			BinaryFormatter formateador = new BinaryFormatter();
-			//Se crea el Stream
-			Stream miStream = new FileStream(Environment.CurrentDirectory + "\\estadosSerializados", FileMode.Open, FileAccess.Read, FileShare.None);
-			//Deserializacion
-			List<Node> AFDeserializado = (List<Node>)formateador.Deserialize(miStream);
-			//Cerrar Stream
-			miStream.Close();
-			return (AFDeserializado);
-		}
-		//**************************SERIALIZACION - DESERIALIZACION*********************************************
 	}
 }

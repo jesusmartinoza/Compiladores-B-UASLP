@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LR1_Parser.Model
 {
+	[Serializable]
     public class Quad
     {
 

@@ -11,6 +11,10 @@ using Shields.GraphViz.Components;
 using Shields.GraphViz.Models;
 using Shields.GraphViz.Services;
 
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
+
+
 namespace LR1_Parser.Model
 {
     /// <summary>
@@ -40,7 +44,7 @@ namespace LR1_Parser.Model
         public Parser(List<Node> AFDList)
         {
             AFD = AFDList;
-            States = new List<State>();
+            //States = new List<State>();
             stackAnalysis = new List<TokenState>();
             log = new List<ActionLog>();
             nodesStack = new Stack<BinaryTreeNode>();
@@ -49,16 +53,28 @@ namespace LR1_Parser.Model
             graphVizEdges = new List<EdgeStatement>();
 
             //InitTestAFD();
-            CreateSyntaxisAnalysisTable();
+            //CreateSyntaxisAnalysisTable();
+			deserializacionBinaria();
         }
+
+		public Parser()
+		{			
+			stackAnalysis = new List<TokenState>();
+			log = new List<ActionLog>();
+			nodesStack = new Stack<BinaryTreeNode>();
+			operatorsStack = new Stack<string>();
+			renderer = new Renderer(@"C:\Program Files\Graphviz2.38\bin");
+			graphVizEdges = new List<EdgeStatement>();
+			deserializacionBinaria();
+		}
 
         public bool EvalString(String inputString)
         {
             bool valid = true;
             List<Token> inputTokens = new List<Token>();
             input = inputString;
-            // Se limpia al log
-            Log.Clear();
+			// Se limpia al log
+			Log.Clear();        
 
             inputTokens = Tokenizer.Convert(input);
 
@@ -155,7 +171,7 @@ namespace LR1_Parser.Model
             {
                 graphVizEdges.Clear();
                 DFSSearch(nodesStack.Peek(), 1);
-                CreateGraphFile();
+                //CreateGraphFile();
             }
 
             return valid;
@@ -549,6 +565,7 @@ namespace LR1_Parser.Model
 
                 States.Add(state);
             }
+			serializacionBinaria();
         }
 
         /// Ejemeplo con la información absolutamente necesaria para
@@ -643,5 +660,45 @@ namespace LR1_Parser.Model
             AFD.Add(n5);
             AFD.Add(n6);
         }
-    }
+
+		//**************************SERIALIZACION - DESERIALIZACION*********************************************
+		private void serializacionBinaria()
+		{
+			//Seleccion de formateador
+			BinaryFormatter formateador = new BinaryFormatter();
+			//XmlSerializer formateadorXml = new XmlSerializer(typeof(List<State>));
+
+			//Se crea el Stream
+			Stream miStream = new FileStream(Environment.CurrentDirectory + "\\estadosSerializados11", FileMode.Create, FileAccess.Write, FileShare.None);
+			
+			
+			//Serializacion
+			formateador.Serialize(miStream, States);
+			
+			
+			//Cerrar Stream
+			miStream.Close();
+		}
+
+		private void deserializacionBinaria()
+		{
+			States = new List<State>();
+
+			//Seleccion de formateador
+			BinaryFormatter formateador = new BinaryFormatter();
+			
+
+			//Se crea el Stream
+			Stream miStream = new FileStream(Environment.CurrentDirectory + "\\estadosSerializados11", FileMode.Open, FileAccess.Read, FileShare.None);
+
+
+			//Deserializacion
+			States = (List<State>)formateador.Deserialize(miStream);
+
+
+			//Cerrar Stream
+			miStream.Close();
+		}
+		//**************************SERIALIZACION - DESERIALIZACION*********************************************
+	}
 }
