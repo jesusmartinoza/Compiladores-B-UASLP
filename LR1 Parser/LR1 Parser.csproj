@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="AFDGenerator.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="Model\Interpreter.cs" />
     <Compile Include="Model\ActionLog.cs" />
     <Compile Include="Model\BinaryTreeNode.cs" />
     <Compile Include="Model\LR1Element.cs" />

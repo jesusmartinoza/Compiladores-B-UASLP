@@ -23,10 +23,15 @@ namespace LR1_Parser
     /// </summary>
     public partial class PageAnalisis : Page
     {
+
+        List<Quad> CurrentQuads = new List<Quad>();
+
         public PageAnalisis()
         {
             InitializeComponent();
         }
+
+
 
         private void AbrirFuente_Click(object sender, RoutedEventArgs e)
         {
@@ -70,64 +75,37 @@ namespace LR1_Parser
 
         private async void AnalizarFuente_Click(object sender, RoutedEventArgs e)
         {
-			if (App.currentParser != null)
-			{
-				if (!string.IsNullOrEmpty(EntradaFuente.Text))
-				{
-					TablaAcciones.ItemsSource = null;
 
-					if (App.currentParser.EvalString(EntradaFuente.Text))
-					{
+            if (App.currentParser != null)
+            {
+                if (!string.IsNullOrEmpty(EntradaFuente.Text))
+                {
+                    TablaAcciones.ItemsSource = null;
 
-						Log.Text = "La cadena de entrada es valida!";
-						Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
-					}
-					else
-					{
-						Log.Text = "La cadena de entrada no es valida. :( ";
-						Log.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                    if (App.currentParser.EvalString(EntradaFuente.Text))
+                    {
 
-					}
+                        Log.Text = "La cadena de entrada es valida!";
+                        Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
+                        QuadGenerator quadGenerator = new QuadGenerator();
+                        CurrentQuads= quadGenerator.Generate(App.currentParser.NodeStack.Peek());
 
-					TablaAcciones.ItemsSource = App.currentParser.Log;
-				}
-				else
-					MessageBox.Show("Introduzca código fuente");
+                    }
+                    else
+                    {
+                        Log.Text = "La cadena de entrada no es valida. :( ";
+                        Log.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
 
-			}
-			else//Deserializar la lista de estados
-			{				
-				App.currentParser = new Parser();
-				if (App.currentParser != null)
-				{
-					if (!string.IsNullOrEmpty(EntradaFuente.Text))
-					{
-						TablaAcciones.ItemsSource = null;
+                    }
 
-						if (App.currentParser.EvalString(EntradaFuente.Text))
-						{
+                    TablaAcciones.ItemsSource = App.currentParser.Log;
+                }
+                else
+                    MessageBox.Show("Introduzca código fuente");
 
-							Log.Text = "La cadena de entrada es valida!";
-							Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
-						}
-						else
-						{
-							Log.Text = "La cadena de entrada no es valida. :( ";
-							Log.Foreground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-
-						}
-
-						TablaAcciones.ItemsSource = App.currentParser.Log;
-					}
-					else
-						MessageBox.Show("Introduzca código fuente");
-
-				}
-				else
-				{
-					MessageBox.Show("Primero Cree una tabla de Analisis Sintáctico en la sección Gramática");
-				}
-			}
+            }
+            else
+                MessageBox.Show("Primero Cree una tabla de Analisis Sintáctico en la sección Gramática");
             
 
         }
