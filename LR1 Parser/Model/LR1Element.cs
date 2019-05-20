@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LR1_Parser.Model
 {
-    class LR1Element
+	[Serializable]
+	class LR1Element
     {
         //Getters and Setters L -> α.γ, {δ}
         internal Token Left { get; set; }

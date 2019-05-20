@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace LR1_Parser.Model
 {
+	[Serializable]
     /// <summary>  
     /// Representa un estado en la tabla de análisis sintáctico.
     /// 
@@ -22,8 +24,7 @@ namespace LR1_Parser.Model
         public State()
         {
             nonTerminals = new Dictionary<string, Action>();
-            terminals = new Dictionary<string, Action>();
-            
+            terminals = new Dictionary<string, Action>();            
         }
     }
 
@@ -35,7 +36,8 @@ namespace LR1_Parser.Model
 	/// R which means REDUX
 	/// A which means ACCEPT
 	/// 
-	/// </summary> 
+	/// </summary> }
+	[Serializable]
 	struct Action
 	{
 		internal char action; // Puede ser 'S', 'R' u 'A'

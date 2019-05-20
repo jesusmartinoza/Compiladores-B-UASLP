@@ -42,7 +42,6 @@ namespace LR1_Parser
 
             if (dialog.ShowDialog() == true)
             {
-
                 EntradaFuente.Text = File.ReadAllText(dialog.FileName);
                 App.sourceFilePath = dialog.FileName;
             }
@@ -76,6 +75,7 @@ namespace LR1_Parser
 
         private async void AnalizarFuente_Click(object sender, RoutedEventArgs e)
         {
+
             if (App.currentParser != null)
             {
                 if (!string.IsNullOrEmpty(EntradaFuente.Text))

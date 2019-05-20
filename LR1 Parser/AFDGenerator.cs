@@ -86,7 +86,7 @@ namespace LR1_Parser.Model
         /// <summary>
         /// Creates and returns the grammar's augmented production.
         /// </summary>
-        private void AddAugmentedProduction()
+        public void AddAugmentedProduction()
         {
             string FirstProduction = Productions[0].Left.Content;
 
@@ -225,5 +225,5 @@ namespace LR1_Parser.Model
                 return Result;           
             }
         }
-    }
+	}
 }
