@@ -101,7 +101,8 @@ namespace LR1_Parser
                 //Se calcula el AFD de la lista de producciones 
                 AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
 
-                //List<Node> AFD = AFDGen.GenerateAFD();
+				//List<Node> AFD = AFDGen.GenerateAFD();
+				AFDGen.AddAugmentedProduction();
 
 				App.currentParser= new Parser();           
 				           
