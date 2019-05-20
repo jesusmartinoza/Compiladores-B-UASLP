@@ -37,6 +37,7 @@ namespace LR1_Parser.Model
         internal List<Node> AFD;
         internal List<State> States { get { return states; } set { states = value; } }
         internal List<ActionLog> Log { get { return log; } set { log = value; } }
+        internal Stack<BinaryTreeNode> NodeStack { get { return nodesStack; } set { nodesStack = value; } }
 
         public Parser(List<Node> AFDList)
         {
@@ -308,7 +309,7 @@ namespace LR1_Parser.Model
                     BinaryTreeNode a = nodesStack.Pop();
 
                     BinaryTreeNode n = new BinaryTreeNode("else", b, c);
-                    nodesStack.Push(new BinaryTreeNode("sent-if", a, n));
+                    nodesStack.Push(new BinaryTreeNode("sent-if-else", a, n));
                 }
                 break;
                
@@ -375,7 +376,7 @@ namespace LR1_Parser.Model
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
 
-                    nodesStack.Push(new BinaryTreeNode(";", a, b));
+                    nodesStack.Push(new BinaryTreeNode("case-sep", a, b));
                 }
                 break;
 
