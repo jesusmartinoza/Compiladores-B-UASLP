@@ -23,10 +23,15 @@ namespace LR1_Parser
     /// </summary>
     public partial class PageAnalisis : Page
     {
+
+        List<Quad> CurrentQuads = new List<Quad>();
+
         public PageAnalisis()
         {
             InitializeComponent();
         }
+
+
 
         private void AbrirFuente_Click(object sender, RoutedEventArgs e)
         {
@@ -69,7 +74,7 @@ namespace LR1_Parser
             }
         }
 
-        private void AnalizarFuente_Click(object sender, RoutedEventArgs e)
+        private async void AnalizarFuente_Click(object sender, RoutedEventArgs e)
         {
             if (App.currentParser != null)
             {
@@ -77,13 +82,14 @@ namespace LR1_Parser
                 {
                     TablaAcciones.ItemsSource = null;
 
-
-
                     if (App.currentParser.EvalString(EntradaFuente.Text))
                     {
 
                         Log.Text = "La cadena de entrada es valida!";
                         Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
+                        QuadGenerator quadGenerator = new QuadGenerator();
+                        CurrentQuads= quadGenerator.Generate(App.currentParser.NodeStack.Peek());
+
                     }
                     else
                     {

@@ -15,12 +15,12 @@ namespace LR1_Parser.Model
         Boolean solved;
         int id;
 
-        internal BinaryTreeNode Right { get => right; set => right = value; }
-        internal BinaryTreeNode Left { get => left; set => left = value; }
-        public string Content { get => content; set => content = value; }
-        public bool Visited { get => visited; set => visited = value; }
-        public int Id { get => id; set => id = value; }
-        public bool Solved { get => solved; set => solved=value; }
+        internal BinaryTreeNode Right { get { return right; } set { right = value; } }
+        internal BinaryTreeNode Left { get { return left; } set { left = value; } }
+        public string Content { get { return content; } set { content = value; } }
+        public bool Visited { get { return visited; } set { visited = value; } }
+        public int Id { get { return id; } set { id = value; } }
+        public bool Solved { get { return solved; } set { solved = value; } }
         public BinaryTreeNode(String content)
         {
             Content = content;
