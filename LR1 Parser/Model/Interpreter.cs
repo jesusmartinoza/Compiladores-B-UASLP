@@ -55,13 +55,31 @@ namespace LR1_Parser.Model
             quadsList.Add(new Quad("end",   null,       null,   null));
         }
 
+        private void GenerateManualQuads2()
+        {
+
+        }
+
         private void ReadByQuads()
         {
             for (int i = 0; i < quadsList.Count; i++)
             {
                 switch(quadsList[i].Operator)
                 {
+                    
                     case ":=":
+                        string key = quadsList[i].Result.ToString();
+                        string OpA = quadsList[i].ToString();
+                        if (simbTable.Keys.Contains(key))
+                        {
+                            AddData(OpA, key);
+                        }
+                        else
+                        {
+                            simbTable.Add(key, null);
+                            AddData(OpA, key);
+
+                        }
                         break;
                     case "<":
                         break;
@@ -105,6 +123,30 @@ namespace LR1_Parser.Model
                     case "posL":
                         break;
                 }
+            }
+        }
+
+        private void AddData(string variable, string key)
+        {
+            if (simbTable.Keys.Contains(variable))
+            {
+                variable = simbTable[variable].ToString();
+            }
+            
+
+            bool isNumeric = int.TryParse(variable, out int n);
+            bool isBoolean = bool.TryParse(variable, out bool b);
+            if (isNumeric)
+            {
+                simbTable[key] = n;
+            }
+            else if (isBoolean)
+            {
+                simbTable[key] = b;
+            }
+            else
+            {
+                simbTable[key] = variable;
             }
         }
     }

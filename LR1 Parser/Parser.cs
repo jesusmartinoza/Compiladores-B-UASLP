@@ -407,7 +407,7 @@ namespace LR1_Parser.Model
                 {
                     BinaryTreeNode b = nodesStack.Pop();
                     BinaryTreeNode a = nodesStack.Pop();
-                    nodesStack.Push(new BinaryTreeNode(operatorsStack.Pop(), a, b));
+                    //nodesStack.Push(new BinaryTreeNode(operatorsStack.Pop(), a, b));
                 }
                 break;
             }
