@@ -426,6 +426,30 @@ namespace LR1_Parser.Model
                     nodesStack.Push(new BinaryTreeNode("MS", a, null));
                 }
                 break;
+		//sent-declara -> tipo identificadores    
+		case 39:
+                {
+			a=BinaryTreeNode (tipo.vallex,null,null)
+			b=BinaryTreeNode(identificadores.vallex,null,null)
+			nodesStack.push(“dec”, a, b);
+                }
+                 break;
+		//sent-declara -> tipo [ indice ] identificadores
+		case 40:
+                {
+			a = BinaryTreeNode(identificador, null, null),b=BinaryTreeNode("tam",BinaryTreeNode(tipo.vallex, null, null),BinaryTreeNode(indice.vallex, null, null)) ;
+			nodesStack.push(BinaryTreeNode ("Arr", a, b)); 
+                }
+                 break;
+		//identificadores -> identificadores , id 	    
+		case 41:
+                {
+			BinaryTreeNode b = nodesStack.Pop();
+			BinaryTreeNode a = nodesStack.Pop();
+
+			nodesStack.Push(new BinaryTreeNode("Identificadores", a, b));
+                }
+                 break;
 
                 // exp -> exp-simple opcomparacion exp-simple
                 // exp-simple -> exp-simple opsuma term
