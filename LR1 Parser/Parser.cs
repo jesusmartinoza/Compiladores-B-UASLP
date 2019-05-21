@@ -449,9 +449,9 @@ namespace LR1_Parser.Model
 			BinaryTreeNode b = nodesStack.Pop();
 			BinaryTreeNode a = nodesStack.Pop();
 
-			nodesStack.Push(new BinaryTreeNode("Identificadores", a, b));
-                }
-                 break;
+                        nodesStack.Push(new BinaryTreeNode("Identificadores", a, b));
+                    }
+                    break;
 
                 // exp -> exp-simple opcomparacion exp-simple
                 // exp-simple -> exp-simple opsuma term
