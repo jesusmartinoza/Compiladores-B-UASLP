@@ -62,43 +62,123 @@ namespace LR1_Parser.Model
 
         private void ReadByQuads()
         {
+            //int tempCounter = 1;
             for (int i = 0; i < quadsList.Count; i++)
             {
-                switch(quadsList[i].Operator)
+                string keyVar;
+                string OpA, OpB;
+                dynamic OperatorA;
+                dynamic OperatorB;
+                bool res;
+                switch (quadsList[i].Operator)
                 {
-                    
                     case ":=":
-                        string key = quadsList[i].Result.ToString();
-                        string OpA = quadsList[i].ToString();
-                        if (simbTable.Keys.Contains(key))
-                        {
-                            AddData(OpA, key);
-                        }
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        if (simbTable.Keys.Contains(keyVar))
+                            AddData(OpA, keyVar);
                         else
                         {
-                            simbTable.Add(key, null);
-                            AddData(OpA, key);
-
+                            simbTable.Add(keyVar, null);
+                            AddData(OpA, keyVar);
                         }
                         break;
                     case "<":
+                        keyVar = quadsList[i].Result.ToString();
+                        // ## extraer Operando A
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        // ## extraer Operando B 
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de <
+                        res = OperatorA < OperatorB;
+                        simbTable.Add(keyVar, res);
                         break;
                     case "<=":
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de <=
+                        res = OperatorA <= OperatorB;
+                        simbTable.Add(keyVar, res);
                         break;
                     case ">":
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de >
+                        res = OperatorA > OperatorB;
+                        simbTable.Add(keyVar, res);
                         break;
                     case ">=":
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de >=
+                        res = OperatorA >= OperatorB;
+                        simbTable.Add(keyVar, res);
                         break;
                     case "+":
+                        //TODO
                         break;
                     case "-":
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de -
+                        res = OperatorA - OperatorB;
+                        simbTable.Add(keyVar, res);
                         break;
                     case "*":
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de *
+                        res = OperatorA * OperatorB;
+                        simbTable.Add(keyVar, res);
                         break;
                     case "/":
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de /
+                        res = OperatorA / OperatorB;
+                        simbTable.Add(keyVar, res);
                         break;
                     case "^":
+                        keyVar = quadsList[i].Result.ToString();
+                        OpA = quadsList[i].OperandA.ToString();
+                        OperatorA = ExtractOperand(OpA);
+                        OpB = quadsList[i].OperandB.ToString();
+                        OperatorB = ExtractOperand(OpB);
+
+                        //resultado de ^
                         //checar si es menor de 0 la potencia, es una raiz cuadrada
+                        if(OperatorB >= 1)
+                            res = Math.Pow(OperatorA, OperatorB);
+                        else
+                            res = Math.Sqrt(OperatorA);
+                        simbTable.Add(keyVar, res);
                         break;
                     case "goto":
                         break;
@@ -126,27 +206,37 @@ namespace LR1_Parser.Model
             }
         }
 
-        private void AddData(string variable, string key)
+        private void AddData(string resultVar, string keyVar)
         {
-            if (simbTable.Keys.Contains(variable))
-            {
-                variable = simbTable[variable].ToString();
-            }
-            
-
-            bool isNumeric = int.TryParse(variable, out int n);
-            bool isBoolean = bool.TryParse(variable, out bool b);
-            if (isNumeric)
-            {
-                simbTable[key] = n;
-            }
-            else if (isBoolean)
-            {
-                simbTable[key] = b;
-            }
+            if (simbTable.Keys.Contains(resultVar))
+                simbTable[keyVar] = simbTable[resultVar];
             else
             {
-                simbTable[key] = variable;
+                bool isNumeric = int.TryParse(resultVar, out int n);
+                bool isBoolean = bool.TryParse(resultVar, out bool b);
+                if (isNumeric)
+                    simbTable[keyVar] = n;
+                else if (isBoolean)
+                    simbTable[keyVar] = b;
+                else
+                    simbTable[keyVar] = resultVar;
+            }  
+        }
+
+        private dynamic ExtractOperand(string Op)
+        {
+            if (simbTable.Keys.Contains(Op))
+                 return simbTable[Op];
+            else
+            {
+                bool isNumeric = int.TryParse(Op, out int n);
+                bool isBoolean = bool.TryParse(Op, out bool b);
+                if (isNumeric)
+                    return n;
+                else if (isBoolean)
+                    return b;
+                else
+                    return Op;
             }
         }
     }
