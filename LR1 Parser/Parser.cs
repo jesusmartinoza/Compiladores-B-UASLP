@@ -429,18 +429,18 @@ namespace LR1_Parser.Model
 		//sent-declara -> tipo identificadores    
 		case 39:
                 {
-                       BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Val, null, null);
-                       BinaryTreeNode b =  new BinaryTreeNode(p.Right[1].Val, null, null);
-			            nodesStack.Push(new BinaryTreeNode("dec", a, b));
+               //        BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Val, null, null);
+               //        BinaryTreeNode b =  new BinaryTreeNode(p.Right[1].Val, null, null);
+			            //nodesStack.Push(new BinaryTreeNode("dec", a, b));
                 }
                  break;
 		//sent-declara -> tipo [ indice ] identificadores
 		case 40:
                 {
-                        BinaryTreeNode a = new BinaryTreeNode(p.Right[4].Val, null, null);
-                        BinaryTreeNode b = new BinaryTreeNode("tam",new BinaryTreeNode(p.Right[0].Val, null, null),new BinaryTreeNode(p.Right[2].Val, null, null)) ;
+               //         BinaryTreeNode a = new BinaryTreeNode(p.Right[4].Val, null, null);
+               //         BinaryTreeNode b = new BinaryTreeNode("tam",new BinaryTreeNode(p.Right[0].Val, null, null),new BinaryTreeNode(p.Right[2].Val, null, null)) ;
 
-			            nodesStack.Push(new BinaryTreeNode ("Arr", a, b)); 
+			            //nodesStack.Push(new BinaryTreeNode ("Arr", a, b)); 
                 }
                  break;
 		//identificadores -> identificadores , id 	    

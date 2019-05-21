@@ -88,7 +88,7 @@ namespace LR1_Parser
                         Log.Text = "La cadena de entrada es valida!";
                         Log.Foreground = new SolidColorBrush(Color.FromRgb(51, 204, 51));
                         QuadGenerator quadGenerator = new QuadGenerator();
-                        //CurrentQuads= quadGenerator.Generate(App.currentParser.NodeStack.Peek());
+                        CurrentQuads= quadGenerator.Generate(App.currentParser.NodeStack.Peek());
 
                     }
                     else

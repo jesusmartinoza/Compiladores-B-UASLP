@@ -12,9 +12,9 @@ namespace LR1_Parser.Model
 
 
         public string Operator { get; set; }
-        public object OperandA { get; set; }
-        public object OperandB { get; set; }
-        public object Result { get; set; }
+        public string OperandA { get; set; }
+        public string OperandB { get; set; }
+        public string Result { get; set; }
 
         public Quad(string oprtr, string opA, string opB, string result)
         {
@@ -23,6 +23,12 @@ namespace LR1_Parser.Model
             OperandA = opA;
             OperandB = opB;
             Result = result;
+        }
+
+        public override string ToString()
+        {
+            return "|  " + Operator.ToString() + "  |  " + OperandA.ToString() + "  |  " + OperandB.ToString() + "  |  " + Result.ToString() + "  |";
+            
         }
 
     }
