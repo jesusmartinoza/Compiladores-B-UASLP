@@ -43,7 +43,15 @@ namespace LR1_Parser.Model
 
                     break;
 
-                
+                case "CV2":
+                    string idV2 = node.Left.Left.Left.Content;
+                    Quads.Add(new Quad("idV", node.Left.Left.Right.Content, "null", idV2));
+                    node.Solved = true;
+                    SwitchNodes(node.Right);
+                    Quads.Add(new Quad("endV", "null", "null", idV2));
+                    break;
+
+
                 // # 7 en Parser
                 case ";":
                     if (node.Left!=null&&!node.Left.Solved)
@@ -107,12 +115,13 @@ namespace LR1_Parser.Model
 
                 // #31 en Parser 
                 case "while":
-
+                    var whileReturn = Quads.Count();
                     SwitchNodes(node.Left);
                     Quad condition = new Quad("GOTOFALSE", TempValuesStack.Pop(), "null", "null");
                     Quads.Add(condition);
                     SwitchNodes(node.Right);
                     condition.OperandB = Quads.Count.ToString();
+                    Quads.Add(new Quad("GOTO", whileReturn.ToString(),"null","null"));
                     
                     break;
                 // # 31 en Parser
@@ -192,34 +201,36 @@ namespace LR1_Parser.Model
                     GenericNode(node);
                     break;
                 case "-":
-                    if (!node.Right.Solved)
-                    {
-                        SwitchNodes(node.Right);
-                        Quads.Add(new Quad("-", TempValuesStack.Pop(), "null", node.Left.Content));
-                        node.Solved = true;
-                    }
-                    else
-                    {
-                        TempCounter++;
-                        string t = "t" + TempCounter.ToString();
-                        TempValuesStack.Push(t);
-                        Quads.Add(new Quad("-", node.Left.Content, node.Right.Content, t));
-                    }
+                    //if (!node.Right.Solved)
+                    //{
+                    //    SwitchNodes(node.Right);
+                    //    Quads.Add(new Quad("-", TempValuesStack.Pop(), "null", node.Left.Content));
+                    //    node.Solved = true;
+                    //}
+                    //else
+                    //{
+                    //    TempCounter++;
+                    //    string t = "t" + TempCounter.ToString();
+                    //    TempValuesStack.Push(t);
+                    //    Quads.Add(new Quad("-", node.Left.Content, node.Right.Content, t));
+                    //}
+                    GenericNode(node);
                     break;
                 case "/":
-                    if (!node.Right.Solved)
-                    {
-                        SwitchNodes(node.Right);
-                        Quads.Add(new Quad("/", TempValuesStack.Pop(), "null", node.Left.Content));
-                        node.Solved = true;
-                    }
-                    else
-                    {
-                        TempCounter++;
-                        string t = "t" + TempCounter.ToString();
-                        TempValuesStack.Push(t);
-                        Quads.Add(new Quad("/", node.Left.Content, node.Right.Content, t));
-                    }
+                    //if (!node.Right.Solved)
+                    //{
+                    //    SwitchNodes(node.Right);
+                    //    Quads.Add(new Quad("/", TempValuesStack.Pop(), "null", node.Left.Content));
+                    //    node.Solved = true;
+                    //}
+                    //else
+                    //{
+                    //    TempCounter++;
+                    //    string t = "t" + TempCounter.ToString();
+                    //    TempValuesStack.Push(t);
+                    //    Quads.Add(new Quad("/", node.Left.Content, node.Right.Content, t));
+                    //}
+                    GenericNode(node);
                     break;
 
                 case "%":
@@ -239,6 +250,10 @@ namespace LR1_Parser.Model
                     GenericNode(node);
                     break;
 
+                case "**":
+                    GenericNode(node);
+                    break;
+
                 // we try to catch here the variables and constants, validate existence in TABSIM etc
                 default:
                     TempValuesStack.Push(node.Content);
@@ -246,9 +261,6 @@ namespace LR1_Parser.Model
             }
 
         }
-
-
-       
 
         private void  GenericNode(BinaryTreeNode node)
         {

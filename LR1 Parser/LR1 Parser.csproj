@@ -72,6 +72,9 @@
     </ApplicationDefinition>
     <Compile Include="AFDGenerator.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="interfaz.xaml.cs">
+      <DependentUpon>interfaz.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Interpreter.cs" />
     <Compile Include="Model\ActionLog.cs" />
     <Compile Include="Model\BinaryTreeNode.cs" />
@@ -92,6 +95,10 @@
     <Compile Include="Views\PageGramatica.xaml.cs">
       <DependentUpon>PageGramatica.xaml</DependentUpon>
     </Compile>
+    <Page Include="interfaz.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -243,7 +243,7 @@ namespace LR1_Parser.Model
                 // def-vent -> CreaVentana ( id , cadena ) { secuencia-ctrl }
                 case 6:
                 {
-                    BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Val), nodesStack.Peek());
+                    BinaryTreeNode a = new BinaryTreeNode("idV", new BinaryTreeNode(p.Right[2].Val), new BinaryTreeNode(p.Right[4].Val));
                     BinaryTreeNode b = nodesStack.Pop();
 
                     nodesStack.Push(new BinaryTreeNode("CV2", a, b));

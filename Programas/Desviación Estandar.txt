@@ -20,7 +20,7 @@ defmain {
 	int i
 	i := 0 ;
  
-	while(i<numDatos)
+	while( i < numDatos)
 	{
 	 	vent auxVent
 	 	textBox auxTextBox
@@ -39,7 +39,7 @@ defmain {
 
  	i := 0;
 
-	while(i < numDatos)
+	while( i < numDatos)
 	{
 		difCuadrada := difCuadrada + (datos[ i ] - media)**2;
 		i := i+1;

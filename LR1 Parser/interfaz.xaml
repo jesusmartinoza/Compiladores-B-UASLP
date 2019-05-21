@@ -7,7 +7,6 @@
       mc:Ignorable="d" d:DesignWidth="800"
       xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
         Title="interfaz" Height="444" Width="800">
     <Grid Margin="0,0,0,5">
         <Grid.ColumnDefinitions>
@@ -47,16 +46,16 @@
             Margin="0,31,0,51" Grid.ColumnSpan="2" Grid.RowSpan="2"
             />
 
-        <Button Height="Auto" Grid.Row="1" Name="BajoNivel" Click="" Grid.Column="2" Margin="189,152,189,22">
+        <Button Height="Auto" Grid.Row="1" Name="BajoNivel"  Grid.Column="2" Margin="189,152,189,22">
             Bajo nivel
         </Button>
-        <Button Height="Auto" Grid.Row="1" Name="AltoNivel" Click="" Grid.Column="2" Margin="10,152,368,22" RenderTransformOrigin="0.529,0.154">
+        <Button Height="Auto" Grid.Row="1" Name="AltoNivel"  Grid.Column="2" Margin="10,152,368,22" RenderTransformOrigin="0.529,0.154">
             Alto Nivel
         </Button>
-        <Button Height="Auto" Grid.Row="1" Name="Compilar" Click="" Grid.Column="2" Margin="368,152,10,22">
+        <Button Height="Auto" Grid.Row="1" Name="Compilar"  Grid.Column="2" Margin="368,152,10,22">
             Compilar
         </Button>
-        <Button Height="Auto" Name="TablaAS" Click="" Grid.Column="2" Margin="149,0,137,34">
+        <Button Height="Auto" Name="TablaAS"  Grid.Column="2" Margin="149,0,137,34">
             Mostrar Tabla de analisis
         </Button>
         <GridSplitter Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Height="2" Grid.Row="2"/>
