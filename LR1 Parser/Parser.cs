@@ -499,15 +499,7 @@ namespace LR1_Parser.Model
                 //  factor-> id
                 //  factor->cadena
                 case 59:
-                    {
-                        nodesStack.Push(new BinaryTreeNode(p.Right[0].Val));
-                    }
-                break;
                 case 60:
-                    {
-                        nodesStack.Push(new BinaryTreeNode(p.Right[0].Val));
-                    }
-                    break;
                 case 61:
                     {
                         nodesStack.Push(new BinaryTreeNode(p.Right[0].Val));
