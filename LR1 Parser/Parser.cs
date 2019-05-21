@@ -428,28 +428,28 @@ namespace LR1_Parser.Model
                 break;
 		//sent-declara -> tipo identificadores    
 		case 39:
-                {
-			a=BinaryTreeNode (tipo.vallex,null,null)
-			b=BinaryTreeNode(identificadores.vallex,null,null)
-			nodesStack.push(“dec”, a, b);
-                }
-                 break;
-		//sent-declara -> tipo [ indice ] identificadores
-		case 40:
-                {
-			a = BinaryTreeNode(identificador, null, null),b=BinaryTreeNode("tam",BinaryTreeNode(tipo.vallex, null, null),BinaryTreeNode(indice.vallex, null, null)) ;
-			nodesStack.push(BinaryTreeNode ("Arr", a, b)); 
-                }
-                 break;
-		//identificadores -> identificadores , id 	    
-		case 41:
-                {
-			BinaryTreeNode b = nodesStack.Pop();
-			BinaryTreeNode a = nodesStack.Pop();
+                    {
+                        BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Val, null, null);
+                        BinaryTreeNode b = new BinaryTreeNode(p.Right[3].Val, null, null);
+                        nodesStack.Push(new BinaryTreeNode ("dec", a, b));
+                    }
+                    break;
+                //sent-declara -> tipo [ indice ] identificadores
+                case 40:
+                    {
+                        BinaryTreeNode a = new BinaryTreeNode(p.Right[2].Val, null, null),b = new BinaryTreeNode("tam", new BinaryTreeNode(p.Right[3].Val, null, null),new BinaryTreeNode(p.Right[4].Val, null, null));
+                        nodesStack.Push(new BinaryTreeNode("Arr", a, b));
+                    }
+                    break;
+                //identificadores -> identificadores , id 	    
+                case 41:
+                    {
+                        BinaryTreeNode b = nodesStack.Pop();
+                        BinaryTreeNode a = nodesStack.Pop();
 
-			nodesStack.Push(new BinaryTreeNode("Identificadores", a, b));
-                }
-                 break;
+                        nodesStack.Push(new BinaryTreeNode("Identificadores", a, b));
+                    }
+                    break;
 
                 // exp -> exp-simple opcomparacion exp-simple
                 // exp-simple -> exp-simple opsuma term
