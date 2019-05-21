@@ -56,8 +56,8 @@ namespace LR1_Parser.Model
             counter = 1;
 
             //InitTestAFD();
-            //CreateSyntaxisAnalysisTable();
-			deserializacionBinaria();
+            CreateSyntaxisAnalysisTable();
+			//deserializacionBinaria();   se cambia lugad de implementación
         }
 
 		public Parser()
@@ -68,7 +68,7 @@ namespace LR1_Parser.Model
 			operatorsStack = new Stack<string>();
 			renderer = new Renderer(@"C:\Program Files\Graphviz2.38\bin");
 			graphVizEdges = new List<EdgeStatement>();
-			deserializacionBinaria();
+			//deserializacionBinaria();  Se cambia lugar de implementación
 		}
 
         public bool EvalString(String inputString)
@@ -429,16 +429,18 @@ namespace LR1_Parser.Model
 		//sent-declara -> tipo identificadores    
 		case 39:
                 {
-			a=BinaryTreeNode (tipo.vallex,null,null)
-			b=BinaryTreeNode(identificadores.vallex,null,null)
-			nodesStack.push(“dec”, a, b);
+                       BinaryTreeNode a = new BinaryTreeNode(p.Right[0].Val, null, null);
+                       BinaryTreeNode b =  new BinaryTreeNode(p.Right[1].Val, null, null);
+			            nodesStack.Push(new BinaryTreeNode("dec", a, b));
                 }
                  break;
 		//sent-declara -> tipo [ indice ] identificadores
 		case 40:
                 {
-			a = BinaryTreeNode(identificador, null, null),b=BinaryTreeNode("tam",BinaryTreeNode(tipo.vallex, null, null),BinaryTreeNode(indice.vallex, null, null)) ;
-			nodesStack.push(BinaryTreeNode ("Arr", a, b)); 
+                        BinaryTreeNode a = new BinaryTreeNode(p.Right[4].Val, null, null);
+                        BinaryTreeNode b = new BinaryTreeNode("tam",new BinaryTreeNode(p.Right[0].Val, null, null),new BinaryTreeNode(p.Right[2].Val, null, null)) ;
+
+			            nodesStack.Push(new BinaryTreeNode ("Arr", a, b)); 
                 }
                  break;
 		//identificadores -> identificadores , id 	    
@@ -603,7 +605,7 @@ namespace LR1_Parser.Model
 
                 States.Add(state);
             }
-			serializacionBinaria();
+			//serializacionBinaria(); Se cambia lugar de implementación
         }
 
         /// Ejemeplo con la información absolutamente necesaria para
@@ -699,44 +701,6 @@ namespace LR1_Parser.Model
             AFD.Add(n6);
         }
 
-		//**************************SERIALIZACION - DESERIALIZACION*********************************************
-		private void serializacionBinaria()
-		{
-			//Seleccion de formateador
-			BinaryFormatter formateador = new BinaryFormatter();
-			//XmlSerializer formateadorXml = new XmlSerializer(typeof(List<State>));
-
-			//Se crea el Stream
-			Stream miStream = new FileStream(Environment.CurrentDirectory + "\\estadosSerializados11", FileMode.Create, FileAccess.Write, FileShare.None);
-			
-			
-			//Serializacion
-			formateador.Serialize(miStream, States);
-			
-			
-			//Cerrar Stream
-			miStream.Close();
-		}
-
-		private void deserializacionBinaria()
-		{
-			States = new List<State>();
-
-			//Seleccion de formateador
-			BinaryFormatter formateador = new BinaryFormatter();
-			
-
-			//Se crea el Stream
-			Stream miStream = new FileStream(Environment.CurrentDirectory + "\\estadosSerializados11", FileMode.Open, FileAccess.Read, FileShare.None);
-
-
-			//Deserializacion
-			States = (List<State>)formateador.Deserialize(miStream);
-
-
-			//Cerrar Stream
-			miStream.Close();
-		}
-		//**************************SERIALIZACION - DESERIALIZACION*********************************************
+		
 	}
 }
