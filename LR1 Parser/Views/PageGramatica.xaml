@@ -66,7 +66,17 @@
                     <materialDesign:PackIcon Kind="TableLarge" />
                 </Button>
 
-               
+                <Button ToolTip="Exportar tabla de analisis sintáctico" ToolBar.OverflowMode="AsNeeded" Name="ExportarTablaAS" Click="ExportarTablaAS_Click" >
+                    <materialDesign:PackIcon Kind="Export" />
+                </Button>
+
+                <Button ToolTip="Importar tabla de analisis sintáctico" ToolBar.OverflowMode="AsNeeded" Name="ImportarTablaAS" Click="ImportarTablaAS_Click" >
+                    <materialDesign:PackIcon Kind="Import" />
+                </Button>
+
+
+
+
 
             </ToolBar>
         </ToolBarTray>

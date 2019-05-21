@@ -101,10 +101,13 @@ namespace LR1_Parser
                 //Se calcula el AFD de la lista de producciones 
                 AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, primeros, simbolosGramaticales);
 
-				//List<Node> AFD = AFDGen.GenerateAFD();
-				AFDGen.AddAugmentedProduction();
+				List<Node> AFD = AFDGen.GenerateAFD();
 
-				App.currentParser= new Parser();           
+                //==================
+				//AFDGen.AddAugmentedProduction();
+
+				App.currentParser= new Parser(AFD);    
+                //=================
 				           
                 //App.currentParser.EvalString("n + n - n - n + n");
 
@@ -217,6 +220,52 @@ namespace LR1_Parser
             Clipboard.SetText("ε");
         }
 
-       
+        private void ExportarTablaAS_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.currentParser.States != null)
+                Helpers.serializacionBinaria(App.currentParser.States);
+        }
+
+        private void ImportarTablaAS_Click(object sender, RoutedEventArgs e)
+        {
+
+            // Se limpia UI tabla A.S
+            TablaAnalisis.ItemsSource = null;
+
+
+            // Se separan el texto de entrada de la gramática y se crea la lista de producciones 
+            Tokenizer obtenProd = new Tokenizer();
+            MainWindow.productions = obtenProd.obtenProducciones(EntradaGramatica.Text);
+            noTerminales = obtenProd.NT;
+            List<Token> simbolosGramaticales = obtenProd.tokens;
+            simbolosGramaticales.RemoveAll(pred => pred.Content == "ε");
+
+            // Se calcula el conjunto de primeros para la gramática
+            //Primeros primeros = new Primeros(MainWindow.productions, noTerminales);
+
+            //Se calcula el AFD de la lista de producciones 
+            AFDGenerator AFDGen = new AFDGenerator(MainWindow.productions, null, simbolosGramaticales);
+
+            //List<Node> AFD = AFDGen.GenerateAFD();
+
+            //==================
+            AFDGen.AddAugmentedProduction();
+
+            App.currentParser = new Parser();
+            App.currentParser.States = Helpers.deserializacionBinaria();
+            //=================
+
+            //App.currentParser.EvalString("n + n - n - n + n");
+
+            // Se muestran los primeros en la UI
+            //PrimerosTable.ItemsSource = primeros.GetView();
+
+            // Se crea la tabla de Analisis Sintáctico
+            //App.currentParser.CreateSyntaxisAnalysisTable();
+
+            // Se muestra la tabla de Analisis Sintáctico				
+            ShowTablaAS(App.currentParser.States);
+        }
+
     }
 }
